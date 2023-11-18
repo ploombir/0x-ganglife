@@ -1,0 +1,4 @@
+name: ganglife
+version: '${version}'
+main: de.marc.ganglife.Main.main
+api-version: '1.20'
