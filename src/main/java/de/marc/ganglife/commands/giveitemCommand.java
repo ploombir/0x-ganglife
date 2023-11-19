@@ -28,228 +28,226 @@ public class giveitemCommand implements CommandExecutor {
                         .disableAllInteractions()
                         .create();
 
-                inv.setItem(0, ItemBuilder.from(items.m4).asGuiItem(event -> {
+                inv.setItem(0, ItemBuilder.from(items.M4.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(1, ItemBuilder.from(items.ak47).asGuiItem(event -> {
+                inv.setItem(1, ItemBuilder.from(items.AK47.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
 
-                inv.setItem(2, ItemBuilder.from(items.pdw).asGuiItem(event -> {
+                inv.setItem(2, ItemBuilder.from(items.PDW.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(3, ItemBuilder.from(items.smg).asGuiItem(event -> {
+                inv.setItem(3, ItemBuilder.from(items.SMG.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(4, ItemBuilder.from(items.pistole).asGuiItem(event -> {
+                inv.setItem(4, ItemBuilder.from(items.PISTOLE.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(5, ItemBuilder.from(items.jagdflinte).asGuiItem(event -> {
+                inv.setItem(5, ItemBuilder.from(items.JAGDFLINTE.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(6, ItemBuilder.from(items.sniper).asGuiItem(event -> {
+                inv.setItem(6, ItemBuilder.from(items.SNIPER.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(7, ItemBuilder.from(items.lasergun).asGuiItem(event -> {
+                inv.setItem(7, ItemBuilder.from(items.LASERGUN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(8, ItemBuilder.from(items.FesselnInInv).asGuiItem(event -> {
+                inv.setItem(8, ItemBuilder.from(items.FESSELN_IN_INV.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(9, ItemBuilder.from(items.chestplate).asGuiItem(event -> {
+                inv.setItem(9, ItemBuilder.from(items.CHESTPLATECHEST.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addSchutzweste(player.getUniqueId(), 1);
                 }));
 
-                inv.setItem(10, ItemBuilder.from(items.police_chestplate).asGuiItem(event -> {
+                inv.setItem(10, ItemBuilder.from(items.POLICE_CHESTPLATE.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addPoliceSchutzweste(player.getUniqueId(), 1);
                 }));
-                inv.setItem(11, ItemBuilder.from(items.police_cuff).asGuiItem(event -> {
+                inv.setItem(11, ItemBuilder.from(items.POLICE_CUFF.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(12, ItemBuilder.from(items.phone).asGuiItem(event -> {
+
+                inv.setItem(12, ItemBuilder.from(items.PHONE.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(13, ItemBuilder.from(items.hausvertrag).asGuiItem(event -> {
+
+                inv.setItem(13, ItemBuilder.from(items.HAUSVERTRAG.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(14, ItemBuilder.from(items.cocain).asGuiItem(event -> {
+
+                inv.setItem(14, ItemBuilder.from(items.COCAIN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addCocain(player.getUniqueId(), 1);
                 }));
-                ;
-                inv.setItem(15, ItemBuilder.from(items.weed).asGuiItem(event -> {
+
+                inv.setItem(15, ItemBuilder.from(items.WEED.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addWeed(player.getUniqueId(), 1);
                 }));
-                ;
-                inv.setItem(16, ItemBuilder.from(items.meth).asGuiItem(event -> {
+
+                inv.setItem(16, ItemBuilder.from(items.METH.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addMeth(player.getUniqueId(), 1);
                 }));
-                ;
-                inv.setItem(17, ItemBuilder.from(items.medizin).asGuiItem(event -> {
+
+                inv.setItem(17, ItemBuilder.from(items.MEDIZIN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     setDrugs.addMedizin(player.getUniqueId(), 1);
                 }));
-                ;
-                inv.setItem(18, ItemBuilder.from(items.iron).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
 
-                inv.setItem(19, ItemBuilder.from(items.wood).asGuiItem(event -> {
+                inv.setItem(18, ItemBuilder.from(items.IRON.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(20, ItemBuilder.from(items.bohrer).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(21, ItemBuilder.from(items.sprengstoff).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(22, ItemBuilder.from(items.cocainpap).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(23, ItemBuilder.from(items.kröten).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(24, ItemBuilder.from(items.weedpap).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(25, ItemBuilder.from(items.aramid).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(26, ItemBuilder.from(items.fangkäfig).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(27, ItemBuilder.from(items.spitzhacke).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
 
-                inv.setItem(28, ItemBuilder.from(items.axt).asGuiItem(event -> {
+                inv.setItem(19, ItemBuilder.from(items.WOOD.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(29, ItemBuilder.from(items.sichel).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(30, ItemBuilder.from(items.gold).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(31, ItemBuilder.from(items.wood_finish).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
-                inv.setItem(32, ItemBuilder.from(items.iron_finish).asGuiItem(event -> {
-                    main.playProccessSound(player);
-                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(event.getCurrentItem());
-                }));
-                ;
 
-                inv.setItem(33, ItemBuilder.from(items.cocainchest).asGuiItem(event -> {
+                inv.setItem(20, ItemBuilder.from(items.BOHRER.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(34, ItemBuilder.from(items.methchest).asGuiItem(event -> {
+
+                inv.setItem(21, ItemBuilder.from(items.SPRENGSTOFF.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(35, ItemBuilder.from(items.weedchest).asGuiItem(event -> {
+
+                inv.setItem(22, ItemBuilder.from(items.COCAINPAP.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(36, ItemBuilder.from(items.chestplatechest).asGuiItem(event -> {
+
+                inv.setItem(23, ItemBuilder.from(items.KRÖTEN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
-                inv.setItem(37, ItemBuilder.from(items.box).asGuiItem(event -> {
+
+                inv.setItem(24, ItemBuilder.from(items.WEEDPAP.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                ;
+
+                inv.setItem(25, ItemBuilder.from(items.ARAMID.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(26, ItemBuilder.from(items.FANGKÄFIG.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(27, ItemBuilder.from(items.SPITZHACKE.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(28, ItemBuilder.from(items.AXT.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(29, ItemBuilder.from(items.SICHEL.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(30, ItemBuilder.from(items.GOLD.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(31, ItemBuilder.from(items.WOOD_FINISH.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(32, ItemBuilder.from(items.IRON_FINISH.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+
+                inv.setItem(33, ItemBuilder.from(items.COCAINCHEST.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(34, ItemBuilder.from(items.METHCHEST.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(35, ItemBuilder.from(items.WEEDCHEST.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(36, ItemBuilder.from(items.CHESTPLATECHEST.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
+                inv.setItem(37, ItemBuilder.from(items.BOX.getItem()).asGuiItem(event -> {
+                    main.playProccessSound(player);
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
+                    player.getInventory().addItem(event.getCurrentItem());
+                }));
+
 
                 main.playProccessSound(player);
                 inv.open(player);

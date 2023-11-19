@@ -2,6 +2,8 @@ package de.marc.ganglife.Main;
 
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
+import de.marc.ganglife.playerEvents.chat;
+import de.marc.ganglife.playerEvents.interactionmenu;
 import de.marc.ganglife.playerEvents.loginManager;
 import de.marc.ganglife.playerEvents.registerAccounts;
 import org.bukkit.Bukkit;
@@ -58,10 +60,18 @@ public final class main extends JavaPlugin {
         getCommand("werbung").setExecutor(new werbungCommand());
         getCommand("aduty").setExecutor(new adutyCommand());
         getCommand("build").setExecutor(new buildCommand());
+        getCommand("blockfarming").setExecutor(new blockfarmingCommand());
+        getCommand("heal").setExecutor(new healCommand());
+        getCommand("broadcast").setExecutor(new broadcastCommand());
+        getCommand("clear").setExecutor(new clearCommand());
+        getCommand("registeratm").setExecutor(new registeratmCommand());
+        getCommand("dropgun").setExecutor(new dropgunCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);
         getServer().getPluginManager().registerEvents(new loginManager(), this);
+        getServer().getPluginManager().registerEvents(new interactionmenu(), this);
+        getServer().getPluginManager().registerEvents(new chat(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

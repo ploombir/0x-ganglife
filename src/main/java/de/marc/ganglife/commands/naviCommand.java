@@ -32,11 +32,11 @@ public class naviCommand implements CommandExecutor {
 
             boolean found = Arrays.stream(player.getInventory().getContents())
                     .filter(item -> item != null && item.getType() != Material.AIR)
-                    .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.phone.getItemMeta().getDisplayName()))
-                    .anyMatch(item -> item.getType() == items.phone.getType());
+                    .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
+                    .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
 
-            if (!found) {
-                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy um eine Route zu starten.");
+            if(!found) {
+                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um die Navigation zu öffnen.");
                 main.playErrorSound(player);
                 return true;
             }

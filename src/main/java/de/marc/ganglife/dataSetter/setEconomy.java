@@ -48,14 +48,11 @@ public class setEconomy extends QueryFactory {
                 .send()
                 .thenApply(UpdateResult::changed);
     }
+    public boolean hasEnoughMoney(UUID playerUUID, int requiredAmount) {
+        CompletableFuture<Optional<Integer>> moneyFuture = getMoney(playerUUID);
 
-    public void payMoney(UUID uniqueId, int amount) {
-        addMoney(uniqueId, amount);
-    }
+        Optional<Integer> money = moneyFuture.join();
 
-    public boolean hasEnoughMoney(UUID uniqueId, int amount) {
-        getMoney(uniqueId)
-                .thenApply(money -> money.isPresent() && money.get() >= amount);
-        return false;
+        return money.filter(actualMoney -> actualMoney >= requiredAmount).isPresent();
     }
 }

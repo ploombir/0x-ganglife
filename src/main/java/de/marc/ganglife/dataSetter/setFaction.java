@@ -31,10 +31,12 @@ public class setFaction extends QueryFactory {
                 .thenApply(UpdateResult::changed);
     }
 
-    public boolean isInFaction(UUID uniqueId, String faction) {
-        getFaction(uniqueId)
-                .thenApply(playerFaction -> playerFaction.isPresent() && playerFaction.get().equals(faction));
-        return false;
+    public boolean isInFaction(UUID playerUUID, String faction) {
+        CompletableFuture<Optional<String>> facFuture = getFaction(playerUUID);
+
+        Optional<String> fac = facFuture.join();
+
+        return fac.filter(actualMoney -> actualMoney.equals(faction)).isPresent();
     }
 
     public CompletableFuture<Optional<Integer>> getRank(UUID uniqueId) {

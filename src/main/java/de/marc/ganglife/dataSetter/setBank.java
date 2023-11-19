@@ -49,11 +49,11 @@ public class setBank extends QueryFactory {
                 .thenApply(UpdateResult::changed);
     }
 
-    public CompletableFuture<Optional<Boolean>> hasEnoughBank(UUID uniqueId, int amount) {
-        return builder(Boolean.class)
-                .query("SELECT bank FROM accounts WHERE uniqueid = ?")
-                .parameter(stmt -> stmt.setString(uniqueId.toString()))
-                .readRow(row -> row.getInt("bank") >= amount)
-                .first();
+    public boolean hasEnoughBank(UUID playerUUID, int requiredAmount) {
+        CompletableFuture<Optional<Integer>> moneyFuture = getBank(playerUUID);
+
+        Optional<Integer> money = moneyFuture.join();
+
+        return money.filter(actualMoney -> actualMoney >= requiredAmount).isPresent();
     }
 }
