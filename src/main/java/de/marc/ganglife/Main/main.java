@@ -1,6 +1,7 @@
 package de.marc.ganglife.Main;
 
 import de.marc.ganglife.dataSetter.mySQLConnection;
+import de.marc.ganglife.playerEvents.loginManager;
 import de.marc.ganglife.playerEvents.registerAccounts;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -54,6 +55,7 @@ public final class main extends JavaPlugin {
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);
+        getServer().getPluginManager().registerEvents(new loginManager(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

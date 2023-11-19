@@ -3,6 +3,7 @@ package de.marc.ganglife.playerEvents;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,9 +31,7 @@ public class registerAccounts implements Listener {
     setMobile setMobile = new setMobile(main.getPlugin().getDatabaseAsync().getDataSource());
     setPayDays setPayDays = new setPayDays(main.getPlugin().getDatabaseAsync().getDataSource());
     setPersonalausweis setPersonalausweis = new setPersonalausweis(main.getPlugin().getDatabaseAsync().getDataSource());
-    setPlayerName setPlayerName = new setPlayerName(main.getPlugin().getDatabaseAsync().getDataSource());
     setPlayertime setPlayertime = new setPlayertime(main.getPlugin().getDatabaseAsync().getDataSource());
-    setPremium setPremium = new setPremium(main.getPlugin().getDatabaseAsync().getDataSource());
     setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
     setVotes setVotes = new setVotes(main.getPlugin().getDatabaseAsync().getDataSource());
 
@@ -40,10 +39,10 @@ public class registerAccounts implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.sendMessage("jo");
+        event.setJoinMessage(null);
+
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
-            if(id.get() == null) {
-                player.sendMessage("jo");
+            if(id.isEmpty()) {
                 setUnique.insertUniqueIdIntoDatabase(player.getUniqueId(), player.getName());
                 setLicences.setDriveFile(player.getUniqueId(), "false");
                 setLicences.setGunFile(player.getUniqueId(), "false");
@@ -83,12 +82,27 @@ public class registerAccounts implements Listener {
                 setDiscordverify.setDiscordVerify(player.getUniqueId(), generateRandomFourDigitNumber());
                 setMobile.addPlayers(1);
                 setVotes.setVotes(player.getUniqueId(), 0);
-               // setMobile.setNumber(player.getUniqueId(), setMobile.getPlayers() + 5000);
                 setMobile.setContacts(player.getUniqueId(), "[]");
                 setMobile.setFlugmodus(player.getUniqueId(), "false");
-                Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt.");
+                setMobile.getPlayers().thenAccept(registredPlayers -> {
+                    if(registredPlayers.isPresent()) {
+                        setMobile.setNumber(player.getUniqueId(), registredPlayers.get() + 5000);
+                    }
+                });
+                Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt. §7IP: " + player.getAddress().getHostString());
+
+                Location locnew = new Location(Bukkit.getWorld("0xMain"),-175, 71, -268);
+
+                player.teleport(locnew);
+                player.sendMessage(" ");
+                player.sendMessage(main.prefix + "§aHallo und Herzlich Willkommen auf §bOx-GangLife§a! §aDu befindest dich im moment am Flughafen, bitte begebe dich aus dem Flugzeug und folge den grünen Teppichen auf dem Boden. Spreche mit dem Einreiseamt und beantrage einen Ausweis.");
+                main.playSuccessSound(player);
+
+                Location loc = new Location(player.getWorld(), -156, 68, -239);
+               // cmd_navi.navigateTo(player, loc);
+
             } else {
-                Bukkit.getConsoleSender().sendMessage(main.log + "§anot null");
+                Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
 
             }
         });

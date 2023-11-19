@@ -23,7 +23,7 @@ public class setPlayertime extends QueryFactory {
     }
 
     public CompletableFuture<Boolean> addPlayertime(UUID uniqueId, int amount) {
-        return builder().query("UPDATE accounts SET playername = playertime + ? WHERE uniqueid = ?")
+        return builder().query("UPDATE accounts SET playertime = playertime + ? WHERE uniqueid = ?")
                 .parameter(stmt -> stmt.setInt(amount)
                         .setString(uniqueId.toString()))
                 .update()
@@ -32,7 +32,7 @@ public class setPlayertime extends QueryFactory {
     }
 
     public CompletableFuture<Boolean> setPlayertime(UUID uniqueId, int amount) {
-        return builder().query("UPDATE accounts SET playername = ? WHERE uniqueid = ?")
+        return builder().query("UPDATE accounts SET playertime = ? WHERE uniqueid = ?")
                 .parameter(stmt -> stmt.setInt(amount)
                         .setString(uniqueId.toString()))
                 .update()

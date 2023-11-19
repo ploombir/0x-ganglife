@@ -16,9 +16,9 @@ public class setPlayerName extends QueryFactory {
     public setPlayerName(DataSource dataSource) {
         super(dataSource);
     }
-    public CompletableFuture<Boolean> setPlayerNameDatabase(UUID uniqueId, String playerName) {
+    public CompletableFuture<Boolean> setPlayerNameDatabase(UUID uniqueId, String playername) {
         return builder().query("UPDATE accounts SET playername = ? WHERE uniqueid = ?")
-                .parameter(stmt -> stmt.setString(playerName)
+                .parameter(stmt -> stmt.setString(playername)
                         .setString(uniqueId.toString()))
                 .update()
                 .send()
