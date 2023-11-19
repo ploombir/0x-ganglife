@@ -1,6 +1,7 @@
 package de.marc.ganglife.Main;
 
 import de.marc.ganglife.dataSetter.mySQLConnection;
+import de.marc.ganglife.playerEvents.registerAccounts;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -40,18 +41,23 @@ public final class main extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(main.log + "§cFehler beim Herstellen der Datenbankverbindung.");
         }
     }
-    private void registerCommands() {
-
-    }
-    private void registerEvents() {
-
-    }
 
     @Override
     public void onDisable() {
         if(mySQL.getConnection() != null) {
             mySQL.disconnect();
         }
+    }
+
+    private void registerCommands() {
+
+    }
+    private void registerEvents() {
+        getServer().getPluginManager().registerEvents(new registerAccounts(), this);
+    }
+
+    public mySQLConnection getDatabaseAsync() {
+        return mySQL;
     }
 
     public static void playErrorSound(Player player) {

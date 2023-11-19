@@ -69,6 +69,14 @@ public class setMobile extends QueryFactory {
                 .readRow(row -> row.getString("flugmodus"))
                 .first();
     }
+    public CompletableFuture<Boolean> setContacts(UUID uniqueId, String contacts) {
+        return builder().query("UPDATE accounts SET contacts = ? WHERE uniqueid = ?")
+                .parameter(stmt -> stmt.setString(contacts)
+                        .setString(uniqueId.toString()))
+                .update()
+                .send()
+                .thenApply(UpdateResult::changed);
+    }
 
     public CompletableFuture<Boolean> setFlugmodus(UUID uniqueId, String flugmodus) {
         return builder().query("UPDATE accounts SET flugmodus = ? WHERE uniqueid = ?")

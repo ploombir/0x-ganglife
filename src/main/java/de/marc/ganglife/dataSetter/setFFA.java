@@ -45,7 +45,7 @@ public class setFFA extends QueryFactory {
                 .first();
     }
 
-    public CompletableFuture<Boolean> setFFAINventory(UUID uniqueId, String isFFA) {
+    public CompletableFuture<Boolean> setFFAInventory(UUID uniqueId, String isFFA) {
         return builder().query("UPDATE accounts SET inventory_ffa = ? WHERE uniqueid = ?")
                 .parameter(stmt -> stmt.setString(isFFA)
                         .setString(uniqueId.toString()))

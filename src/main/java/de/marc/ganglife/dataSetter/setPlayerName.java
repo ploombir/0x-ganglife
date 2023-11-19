@@ -16,19 +16,6 @@ public class setPlayerName extends QueryFactory {
     public setPlayerName(DataSource dataSource) {
         super(dataSource);
     }
-
-    public static void setPlayerName(UUID name, String string) {
-        File file = new File("plugins/0x", "datas.yml");
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-
-        cfg.set(name + ".playername", string);
-        try {
-            cfg.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public CompletableFuture<Boolean> setPlayerNameDatabase(UUID uniqueId, String playerName) {
         return builder().query("UPDATE accounts SET playername = ? WHERE uniqueid = ?")
                 .parameter(stmt -> stmt.setString(playerName)
