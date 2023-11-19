@@ -20,3 +20,5 @@ commands:
   registeratm:
   heal:
   dropgun:
+  pay:
+  durchsuchen:

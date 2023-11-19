@@ -6,6 +6,8 @@ import de.marc.ganglife.playerEvents.chat;
 import de.marc.ganglife.playerEvents.interactionmenu;
 import de.marc.ganglife.playerEvents.loginManager;
 import de.marc.ganglife.playerEvents.registerAccounts;
+import de.marc.ganglife.utils.inventoryCancel;
+import de.marc.ganglife.weapons.func.weaponHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -66,12 +68,16 @@ public final class main extends JavaPlugin {
         getCommand("clear").setExecutor(new clearCommand());
         getCommand("registeratm").setExecutor(new registeratmCommand());
         getCommand("dropgun").setExecutor(new dropgunCommand());
+        getCommand("pay").setExecutor(new payCommand());
+        getCommand("durchsuchen").setExecutor(new durchsuchenCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);
         getServer().getPluginManager().registerEvents(new loginManager(), this);
         getServer().getPluginManager().registerEvents(new interactionmenu(), this);
         getServer().getPluginManager().registerEvents(new chat(), this);
+        getServer().getPluginManager().registerEvents(new weaponHandler(this), this);
+        getServer().getPluginManager().registerEvents(new inventoryCancel(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

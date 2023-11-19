@@ -51,6 +51,7 @@ public class interactionmenu implements Listener {
         if (!event.getRightClicked().getType().equals(EntityType.PLAYER)) return;
         if (setFFA.isInFFA(player.getUniqueId(), "true")) return;
         if (setDeads.isDead(player.getUniqueId(), "true")) return;
+        if(cuff.contains(player)) return;
         getHashTarget.put(player, target.getName());
 
         Gui interactionInventory = Gui.gui()
@@ -211,12 +212,6 @@ public class interactionmenu implements Listener {
         if(!writeMoneyGive.contains(player)) return;
 
         if (writeMoneyGive.contains(player)) {
-            if((!isInteger.isInt(event.getMessage()) && args.length != 0 && Integer.parseInt(event.getMessage()) < 0)) {
-                player.sendMessage(main.pre_error + "§cDas ist keine gültige Zahl!");
-                main.playErrorSound(player);
-                writeMoneyGive.remove(player);
-            }
-
             Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                 Bukkit.dispatchCommand(player, "pay " + getHashTarget.get(player) + " " + event.getMessage());
                 getHashTarget.remove(player);

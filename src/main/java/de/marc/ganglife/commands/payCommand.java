@@ -19,15 +19,15 @@ public class payCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if(sender instanceof Player player) {
-            Player target = Bukkit.getPlayer(args[0]);
-            String amount = args[1];
-            int BlockDistance = 3;
-
             if(args.length != 2) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /pay <Spieler> <Betrag>");
                 main.playErrorSound(player);
                 return true;
             }
+            int BlockDistance = 3;
+            Player target = Bukkit.getPlayer(args[0]);
+            String amount = args[1];
+
             if(target == player) {
                 player.sendMessage(main.pre_error + "§cDu kannst dir nicht selber Geld geben.");
                 main.playErrorSound(player);
@@ -38,7 +38,7 @@ public class payCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
-            if(Integer.valueOf(amount) > 0) {
+            if(Integer.valueOf(amount) < 0) {
                 player.sendMessage(main.pre_error + "§cBitte gebe keine negative Zahl an.");
                 main.playErrorSound(player);
                 return true;
@@ -48,8 +48,18 @@ public class payCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
+            if(!setEconomy.hasEnoughMoney(player.getUniqueId(), Integer.valueOf(amount))) {
+                player.sendMessage(main.pre_error + "§cDu hast nicht genügend Geld.");
+                main.playErrorSound(player);
+                return true;
+            }
 
-
+            setEconomy.addMoney(target.getUniqueId(), Integer.valueOf(amount));
+            setEconomy.removeMoney(player.getUniqueId(), Integer.valueOf(amount));
+            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7" + Integer.valueOf(amount) + "$ gegeben!");
+            target.sendMessage(main.prefix + "§7Du hast von §6" + player.getName() + " §7" + Integer.valueOf(amount) + "$ bekommen!");
+            main.playSuccessSound(player);
+            main.playProccessSound(target);
         }
         return false;
     }
