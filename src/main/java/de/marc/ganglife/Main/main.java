@@ -1,8 +1,6 @@
 package de.marc.ganglife.Main;
 
-import de.marc.ganglife.commands.gamemodeCommand;
-import de.marc.ganglife.commands.giveitemCommand;
-import de.marc.ganglife.commands.naviCommand;
+import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.playerEvents.loginManager;
 import de.marc.ganglife.playerEvents.registerAccounts;
@@ -57,6 +55,9 @@ public final class main extends JavaPlugin {
         getCommand("giveitem").setExecutor(new giveitemCommand());
         getCommand("gamemode").setExecutor(new gamemodeCommand());
         getCommand("navigation").setExecutor(new naviCommand());
+        getCommand("werbung").setExecutor(new werbungCommand());
+        getCommand("aduty").setExecutor(new adutyCommand());
+        getCommand("build").setExecutor(new buildCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);

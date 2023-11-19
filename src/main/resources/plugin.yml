@@ -9,3 +9,7 @@ commands:
     aliases: [gm]
   navigation:
     aliases: [navi]
+  werbung:
+    aliases: [ad]
+  aduty:
+  build:
