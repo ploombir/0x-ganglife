@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'de.marc'
@@ -49,7 +50,15 @@ processResources {
         expand props
     }
 }
-
-jar {
-    destinationDirectory.set(file("C:\\Users\\azuser\\Desktop\\Dev-Server\\plugins"))
+tasks {
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+    shadowJar {
+        archiveFileName.set("ganglife.jar")
+        destinationDirectory.set(file("C:\\Users\\azuser\\Desktop\\Dev-Server\\plugins"))
+    }
+    build {
+        dependsOn(shadowJar)
+    }
 }
