@@ -16,6 +16,9 @@ import org.jetbrains.annotations.NotNull;
 public class ffastatsCommand implements CommandExecutor {
 
     setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
+
+    int KILLS;
+    int DEATHS;
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player player) {
@@ -24,6 +27,13 @@ public class ffastatsCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
+            setFFA.getFFAKills(player.getUniqueId()).thenAccept(getKills -> {
+                KILLS = getKills.get();
+            });
+            setFFA.getFFADeaths(player.getUniqueId()).thenAccept(getDeaths -> {
+                DEATHS = getDeaths.get();
+            });
+
             Gui statsInventory = Gui.gui()
                     .rows(6)
                     .title(Component.text(main.prefix + "§7FFA-Statistiken:"))
@@ -38,41 +48,31 @@ public class ffastatsCommand implements CommandExecutor {
 
             statsInventory.setItem(4, playerHead);
 
-            setFFA.getFFAKills(player.getUniqueId()).thenAccept(getKills -> {
-                GuiItem kills = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine Kills"))
-                        .lore(Component.text(" §f▹ §7" + getKills.get() + " Kills"))
-                        .asGuiItem(clickEvent -> {
-                            main.playProccessSound(player);
-                            player.closeInventory();
-                            player.sendMessage(main.prefix + "§7Deine Kills in FFA: §6" + getKills.get());
-                        });
-                statsInventory.setItem(21, kills);
-            });
+            GuiItem kills = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine Kills"))
+                    .lore(Component.text(" §f▹ §7" + KILLS + " Kills"))
+                    .asGuiItem(clickEvent -> {
+                        main.playProccessSound(player);
+                        player.closeInventory();
+                        player.sendMessage(main.prefix + "§7Deine Kills in FFA: §6" + KILLS);
+                    });
 
-            setFFA.getFFADeaths(player.getUniqueId()).thenAccept(getDeaths -> {
-                GuiItem deaths = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine Tode"))
-                        .lore(Component.text(" §f▹ §7" + getDeaths.get() + " Tode"))
-                        .asGuiItem(clickEvent -> {
-                            main.playProccessSound(player);
-                            player.closeInventory();
-                            player.sendMessage(main.prefix + "§7Deine Tode in FFA: §6" + getDeaths.get());
-                        });
-                statsInventory.setItem(22, deaths);
-            });
 
-            setFFA.getFFAKills(player.getUniqueId()).thenAccept(getKills -> {
-                setFFA.getFFADeaths(player.getUniqueId()).thenAccept(getDeaths -> {
-                    GuiItem kd = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine K/D"))
-                            .lore(Component.text(" §f▹ §7" + Math.round(getKills.get()/getDeaths.get()) + " K/D"))
-                            .asGuiItem(clickEvent -> {
-                                main.playProccessSound(player);
-                                player.closeInventory();
-                                player.sendMessage(main.prefix + "§7Deine K/D in FFA: §6" + getDeaths.get());
-                            });
-                    statsInventory.setItem(23, kd);
-                });
-            });
+            GuiItem deaths = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine Tode"))
+                    .lore(Component.text(" §f▹ §7" + DEATHS + " Tode"))
+                    .asGuiItem(clickEvent -> {
+                        main.playProccessSound(player);
+                        player.closeInventory();
+                        player.sendMessage(main.prefix + "§7Deine Tode in FFA: §6" + DEATHS);
+                    });
 
+
+            GuiItem kd = ItemBuilder.from(Material.BARRIER).name(Component.text("§7Deine K/D"))
+                    .lore(Component.text(" §f▹ §7" + Math.round(KILLS/DEATHS) + " K/D"))
+                    .asGuiItem(clickEvent -> {
+                        main.playProccessSound(player);
+                        player.closeInventory();
+                        player.sendMessage(main.prefix + "§7Deine K/D in FFA: §6" + Math.round(KILLS/DEATHS));
+                    });
 
 
 
@@ -81,6 +81,10 @@ public class ffastatsCommand implements CommandExecutor {
                         player.closeInventory();
                     });
 
+
+            statsInventory.setItem(21, kills);
+            statsInventory.setItem(22, deaths);
+            statsInventory.setItem(23, kd);
             statsInventory.setItem(1, glass);
             statsInventory.setItem(10, glass);
             statsInventory.setItem(19, glass);
