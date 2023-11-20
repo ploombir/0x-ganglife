@@ -2,6 +2,7 @@ package de.marc.ganglife.playerEvents;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
+import de.marc.ganglife.methods.logs;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -90,7 +91,7 @@ public class registerAccounts implements Listener {
                     }
                 });
                 Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt. §7IP: " + player.getAddress().getHostString());
-
+                logs.sendTeamLog(player, "ist ein neuer Spieler.");
                 Location locnew = new Location(Bukkit.getWorld("0xMain"),-175, 71, -268);
 
                 player.teleport(locnew);
@@ -103,6 +104,7 @@ public class registerAccounts implements Listener {
 
             } else {
                 Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
+                logs.sendTeamLog(player, "ist dem Server beigetreten.");
 
             }
         });
