@@ -30,11 +30,12 @@ public class setHouse extends QueryFactory {
                 .send()
                 .thenApply(UpdateResult::changed);
     }
+    public boolean hasHouse(UUID playerUUID, int amount) {
+        CompletableFuture<Optional<Integer>> future = getHouseSystem(playerUUID);
 
-    public boolean isHouseSystem(UUID uniqueId, int amount) {
-        getHouseSystem(uniqueId)
-                .thenApply(playerHouse -> playerHouse.isPresent() && playerHouse.get() == amount);
-        return false;
+        Optional<Integer> integer = future.join();
+
+        return integer.filter(actualMoney -> actualMoney == amount).isPresent();
     }
 
     public CompletableFuture<Boolean> setHouseInventory(UUID uniqueId, String inventory) {

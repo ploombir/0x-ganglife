@@ -26,7 +26,7 @@ public class ffastatsCommand implements CommandExecutor {
             }
             Gui statsInventory = Gui.gui()
                     .rows(6)
-                    .title(Component.text(main.prefix + "§7FFA-Statistiken"))
+                    .title(Component.text(main.prefix + "§7FFA-Statistiken:"))
                     .disableAllInteractions()
                     .create();
 

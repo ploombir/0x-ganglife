@@ -71,6 +71,7 @@ public final class main extends JavaPlugin {
         getCommand("pay").setExecutor(new payCommand());
         getCommand("durchsuchen").setExecutor(new durchsuchenCommand());
         getCommand("ffastats").setExecutor(new ffastatsCommand());
+        getCommand("profil").setExecutor(new profileCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);
