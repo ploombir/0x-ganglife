@@ -20,6 +20,7 @@ public class loginManager implements Listener {
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(unique -> {
            if(unique.isPresent()) {
                player.sendMessage(main.prefix + "Willkommen zurück.");
+               main.playSuccessSound(player);
 
                setPremium.getPremium(player.getUniqueId()).thenAccept(premium -> {
                     if(premium.get() == 1) {
