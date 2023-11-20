@@ -70,6 +70,7 @@ public final class main extends JavaPlugin {
         getCommand("dropgun").setExecutor(new dropgunCommand());
         getCommand("pay").setExecutor(new payCommand());
         getCommand("durchsuchen").setExecutor(new durchsuchenCommand());
+        getCommand("ffastats").setExecutor(new ffastatsCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(), this);
