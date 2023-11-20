@@ -56,9 +56,11 @@ public class setFaction extends QueryFactory {
                 .thenApply(UpdateResult::changed);
     }
 
-    public boolean isRank(UUID uniqueId, int rank) {
-        getRank(uniqueId)
-                .thenApply(playerRank -> playerRank.isPresent() && playerRank.get() == rank);
-        return false;
+    public boolean hasRank(UUID playerUUID, int rank) {
+        CompletableFuture<Optional<Integer>> rankFuture = getRank(playerUUID);
+
+        Optional<Integer> rang = rankFuture.join();
+
+        return rang.filter(actualMoney -> actualMoney >= rank).isPresent();
     }
 }

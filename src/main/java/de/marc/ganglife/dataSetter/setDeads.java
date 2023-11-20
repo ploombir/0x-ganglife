@@ -30,10 +30,11 @@ public class setDeads extends QueryFactory {
                 .readRow(row -> row.getString("dead"))
                 .first();
     }
+    public boolean isDead(UUID playerUUID, String dead) {
+        CompletableFuture<Optional<String>> deadFture = getDead(playerUUID);
 
-    public boolean isDead(UUID uniqueId, String dead) {
-        getDead(uniqueId)
-                .thenApply(playerDead -> playerDead.isPresent() && playerDead.get().equalsIgnoreCase(dead));
-        return false;
+        Optional<String> d = deadFture.join();
+
+        return d.filter(actualMoney -> actualMoney.equals(dead)).isPresent();
     }
 }
