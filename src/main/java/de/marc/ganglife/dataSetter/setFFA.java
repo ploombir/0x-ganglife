@@ -30,11 +30,12 @@ public class setFFA extends QueryFactory {
                 .send()
                 .thenApply(UpdateResult::changed);
     }
+    public boolean isInFFA(UUID playerUUID, String bool) {
+        CompletableFuture<Optional<String>> ffaFture = getisinFFA(playerUUID);
 
-    public boolean isInFFA(UUID uniqueId, String isFFA) {
-        getisinFFA(uniqueId)
-                .thenApply(playerisFFA -> playerisFFA.isPresent() && playerisFFA.get().equalsIgnoreCase(isFFA));
-        return false;
+        Optional<String> ffa = ffaFture.join();
+
+        return ffa.filter(actualMoney -> actualMoney.equals(bool)).isPresent();
     }
 
     public CompletableFuture<Optional<String>> getFFAInventory(UUID uniqueId) {
