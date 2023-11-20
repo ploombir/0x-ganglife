@@ -47,4 +47,11 @@ public class setLager extends QueryFactory {
                 .readRow(row -> row.getString("buylager"))
                 .first();
     }
+    public boolean hasLager(UUID playerUUID, String bool) {
+        CompletableFuture<Optional<String>> future = getHasLager(playerUUID);
+
+        Optional<String> str = future.join();
+
+        return str.filter(actualMoney -> actualMoney.equals(bool)).isPresent();
+    }
 }
