@@ -10,9 +10,11 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class profileCommand implements CommandExecutor {
@@ -24,6 +26,7 @@ public class profileCommand implements CommandExecutor {
     setHouse setHouse = new setHouse(main.getPlugin().getDatabaseAsync().getDataSource());
     setDrink setDrink = new setDrink(main.getPlugin().getDatabaseAsync().getDataSource());
 
+    setFBank setFBank = new setFBank(main.getPlugin().getDatabaseAsync().getDataSource());
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -142,17 +145,18 @@ public class profileCommand implements CommandExecutor {
                 profileInventory.setItem(39, playerTime);
             });
 
+            GuiItem playerDrink = ItemBuilder.from(Material.BONE).name(Component.text("§7Dein Durst:"))
+                    .asGuiItem(clickEvent -> {
+                        main.playProccessSound(player);
+                        player.closeInventory();
+                    });
+
+
             setDrink.getDrink(player.getUniqueId()).thenAccept(drink -> {
-                GuiItem playerDrink = ItemBuilder.from(Material.BONE).name(Component.text("§7Dein Durst:"))
-                        .lore(Component.text(" §f▹ §6" + drink.get() + "§7/§610"))
-                        .asGuiItem(clickEvent -> {
-                            main.playProccessSound(player);
-                            player.sendMessage(main.prefix + "§7Dein Durst : §6" + drink.get());
-                            player.closeInventory();
-                        });
-                profileInventory.setItem(40, playerDrink);
+                playerDrink.getItemStack().setLore((List<String>) Component.text(" §f▹ §6" + drink.get() + "§7/§610"));
             });
 
+            profileInventory.setItem(40, playerDrink);
 
             profileInventory.setItem(4, playerHead);
             profileInventory.setItem(1, glass);
