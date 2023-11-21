@@ -44,7 +44,6 @@ public class interactionmenu implements Listener {
     @EventHandler
     public void onInt(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        Player target = (Player) event.getRightClicked();
 
         if (!player.isSneaking()) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
@@ -52,6 +51,7 @@ public class interactionmenu implements Listener {
         if (setFFA.isInFFA(player.getUniqueId(), "true")) return;
         if (setDeads.isDead(player.getUniqueId(), "true")) return;
         if(cuff.contains(player)) return;
+        Player target = (Player) event.getRightClicked();
         getHashTarget.put(player, target.getName());
 
         Gui interactionInventory = Gui.gui()

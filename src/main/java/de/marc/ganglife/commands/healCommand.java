@@ -1,6 +1,8 @@
 package de.marc.ganglife.commands;
 
 import de.marc.ganglife.Main.main;
+import de.marc.ganglife.dataSetter.getter;
+import de.marc.ganglife.dataSetter.setEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -10,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class healCommand implements CommandExecutor {
+
+    setEconomy setEconomy = new setEconomy(main.getPlugin().getDatabaseAsync().getDataSource());
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -20,6 +24,7 @@ public class healCommand implements CommandExecutor {
                     player.setFoodLevel(20);
                     player.sendMessage(main.prefix + "§7Du hast dich erfolgreich geheilt!");
                     main.playSuccessSound(player);
+                    player.sendMessage("" + getter.getMoney(player.getUniqueId()));
                 }
             } else {
                 player.sendMessage(main.noperms);

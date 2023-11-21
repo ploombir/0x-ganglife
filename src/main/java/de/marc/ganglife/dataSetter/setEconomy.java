@@ -2,6 +2,8 @@ package de.marc.ganglife.dataSetter;
 
 import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.util.UpdateResult;
+import de.marc.ganglife.Main.main;
+import org.bukkit.Bukkit;
 
 import javax.sql.DataSource;
 import java.util.Optional;
@@ -48,6 +50,7 @@ public class setEconomy extends QueryFactory {
                 .send()
                 .thenApply(UpdateResult::changed);
     }
+
     public boolean hasEnoughMoney(UUID playerUUID, int requiredAmount) {
         CompletableFuture<Optional<Integer>> moneyFuture = getMoney(playerUUID);
 
