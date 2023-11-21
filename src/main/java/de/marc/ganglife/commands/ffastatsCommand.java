@@ -43,8 +43,6 @@ public class ffastatsCommand implements CommandExecutor {
     }
 
     public static void createStatsGUI(Player player, int ffa_kills, int ffa_deaths) {
-        player.sendMessage("" + ffa_kills + " " + ffa_deaths);
-
         Gui statsInventory = Gui.gui()
                 .rows(5)
                 .title(Component.text(main.prefix + "§7FFA-Statistiken:"))

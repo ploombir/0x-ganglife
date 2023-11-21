@@ -44,7 +44,6 @@ public class profileCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
-
             setDrink.getDrink(player.getUniqueId()).thenAccept(drink -> {
                 DRINK = drink.get();
 
