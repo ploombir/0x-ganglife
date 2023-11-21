@@ -86,9 +86,11 @@ public class registerAccounts implements Listener {
                 setMobile.setContacts(player.getUniqueId(), "[]");
                 setMobile.setFlugmodus(player.getUniqueId(), "false");
                 setMobile.getPlayers().thenAccept(registredPlayers -> {
-                    if(registredPlayers.isPresent()) {
-                        setMobile.setNumber(player.getUniqueId(), registredPlayers.get() + 5000);
-                    }
+                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                        if(registredPlayers.isPresent()) {
+                            setMobile.setNumber(player.getUniqueId(), registredPlayers.get() + 5000);
+                        }
+                    });
                 });
                 Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt. §7IP: " + player.getAddress().getHostString());
                 logs.sendTeamLog(player, "ist ein neuer Spieler.");
