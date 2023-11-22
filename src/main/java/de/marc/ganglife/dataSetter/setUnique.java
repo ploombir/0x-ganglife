@@ -21,13 +21,4 @@ public class setUnique extends QueryFactory {
                 .readRow(row -> row.getString("uniqueid"))
                 .first();
     }
-    public CompletableFuture<Boolean> insertUniqueIdIntoDatabase(UUID uniqueId, String playerName) {
-        return builder()
-                .query("INSERT INTO accounts (uniqueid, playername) VALUES (?,?)")
-                .parameter(stmt -> stmt.setString(uniqueId.toString())
-                        .setString(playerName))
-                .insert()
-                .send()
-                .thenApply(UpdateResult::changed);
-    }
 }

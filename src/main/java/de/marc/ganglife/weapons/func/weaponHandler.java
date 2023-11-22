@@ -37,10 +37,10 @@ public class weaponHandler implements Listener {
     private ItemStack m4 = new ItemStack(items.M4.getItem());
     private ItemStack ak47 = new ItemStack(items.AK47.getItem());
     private ItemStack pdw = new ItemStack(items.PDW.getItem());
-    private ItemStack uzi = new ItemStack(items.SMG.getItem());
-    private ItemStack pistole = new ItemStack(items.PISTOLE.getItem());
-    private ItemStack jagdflinte = new ItemStack(items.JAGDFLINTE.getItem());
-    private ItemStack sniper = new ItemStack(items.SNIPER.getItem());
+    private ItemStack uzi = new ItemStack(items.UZI.getItem());
+    private ItemStack pistole = new ItemStack(items.PISTOL.getItem());
+    private ItemStack jagdflinte = new ItemStack(items.RIFLE.getItem());
+    private ItemStack sniper = new ItemStack(items.AWP.getItem());
     private ItemStack lasergun = new ItemStack(items.LASERGUN.getItem());
 
     de.marc.ganglife.dataSetter.setDeads setDeads = new setDeads(main.getPlugin().getDatabaseAsync().getDataSource());

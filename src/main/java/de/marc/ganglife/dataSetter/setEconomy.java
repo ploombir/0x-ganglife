@@ -58,4 +58,10 @@ public class setEconomy extends QueryFactory {
 
         return money.filter(actualMoney -> actualMoney >= requiredAmount).isPresent();
     }
+    public int resultMoney(UUID playerUUID) {
+        CompletableFuture<Optional<Integer>> moneyFuture = getMoney(playerUUID);
+        Optional<Integer> money = moneyFuture.join();
+
+        return money.get();
+    }
 }

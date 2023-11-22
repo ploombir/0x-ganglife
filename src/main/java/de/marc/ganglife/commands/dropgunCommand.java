@@ -36,14 +36,14 @@ public class dropgunCommand implements CommandExecutor {
                 case AK47 -> {
                     dropItem(player, items.AK47.getItem());
                 }
-                case PISTOLE -> {
-                    dropItem(player, items.PISTOLE.getItem());
+                case PISTOL -> {
+                    dropItem(player, items.PISTOL.getItem());
                 }
-                case SMG -> {
-                    dropItem(player, items.SMG.getItem());
+                case UZI -> {
+                    dropItem(player, items.UZI.getItem());
                 }
-                case JAGDFLINTE -> {
-                    dropItem(player, items.JAGDFLINTE.getItem());
+                case RIFLE -> {
+                    dropItem(player, items.RIFLE.getItem());
                 }
                 default -> {
                     player.sendMessage(main.pre_error + "§cDu kannst dieses Item nicht droppen.");

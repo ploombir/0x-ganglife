@@ -79,14 +79,14 @@ public class interactionmenu implements Listener {
                 .asGuiItem(clickEvent -> {
                     boolean found = Arrays.stream(player.getInventory().getContents())
                             .filter(item -> item != null && item.getType() != Material.AIR)
-                            .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.FESSELN_IN_INV.getItem().getItemMeta().getDisplayName()))
-                            .anyMatch(item -> item.getType() == items.FESSELN_IN_INV.getItem().getType());
+                            .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.CUFFS.getItem().getItemMeta().getDisplayName()))
+                            .anyMatch(item -> item.getType() == items.CUFFS.getItem().getType());
                     if(!found) {
                         player.sendMessage(main.pre_error + "§cDu hast keine Seile dabei.");
                         main.playErrorSound(player);
                         return;
                     }
-                    cuffPlayers(player, target, items.FESSELN_IN_INV.getItem());
+                    cuffPlayers(player, target, items.CUFFS.getItem());
                     main.playProccessSound(player);
                     player.closeInventory();
                 });

@@ -6,6 +6,8 @@ import de.marc.ganglife.playerEvents.chat;
 import de.marc.ganglife.playerEvents.interactionmenu;
 import de.marc.ganglife.playerEvents.loginManager;
 import de.marc.ganglife.playerEvents.registerAccounts;
+import de.marc.ganglife.playerdatas.playerManager;
+import de.marc.ganglife.playerdatas.quitListener;
 import de.marc.ganglife.utils.inventoryCancel;
 import de.marc.ganglife.weapons.func.weaponHandler;
 import org.bukkit.Bukkit;
@@ -74,8 +76,10 @@ public final class main extends JavaPlugin {
         getCommand("profil").setExecutor(new profileCommand());
     }
     private void registerEvents() {
-        getServer().getPluginManager().registerEvents(new registerAccounts(), this);
+        getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
+
         getServer().getPluginManager().registerEvents(new loginManager(), this);
+        getServer().getPluginManager().registerEvents(new quitListener(), this);
         getServer().getPluginManager().registerEvents(new interactionmenu(), this);
         getServer().getPluginManager().registerEvents(new chat(), this);
         getServer().getPluginManager().registerEvents(new weaponHandler(this), this);
