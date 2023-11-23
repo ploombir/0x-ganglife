@@ -1,12 +1,11 @@
 package de.marc.ganglife.commands;
 
 import de.marc.ganglife.Main.main;
-import de.marc.ganglife.dataSetter.setFFA;
+import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,10 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ffastatsCommand implements CommandExecutor {
 
-    setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
-
-    int KILLS;
-    int DEATHS;
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player player) {
@@ -28,15 +23,9 @@ public class ffastatsCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
+            UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
-            setFFA.getFFAKills(player.getUniqueId()).thenAccept(getKills -> {
-                KILLS = getKills.get();
-                setFFA.getFFADeaths(player.getUniqueId()).thenAccept(getDeaths -> {
-                    DEATHS = getDeaths.get();
-
-                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> createStatsGUI(player, KILLS, DEATHS));
-                });
-            });
+            createStatsGUI(player, uPlayer.getFfaKills(), uPlayer.getFfaDeaths());
         }
 
         return false;

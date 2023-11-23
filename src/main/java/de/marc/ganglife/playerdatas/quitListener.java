@@ -9,9 +9,9 @@ public class quitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-
-        event.setQuitMessage(null);
+        Player player = event.getPlayer();
+        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
         uPlayer.saveData();
+        event.setQuitMessage(null);
     }
 }

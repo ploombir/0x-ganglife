@@ -2,6 +2,7 @@ package de.marc.ganglife.commands;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
+import de.marc.ganglife.playerdatas.UPlayer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -21,15 +22,13 @@ public class werbungCommand implements CommandExecutor {
     public static Map<Player, Integer> playerTimers = new HashMap<>();
     public static ArrayList<Player> blocked = new ArrayList<>();
 
-    setEconomy setEconomy = new setEconomy(main.getPlugin().getDatabaseAsync().getDataSource());
-    setMobile setMobile = new setMobile(main.getPlugin().getDatabaseAsync().getDataSource());
-
     @Override
     public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (cs instanceof Player player) {
             String msg = "";
             int BlockDistance = 3;
             Location loc = new Location(player.getWorld(), 63, 67, -42);
+            UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
             if (args.length >= 3) {
                 for (int i = 0; i < args.length; i++) {
@@ -38,12 +37,11 @@ public class werbungCommand implements CommandExecutor {
                     if (player.getLocation().distance(loc) <= BlockDistance) {
                         if(!blocked.contains(player)) {
                             String finalMsg = msg;
-                            if(setEconomy.hasEnoughMoney(player.getUniqueId(), 50)) {
+                            if(uPlayer.getCash() >= 50) {
                                 Bukkit.broadcast(Component.text("§bWERBUNG §f▹§7" + finalMsg + "."));
-                                setMobile.getNumber(player.getUniqueId()).thenAccept(number -> {
-                                    Bukkit.broadcast(Component.text(" §f▹ §aGeschaltet von §7" + player.getName() + " §7- §6" + number.get()));
-                                });
-                                setEconomy.removeMoney(player.getUniqueId(), 50);
+                                Bukkit.broadcast(Component.text(" §f▹ §aGeschaltet von §7" + player.getName() + " §7- §6" + uPlayer.getPhoneNumber()));
+
+                                uPlayer.setCash(uPlayer.getCash() - 50);
                                 blocked.add(player);
 
                                 playerTimers.put(player, Bukkit.getScheduler().scheduleSyncDelayedTask(main.getPlugin(), () -> {
