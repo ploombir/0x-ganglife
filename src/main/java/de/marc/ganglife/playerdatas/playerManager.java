@@ -33,7 +33,7 @@ public class playerManager extends QueryFactory {
                 .parameter(stmt -> stmt.setUuidAsString(uniqueId)
                         .setInt(0).setBoolean(false)
                         .setInt(500)
-                        .setInt(5000) // Mobile
+                        .setInt(null) // Mobile
                         .setBoolean(false)
                         .setString("[]")
                         .setString(Bukkit.getPlayer(uniqueId).getName())
@@ -85,13 +85,13 @@ public class playerManager extends QueryFactory {
                 .query("SELECT * FROM accounts WHERE uniqueId = ?")
                 .parameter(stmt -> stmt.setUuidAsString(uniqueId))
                 .readRow(row -> new UPlayer(Bukkit.getPlayer(row.getUuidFromString("uniqueId")), this)
-                        .setCash(row.getInt("money"))
-                        .setJailTime(row.getInt("haft")))
+                        .setCash(row.getInt("cash"))
+                        .setJailTime(row.getInt("bank")))
                 .first();
     }
 
     public CompletableFuture<Boolean> savePlayer(UPlayer uPlayer) {
-        return builder().query("UPDATE accounts SET money = ?, haft = ? WHERE uniqueId = ?")
+        return builder().query("UPDATE accounts SET cash = ?, bank = ? WHERE uniqueId = ?")
                 .parameter(stmt -> stmt.setInt(uPlayer.getCash())
                         .setInt(uPlayer.getJailTime())
                         .setUuidAsString(uPlayer.getUUID()))
