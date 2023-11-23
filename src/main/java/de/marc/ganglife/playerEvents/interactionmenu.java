@@ -38,9 +38,6 @@ public class interactionmenu implements Listener {
     public static HashMap<Player, String> getHashTarget = new HashMap<>();
     private static final Map<Player, Integer> playerScheduler = new HashMap<>();
 
-    setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
-    setFaction setFaction = new setFaction(main.getPlugin().getDatabaseAsync().getDataSource());
-
     @EventHandler
     public void onInt(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
@@ -49,8 +46,8 @@ public class interactionmenu implements Listener {
         if (!player.isSneaking()) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (!event.getRightClicked().getType().equals(EntityType.PLAYER)) return;
-        if (setFFA.isInFFA(player.getUniqueId(), "true")) return;
-        //if (uPlayer.getDeathTime()) return;
+        if (uPlayer.isFFA()) return;
+        if(uPlayer.getDeathTime() >= 1) return;
         if(cuff.contains(player)) return;
         Player target = (Player) event.getRightClicked();
         getHashTarget.put(player, target.getName());
@@ -145,19 +142,19 @@ public class interactionmenu implements Listener {
                 });
 
         if (cuff.contains(target)) {
-            if (setFaction.isInFaction(player.getUniqueId(), "Polizei")) {
+            if (uPlayer.getFaction().equals("Polizei")) {
                 interactionInventory.setItem(11, policeUncuffTarget);
             } else {
                 interactionInventory.setItem(11, uncuffTarget);
             }
         } else {
-            if (setFaction.isInFaction(player.getUniqueId(), "Polizei")) {
+            if (uPlayer.getFaction().equals("Polizei")) {
                 interactionInventory.setItem(11, policeCuffTarget);
             } else {
                 interactionInventory.setItem(11, cuffTarget);
             }
         }
-        if (setFaction.isInFaction(player.getUniqueId(), "Polizei")) {
+        if (uPlayer.getFaction().equals("Polizei")) {
             interactionInventory.setItem(22, policeActions);
         }
 

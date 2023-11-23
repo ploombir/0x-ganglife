@@ -3,6 +3,7 @@ package de.marc.ganglife.weapons.func;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
 import de.marc.ganglife.playerEvents.interactionmenu;
+import de.marc.ganglife.playerdatas.UPlayer;
 import de.marc.ganglife.weapons.guns.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -66,6 +67,8 @@ public class weaponHandler implements Listener {
     @EventHandler
     public void handleGunShot(PlayerInteractEvent e) {
         Player p = e.getPlayer();
+        Player player = e.getPlayer();
+        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
         if (e.getHand() == EquipmentSlot.OFF_HAND) return;
         if (e.getItem() == null) return;
@@ -75,7 +78,7 @@ public class weaponHandler implements Listener {
                 if (gun.getAmmo(p) > 1) {
                     if(enableGun == false) return;
                     if(interactionmenu.cuff.contains(p)) return;
-                    //if(setDeads.isDead(p.getUniqueId(), "true")) return;
+                    if(uPlayer.getDeathTime() >= 1) return;
                     if(weapon.reloadGun.contains(p.getName())) return;
 
                     addNbtTagToItemStack(e.getItem(), "GunTagKey", "" + gun.getAmmo(p));
@@ -85,7 +88,7 @@ public class weaponHandler implements Listener {
                 } else {
                     if(enableGun == false) return;
                     if(interactionmenu.cuff.contains(p)) return;
-                    //if(setDeads.isDead(p.getUniqueId(), "true")) return;
+                    if(uPlayer.getDeathTime() >= 1) return;
                     gun.shoot(p);
                     gun.reload(p);
                 }

@@ -36,6 +36,8 @@ public class durchsuchenCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
+            if(uPlayer.getDeathTime() >= 0) return true;
+
             if(uPlayer.isFFA()) {
                 player.sendMessage(main.pre_error + "§cDu kannst diesen Befehl nicht in FFA verwenden.");
                 main.playErrorSound(player);
