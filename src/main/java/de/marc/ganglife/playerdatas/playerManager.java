@@ -17,7 +17,7 @@ public class playerManager extends QueryFactory {
     }
 
     public CompletableFuture<Boolean> createPlayer(UUID uniqueId) {
-        return builder().query("INSERT INTO accounts(uniqueId, deathTime, isJail, cash, phoneNumber," +
+        return builder().query("INSERT INTO accounts(uniqueid, deathTime, isJail, cash, phoneNumber," +
                         "phoneFlightMode, phoneContacts, playerName, bank, level," +
                         "levelExp, faction, factionRank, drink, houseNumber," +
                         "houseInventory, paydayTime, playTime, weaponLicence, driveLicence," +
@@ -63,12 +63,12 @@ public class playerManager extends QueryFactory {
                         .setInt(0)
                         .setString("[]")
                         .setBoolean(false)
-                        .setString(null)
-                        .setString(null)
-                        .setString(null)
-                        .setString(null)
+                        .setString("")
+                        .setString("")
+                        .setString("")
+                        .setString("")
                         .setInt(generateRandomFourDigitNumber())
-                        .setInt(null)
+                        .setInt(0)
                         .setBoolean(false)
                         .setBoolean(false)
                         .setString("[]")
@@ -83,9 +83,9 @@ public class playerManager extends QueryFactory {
 
     public CompletableFuture<Optional<UPlayer>> loadPlayer(UUID uniqueId) {
         return builder(UPlayer.class)
-                .query("SELECT * FROM accounts WHERE uniqueId = ?")
+                .query("SELECT * FROM accounts WHERE uniqueid = ?")
                 .parameter(stmt -> stmt.setUuidAsString(uniqueId))
-                .readRow(row -> new UPlayer(Bukkit.getPlayer(row.getUuidFromString("uniqueId")), this)
+                .readRow(row -> new UPlayer(Bukkit.getPlayer(row.getUuidFromString("uniqueid")), this)
                         .setCash(row.getInt("cash"))
                         .setDeathTime(row.getInt("deathTime"))
                         .setJail(row.getBoolean("isJail"))
@@ -136,14 +136,13 @@ public class playerManager extends QueryFactory {
 
     public CompletableFuture<Boolean> savePlayer(UPlayer uPlayer) {
         return builder().query("UPDATE accounts SET deathTime = ?, isJail = ?, cash = ?, phoneNumber = ?, phoneFlightMode = ?," +
-                        "phoneContacts = ?, playerName = ?, bank = ?, level = ?, levelExp = ?, faction = ?, factionRank = ?, drink = ?," +
+                        "phoneContacts = ?, faction = ?, bank = ?, level = ?, levelExp = ?, playerName = ?, factionRank = ?, drink = ?," +
                         "houseNumber = ?, houseInventory = ?, paydayTime = ?, playTime = ?, weaponLicence = ?, driveLicence = ?," +
                         "firstaidLicence = ?, jailTime = ?, actReasons = ?, garbageLevel = ?, garbageExp = ?, cocaineAmount = ?," +
                         "weedAmount = ?, methAmount = ?, medicineAmount = ?, bulletproofAmount = ?, policeBulletproofAmount = ?," +
                         "storageInventory = ?, rentStorage = ?, firstName = ?, lastName = ?, birthDate = ?, gender = ?, discordVerify = ?," +
-                        " discordId = ?," +
-                        "premiumAccount = ?, isFFA = ?, ffaInventory = ?, ffaKills = ?, ffaDeaths = ?, votes = ?" +
-                        " WHERE uniqueId = ?")
+                        " discordId = ?, premiumAccount = ?, isFFA = ?, ffaInventory = ?, ffaKills = ?, ffaDeaths = ?, votes = ?" +
+                        " WHERE uniqueid = ?")
                 .parameter(stmt -> stmt
                         .setInt(uPlayer.getDeathTime())
                         .setBoolean(uPlayer.isJail())
@@ -151,11 +150,11 @@ public class playerManager extends QueryFactory {
                         .setInt(uPlayer.getPhoneNumber())
                         .setBoolean(uPlayer.isPhoneFlightMode())
                         .setString(uPlayer.getPhoneContacts())
-                        .setString(uPlayer.getPlayerName())
+                        .setString(uPlayer.getFaction())
                         .setInt(uPlayer.getBank())
                         .setInt(uPlayer.getLevel())
                         .setInt(uPlayer.getLevelExp())
-                        .setString(uPlayer.getFaction())
+                        .setString(uPlayer.getPlayerName())
                         .setInt(uPlayer.getFactionRank())
                         .setInt(uPlayer.getDrink())
                         .setInt(uPlayer.getHouseNumber())

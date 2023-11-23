@@ -22,7 +22,6 @@ public class profileCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
             UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
-            player.sendMessage(UPlayer.cachedUPlayers + "");
 
             if (args.length != 0) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /profil");

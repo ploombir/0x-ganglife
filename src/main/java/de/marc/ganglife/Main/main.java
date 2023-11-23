@@ -2,10 +2,7 @@ package de.marc.ganglife.Main;
 
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
-import de.marc.ganglife.playerEvents.chat;
-import de.marc.ganglife.playerEvents.interactionmenu;
-import de.marc.ganglife.playerEvents.loginManager;
-import de.marc.ganglife.playerEvents.registerAccounts;
+import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;
 import de.marc.ganglife.playerdatas.quitListener;
 import de.marc.ganglife.utils.inventoryCancel;
@@ -78,12 +75,13 @@ public final class main extends JavaPlugin {
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
 
-        getServer().getPluginManager().registerEvents(new loginManager(), this);
+       // getServer().getPluginManager().registerEvents(new loginManager(), this);
         getServer().getPluginManager().registerEvents(new quitListener(), this);
         getServer().getPluginManager().registerEvents(new interactionmenu(), this);
         getServer().getPluginManager().registerEvents(new chat(), this);
         getServer().getPluginManager().registerEvents(new weaponHandler(this), this);
         getServer().getPluginManager().registerEvents(new inventoryCancel(), this);
+        //getServer().getPluginManager().registerEvents(new paydayManager(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

@@ -12,6 +12,7 @@ public class quitListener implements Listener {
         Player player = event.getPlayer();
         UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
         uPlayer.saveData();
+
         event.setQuitMessage(null);
     }
 }

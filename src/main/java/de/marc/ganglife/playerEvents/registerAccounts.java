@@ -17,11 +17,15 @@ import java.util.Random;
 
 public class registerAccounts implements Listener {
 
-    private final playerManager playerManager;
+    public final playerManager playerManager;
+
     public registerAccounts(playerManager playerManager) {
         this.playerManager = playerManager;
     }
+
     setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
+
+    paydayManager paydayManager = new paydayManager();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -30,13 +34,10 @@ public class registerAccounts implements Listener {
 
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
             Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
-                if(id.isEmpty()) {
-
-
-
+                if (id.isEmpty()) {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt. §7IP: " + player.getAddress().getHostString());
                     logs.sendTeamLog(player, "ist ein neuer Spieler.");
-                    Location locnew = new Location(Bukkit.getWorld("0xMain"),-175, 71, -268);
+                    Location locnew = new Location(Bukkit.getWorld("0xMain"), -175, 71, -268);
 
                     player.teleport(locnew);
                     player.sendMessage(" ");
@@ -46,28 +47,39 @@ public class registerAccounts implements Listener {
                     Location loc = new Location(player.getWorld(), -156, 68, -239);
                     // cmd_navi.navigateTo(player, loc);
 
-                    UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-                    if (uPlayer == null) {
-                        uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
-                    }
                     playerManager.createPlayer(player.getUniqueId());
 
-                    uPlayer.loadData();
 
+                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+
+                        if (uPlayer == null) {
+                            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
+                        }
+
+                        uPlayer.loadData();
+                        System.out.println(uPlayer.toString());
+                        System.out.println(UPlayer.cachedUPlayers.get(uPlayer.getUUID()));
+                    });
                 } else {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
                     logs.sendTeamLog(player, "ist dem Server beigetreten.");
 
+
                     UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+
                     if (uPlayer == null) {
                         uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                     }
 
                     uPlayer.loadData();
+                    System.out.println(uPlayer.toString());
+                    System.out.println(UPlayer.cachedUPlayers.get(uPlayer.getUUID()));
                 }
             });
         });
     }
+
     public static int generateRandomFourDigitNumber() {
         Random random = new Random();
         int min = 1000;

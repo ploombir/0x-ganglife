@@ -1,6 +1,8 @@
 package de.marc.ganglife.playerdatas;
 
+import de.marc.ganglife.Main.main;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -8,7 +10,8 @@ import java.util.Map;
 import java.util.UUID;
 @Getter
 public class UPlayer {
-    public static final Map<UUID, UPlayer> cachedUPlayers = new HashMap<>();
+    public static Map<UUID, UPlayer> cachedUPlayers = new HashMap<>();
+
     public final UUID uuid;
     private final playerManager playerManager;
 
@@ -74,50 +77,52 @@ public class UPlayer {
 
     public void loadData() {
         playerManager.loadPlayer(this.uuid).thenAccept(uPlayer -> {
-            this.deathTime = uPlayer.get().getDeathTime();
-            this.isJail = uPlayer.get().isJail();
-            this.cash = uPlayer.get().getCash();
-            this.phoneNumber = uPlayer.get().getPhoneNumber();
-            this.phoneFlightMode = uPlayer.get().isPhoneFlightMode();
-            this.phoneContacts = uPlayer.get().getPhoneContacts();
-            this.playerName = uPlayer.get().getPlayerName();
-            this.bank = uPlayer.get().getBank();
-            this.level = uPlayer.get().getLevel();
-            this.levelExp = uPlayer.get().getLevelExp();
-            this.faction = uPlayer.get().getFaction();
-            this.factionRank = uPlayer.get().getFactionRank();
-            this.drink = uPlayer.get().getDrink();
-            this.houseNumber = uPlayer.get().getHouseNumber();
-            this.houseInventory = uPlayer.get().getHouseInventory();
-            this.paydayTime = uPlayer.get().getPaydayTime();
-            this.playTime = uPlayer.get().getPlayTime();
-            this.weaponLicence = uPlayer.get().isWeaponLicence();
-            this.driveLicence = uPlayer.get().isDriveLicence();
-            this.firstaidLicence = uPlayer.get().isFirstaidLicence();
-            this.jailTime = uPlayer.get().getJailTime();
-            this.actReasons = uPlayer.get().getActReasons();
-            this.garbageLevel = uPlayer.get().getGarbageLevel();
-            this.garbageExp = uPlayer.get().getGarbageExp();
-            this.cocaineAmount = uPlayer.get().getCocaineAmount();
-            this.weedAmount = uPlayer.get().getWeedAmount();
-            this.methAmount = uPlayer.get().getMethAmount();
-            this.medicineAmount = uPlayer.get().getMedicineAmount();
-            this.bulletproofAmount = uPlayer.get().getBulletproofAmount();
-            this.policeBulletproofAmount = uPlayer.get().getPoliceBulletproofAmount();
-            this.storageInventory = uPlayer.get().getStorageInventory();
-            this.rentStorage = uPlayer.get().isRentStorage();
-            this.firstName = uPlayer.get().getFirstName();
-            this.lastName = uPlayer.get().getLastName();
-            this.birthDate = uPlayer.get().getBirthDate();
-            this.gender = uPlayer.get().getGender();
-            this.discordVerify = uPlayer.get().getDiscordVerify();
-            this.discordId = uPlayer.get().getDiscordId();
-            this.premiumAccount = uPlayer.get().isPremiumAccount();
-            this.isFFA = uPlayer.get().isFFA();
-            this.ffaInventory = uPlayer.get().getFfaInventory();
-            this.ffaKills = uPlayer.get().getFfaKills();
-            this.ffaDeaths = uPlayer.get().getFfaDeaths();
-            this.votes = uPlayer.get().getVotes();
+            Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                this.deathTime = getDeathTime();
+                this.isJail = isJail();
+                this.cash = getCash();
+                this.phoneNumber = getPhoneNumber();
+                this.phoneFlightMode = isPhoneFlightMode();
+                this.phoneContacts = getPhoneContacts();
+                this.faction = getFaction();
+                this.playerName = getPlayerName();
+                this.bank = getBank();
+                this.level = getLevel();
+                this.levelExp = getLevelExp();
+                this.factionRank = getFactionRank();
+                this.drink = getDrink();
+                this.houseNumber = getHouseNumber();
+                this.houseInventory = getHouseInventory();
+                this.paydayTime = getPaydayTime();
+                this.playTime = getPlayTime();
+                this.weaponLicence = isWeaponLicence();
+                this.driveLicence = isDriveLicence();
+                this.firstaidLicence = isFirstaidLicence();
+                this.jailTime = getJailTime();
+                this.actReasons = getActReasons();
+                this.garbageLevel = getGarbageLevel();
+                this.garbageExp = getGarbageExp();
+                this.cocaineAmount = getCocaineAmount();
+                this.weedAmount = getWeedAmount();
+                this.methAmount = getMethAmount();
+                this.medicineAmount = getMedicineAmount();
+                this.bulletproofAmount = getBulletproofAmount();
+                this.policeBulletproofAmount = getPoliceBulletproofAmount();
+                this.storageInventory = getStorageInventory();
+                this.rentStorage = isRentStorage();
+                this.firstName = getFirstName();
+                this.lastName = getLastName();
+                this.birthDate = getBirthDate();
+                this.gender = getGender();
+                this.discordVerify = getDiscordVerify();
+                this.discordId = getDiscordId();
+                this.premiumAccount = isPremiumAccount();
+                this.isFFA = isFFA();
+                this.ffaInventory = getFfaInventory();
+                this.ffaKills = getFfaKills();
+                this.ffaDeaths = getFfaDeaths();
+                this.votes = getVotes();
+            });
         });
     }
 
@@ -130,8 +135,60 @@ public class UPlayer {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "UPlayer{" +
+                "uuid=" + uuid +
+                ", playerManager=" + playerManager +
+                ", deathTime=" + deathTime +
+                ", isJail=" + isJail +
+                ", cash=" + cash +
+                ", phoneNumber=" + phoneNumber +
+                ", phoneFlightMode=" + phoneFlightMode +
+                ", phoneContacts='" + phoneContacts + '\'' +
+                ", playerName='" + playerName + '\'' +
+                ", bank=" + bank +
+                ", level=" + level +
+                ", levelExp=" + levelExp +
+                ", faction='" + faction + '\'' +
+                ", factionRank=" + factionRank +
+                ", drink=" + drink +
+                ", houseNumber=" + houseNumber +
+                ", houseInventory='" + houseInventory + '\'' +
+                ", paydayTime=" + paydayTime +
+                ", playTime=" + playTime +
+                ", weaponLicence=" + weaponLicence +
+                ", driveLicence=" + driveLicence +
+                ", firstaidLicence=" + firstaidLicence +
+                ", jailTime=" + jailTime +
+                ", actReasons='" + actReasons + '\'' +
+                ", garbageLevel=" + garbageLevel +
+                ", garbageExp=" + garbageExp +
+                ", cocaineAmount=" + cocaineAmount +
+                ", weedAmount=" + weedAmount +
+                ", methAmount=" + methAmount +
+                ", medicineAmount=" + medicineAmount +
+                ", bulletproofAmount=" + bulletproofAmount +
+                ", policeBulletproofAmount=" + policeBulletproofAmount +
+                ", storageInventory='" + storageInventory + '\'' +
+                ", rentStorage=" + rentStorage +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", gender='" + gender + '\'' +
+                ", discordVerify=" + discordVerify +
+                ", discordId='" + discordId + '\'' +
+                ", premiumAccount=" + premiumAccount +
+                ", isFFA=" + isFFA +
+                ", ffaInventory='" + ffaInventory + '\'' +
+                ", ffaKills=" + ffaKills +
+                ", ffaDeaths=" + ffaDeaths +
+                ", votes=" + votes +
+                '}';
+    }
+
     public UPlayer setJail(boolean jail) {
-        isJail = jail;
+        this.isJail = jail;
         return this;
     }
 
@@ -179,7 +236,9 @@ public class UPlayer {
         this.faction = faction;
         return this;
     }
-
+    public String resultFaction() {
+        return this.faction;
+    }
     public UPlayer setFactionRank(int factionRank) {
         this.factionRank = factionRank;
         return this;
@@ -321,7 +380,7 @@ public class UPlayer {
     }
 
     public UPlayer setFFA(boolean FFA) {
-        isFFA = FFA;
+        this.isFFA = FFA;
         return this;
     }
 
