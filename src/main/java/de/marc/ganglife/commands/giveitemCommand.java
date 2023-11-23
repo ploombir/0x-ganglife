@@ -2,7 +2,7 @@ package de.marc.ganglife.commands;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
-import de.marc.ganglife.dataSetter.setDrugs;
+import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import net.kyori.adventure.text.Component;
@@ -15,13 +15,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class giveitemCommand implements CommandExecutor {
 
-
-    setDrugs setDrugs = new setDrugs(main.getPlugin().getDatabaseAsync().getDataSource());
-
     @Override
     public boolean onCommand(@NotNull CommandSender cs, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (cs instanceof Player player) {
             if (player.hasPermission("system.admin")) {
+                UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
+
                 Gui inv = Gui.gui()
                         .rows(5)
                         .title(Component.text(main.prefix + "§7Admin Items"))
@@ -74,16 +73,16 @@ public class giveitemCommand implements CommandExecutor {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
                     player.getInventory().addItem(event.getCurrentItem());
                 }));
-                inv.setItem(9, ItemBuilder.from(items.BULLETPROOF_CHEST.getItem()).asGuiItem(event -> {
+                inv.setItem(9, ItemBuilder.from(items.BULLETPROOF.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addSchutzweste(player.getUniqueId(), 1);
+                    uPlayer.setBulletproofAmount(uPlayer.getBulletproofAmount() + 5);
                 }));
 
                 inv.setItem(10, ItemBuilder.from(items.POLICE_BULLETPROOF.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addPoliceSchutzweste(player.getUniqueId(), 1);
+                    uPlayer.setPoliceBulletproofAmount(uPlayer.getPoliceBulletproofAmount() + 5);
                 }));
                 inv.setItem(11, ItemBuilder.from(items.POLICE_CUFF.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
@@ -106,25 +105,25 @@ public class giveitemCommand implements CommandExecutor {
                 inv.setItem(14, ItemBuilder.from(items.COCAIN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addCocain(player.getUniqueId(), 1);
+                    uPlayer.setCocaineAmount(uPlayer.getCocaineAmount() + 5);
                 }));
 
                 inv.setItem(15, ItemBuilder.from(items.WEED.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addWeed(player.getUniqueId(), 1);
+                    uPlayer.setWeedAmount(uPlayer.getWeedAmount() + 5);
                 }));
 
                 inv.setItem(16, ItemBuilder.from(items.METH.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addMeth(player.getUniqueId(), 1);
+                    uPlayer.setMethAmount(uPlayer.getMethAmount() + 5);
                 }));
 
                 inv.setItem(17, ItemBuilder.from(items.MEDIZIN.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    setDrugs.addMedizin(player.getUniqueId(), 1);
+                    uPlayer.setMedicineAmount(uPlayer.getMedicineAmount() + 5);
                 }));
 
                 inv.setItem(18, ItemBuilder.from(items.IRON_INGOT.getItem()).asGuiItem(event -> {

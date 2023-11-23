@@ -2,7 +2,6 @@ package de.marc.ganglife.weapons.func;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
-import de.marc.ganglife.dataSetter.setDeads;
 import de.marc.ganglife.playerEvents.interactionmenu;
 import de.marc.ganglife.weapons.guns.*;
 import net.md_5.bungee.api.ChatMessageType;
@@ -42,8 +41,6 @@ public class weaponHandler implements Listener {
     private ItemStack jagdflinte = new ItemStack(items.RIFLE.getItem());
     private ItemStack sniper = new ItemStack(items.AWP.getItem());
     private ItemStack lasergun = new ItemStack(items.LASERGUN.getItem());
-
-    de.marc.ganglife.dataSetter.setDeads setDeads = new setDeads(main.getPlugin().getDatabaseAsync().getDataSource());
     public boolean enableGun;
 
     public ArrayList<weapon> weapons;
@@ -78,7 +75,7 @@ public class weaponHandler implements Listener {
                 if (gun.getAmmo(p) > 1) {
                     if(enableGun == false) return;
                     if(interactionmenu.cuff.contains(p)) return;
-                    if(setDeads.isDead(p.getUniqueId(), "true")) return;
+                    //if(setDeads.isDead(p.getUniqueId(), "true")) return;
                     if(weapon.reloadGun.contains(p.getName())) return;
 
                     addNbtTagToItemStack(e.getItem(), "GunTagKey", "" + gun.getAmmo(p));
@@ -88,7 +85,7 @@ public class weaponHandler implements Listener {
                 } else {
                     if(enableGun == false) return;
                     if(interactionmenu.cuff.contains(p)) return;
-                    if(setDeads.isDead(p.getUniqueId(), "true")) return;
+                    //if(setDeads.isDead(p.getUniqueId(), "true")) return;
                     gun.shoot(p);
                     gun.reload(p);
                 }

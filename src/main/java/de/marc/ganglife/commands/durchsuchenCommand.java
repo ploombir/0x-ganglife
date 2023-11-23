@@ -3,6 +3,7 @@ package de.marc.ganglife.commands;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
 import de.marc.ganglife.playerEvents.interactionmenu;
+import de.marc.ganglife.playerdatas.UPlayer;
 import de.marc.ganglife.utils.inventoryCancel;
 import dev.triumphteam.gui.guis.Gui;
 import net.kyori.adventure.text.Component;
@@ -23,20 +24,24 @@ import java.util.Map;
 
 public class durchsuchenCommand implements CommandExecutor {
 
-    setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDrugs setDrugs = new setDrugs(main.getPlugin().getDatabaseAsync().getDataSource());
-    setEconomy setEconomy = new setEconomy(main.getPlugin().getDatabaseAsync().getDataSource());
     private final Map<Player, Integer> playerScheduler = new HashMap<>();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player player) {
+            UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
+
             int BlockDistance = 3;
-            if(setFFA.isInFFA(player.getUniqueId(), "true")) return true;
             if(args.length != 1) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /durchsuchen <Name>");
                 main.playErrorSound(player);
                 return true;
             }
+            if(uPlayer.isFFA()) {
+                player.sendMessage(main.pre_error + "§cDu kannst diesen Befehl nicht in FFA verwenden.");
+                main.playErrorSound(player);
+                return true;
+            }
+
             Player target = Bukkit.getPlayer(args[0]);
             if(target == null) {
                 player.sendMessage(main.notonline);
@@ -86,29 +91,17 @@ public class durchsuchenCommand implements CommandExecutor {
                 player.setWalkSpeed((float) 0.2);
                 main.playProccessSound(player);
 
+                UPlayer uPlayerTarget = UPlayer.getUPlayer(target.getUniqueId());
+
                 player.sendMessage(" ");
                 player.sendMessage(main.prefix + "§aInventar von §6" + target.getName());
-                setDrugs.getCocain(target.getUniqueId()).thenAccept(amount -> {
-                    player.sendMessage(" §f▹ §7Pulver: §6" + amount.get() + "g");
-                    setDrugs.getWeed(target.getUniqueId()).thenAccept(amountw -> {
-                        player.sendMessage(" §f▹ §7Sportzigaretten: §6" + amountw.get() + "g");
-                        setDrugs.getMeth(target.getUniqueId()).thenAccept(amountm -> {
-                            player.sendMessage(" §f▹ §7Kristalle: §6" + amountm.get() + "g");
-                            setDrugs.getMedizin(target.getUniqueId()).thenAccept(amountmed -> {
-                                player.sendMessage(" §f▹ §7Verbandskasten: §6" + amountmed.get() + "g");
-                                    setDrugs.getSchutzweste(target.getUniqueId()).thenAccept(s -> {
-                                    player.sendMessage(" §f▹ §7Schutzwesten: §6" + s.get() + "g");
+                player.sendMessage(" §f▹ §7Bargeld: §6" + uPlayerTarget.getCash());
+                player.sendMessage(" §f▹ §7Pulver: §6" + uPlayerTarget.getCocaineAmount() + "g");
+                player.sendMessage(" §f▹ §7Sportzigaretten: §6" + uPlayerTarget.getWeedAmount() + "g");
+                player.sendMessage(" §f▹ §7Kristalle: §6" + uPlayerTarget.getMethAmount() + "g");
+                player.sendMessage(" §f▹ §7Verbandskasten: §6" + uPlayerTarget.getMedicineAmount() + "g");
+                player.sendMessage(" §f▹ §7Schutzwesten: §6" + uPlayerTarget.getBulletproofAmount() + "g");
 
-                                    player.sendMessage(" ");
-
-                                    setEconomy.getMoney(target.getUniqueId()).thenAccept(money -> {
-                                        player.sendMessage(" §f▹ §7Bargeld: §6" + money.get());
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
             }, 3 * 20L));
         }
 

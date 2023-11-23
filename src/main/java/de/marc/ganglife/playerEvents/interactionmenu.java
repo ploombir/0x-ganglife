@@ -3,6 +3,7 @@ package de.marc.ganglife.playerEvents;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
 import de.marc.ganglife.methods.isInteger;
+import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -38,18 +39,18 @@ public class interactionmenu implements Listener {
     private static final Map<Player, Integer> playerScheduler = new HashMap<>();
 
     setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDeads setDeads = new setDeads(main.getPlugin().getDatabaseAsync().getDataSource());
     setFaction setFaction = new setFaction(main.getPlugin().getDatabaseAsync().getDataSource());
 
     @EventHandler
     public void onInt(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
+        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
         if (!player.isSneaking()) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (!event.getRightClicked().getType().equals(EntityType.PLAYER)) return;
         if (setFFA.isInFFA(player.getUniqueId(), "true")) return;
-        if (setDeads.isDead(player.getUniqueId(), "true")) return;
+        //if (uPlayer.getDeathTime()) return;
         if(cuff.contains(player)) return;
         Player target = (Player) event.getRightClicked();
         getHashTarget.put(player, target.getName());

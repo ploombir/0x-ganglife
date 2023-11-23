@@ -21,27 +21,7 @@ public class registerAccounts implements Listener {
     public registerAccounts(playerManager playerManager) {
         this.playerManager = playerManager;
     }
-    setActs setActs = new setActs(main.getPlugin().getDatabaseAsync().getDataSource());
-    setBank setBank = new setBank(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDeads setDeads = new setDeads(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDiscordverify setDiscordverify = new setDiscordverify(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDrink setDrink = new setDrink(main.getPlugin().getDatabaseAsync().getDataSource());
-    setDrugs setDrugs = new setDrugs(main.getPlugin().getDatabaseAsync().getDataSource());
-    setEconomy setEconomy = new setEconomy(main.getPlugin().getDatabaseAsync().getDataSource());
-    setFaction setFaction = new setFaction(main.getPlugin().getDatabaseAsync().getDataSource());
-    setFFA setFFA = new setFFA(main.getPlugin().getDatabaseAsync().getDataSource());
-    setGarbageLevel setGarbageLevel = new setGarbageLevel(main.getPlugin().getDatabaseAsync().getDataSource());
-    setHouse setHouse = new setHouse(main.getPlugin().getDatabaseAsync().getDataSource());
-    setLager setLager = new setLager(main.getPlugin().getDatabaseAsync().getDataSource());
-    setLevel setLevel = new setLevel(main.getPlugin().getDatabaseAsync().getDataSource());
-    setLicences setLicences = new setLicences(main.getPlugin().getDatabaseAsync().getDataSource());
-    setMobile setMobile = new setMobile(main.getPlugin().getDatabaseAsync().getDataSource());
-    setPayDays setPayDays = new setPayDays(main.getPlugin().getDatabaseAsync().getDataSource());
-    setPersonalausweis setPersonalausweis = new setPersonalausweis(main.getPlugin().getDatabaseAsync().getDataSource());
-    setPlayertime setPlayertime = new setPlayertime(main.getPlugin().getDatabaseAsync().getDataSource());
     setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
-    setVotes setVotes = new setVotes(main.getPlugin().getDatabaseAsync().getDataSource());
-
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
