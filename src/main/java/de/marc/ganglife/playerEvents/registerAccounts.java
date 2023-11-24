@@ -13,7 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
+import static de.marc.ganglife.playerdatas.UPlayer.cachedUPlayers;
 
 public class registerAccounts implements Listener {
 
@@ -22,6 +26,8 @@ public class registerAccounts implements Listener {
     public registerAccounts(playerManager playerManager) {
         this.playerManager = playerManager;
     }
+
+    public static Map<Player, Integer> playerWaiter = new HashMap<>();
 
     setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
 
@@ -52,29 +58,27 @@ public class registerAccounts implements Listener {
 
                     Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                         UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-
                         if (uPlayer == null) {
                             uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                         }
-
+                        System.out.println(playerManager.loadPlayer(player.getUniqueId()));
                         uPlayer.loadData();
-                        System.out.println(uPlayer.toString());
-                        System.out.println(UPlayer.cachedUPlayers.get(uPlayer.getUUID()));
                     });
                 } else {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
                     logs.sendTeamLog(player, "ist dem Server beigetreten.");
 
+                    player.sendMessage("debug");
 
-                    UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-
-                    if (uPlayer == null) {
-                        uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
-                    }
-
-                    uPlayer.loadData();
-                    System.out.println(uPlayer.toString());
-                    System.out.println(UPlayer.cachedUPlayers.get(uPlayer.getUUID()));
+                    playerWaiter.put(player, Bukkit.getScheduler().scheduleSyncDelayedTask(main.getPlugin(), () -> {
+                        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+                        if (uPlayer == null) {
+                            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
+                            uPlayer.loadData();
+                        }
+                        uPlayer.loadData();
+                        System.out.println(cachedUPlayers);
+                    }, 3*20L));
                 }
             });
         });

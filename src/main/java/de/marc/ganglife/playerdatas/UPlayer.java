@@ -76,7 +76,7 @@ public class UPlayer {
     }
 
     public void loadData() {
-        playerManager.loadPlayer(this.uuid).thenAccept(uPlayer -> {
+        playerManager.loadPlayer(getUUID()).thenAccept(uPlayer -> {
             Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                 this.deathTime = getDeathTime();
                 this.isJail = isJail();
