@@ -3,6 +3,7 @@ package de.marc.ganglife.playerEvents;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.*;
 import de.marc.ganglife.methods.logs;
+import de.marc.ganglife.methods.navigation;
 import de.marc.ganglife.playerdatas.UPlayer;
 import de.marc.ganglife.playerdatas.playerManager;
 import org.bukkit.Bukkit;
@@ -51,7 +52,7 @@ public class registerAccounts implements Listener {
                     main.playSuccessSound(player);
 
                     Location loc = new Location(player.getWorld(), -156, 68, -239);
-                    // cmd_navi.navigateTo(player, loc);
+                    navigation.navigateTo(player, loc);
 
                     playerManager.createPlayer(player.getUniqueId());
 
@@ -61,8 +62,9 @@ public class registerAccounts implements Listener {
                         if (uPlayer == null) {
                             uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                         }
-                        System.out.println(playerManager.loadPlayer(player.getUniqueId()));
                         uPlayer.loadData();
+                        uPlayer.loadData();
+                        System.out.println(cachedUPlayers);
                     });
                 } else {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
@@ -70,15 +72,17 @@ public class registerAccounts implements Listener {
 
                     player.sendMessage("debug");
 
-                    playerWaiter.put(player, Bukkit.getScheduler().scheduleSyncDelayedTask(main.getPlugin(), () -> {
+                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                         UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
                         if (uPlayer == null) {
                             uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                             uPlayer.loadData();
+                            uPlayer.loadData();
                         }
                         uPlayer.loadData();
+                        uPlayer.loadData();
                         System.out.println(cachedUPlayers);
-                    }, 3*20L));
+                    });
                 }
             });
         });

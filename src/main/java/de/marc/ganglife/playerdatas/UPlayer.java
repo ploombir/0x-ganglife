@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 @Getter
 public class UPlayer {
-    public static Map<UUID, UPlayer> cachedUPlayers = new HashMap<>();
+    public static final Map<UUID, UPlayer> cachedUPlayers = new HashMap<>();
 
     public final UUID uuid;
     private final playerManager playerManager;
