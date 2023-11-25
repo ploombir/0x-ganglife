@@ -2,7 +2,9 @@ package de.marc.ganglife.playerdatas;
 
 import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.util.UpdateResult;
+import de.marc.ganglife.Main.main;
 import org.bukkit.Bukkit;
+import de.marc.ganglife.dataSetter.*;
 
 import javax.sql.DataSource;
 import java.util.Optional;
@@ -15,6 +17,7 @@ public class playerManager extends QueryFactory {
     public playerManager(DataSource dataSource) {
         super(dataSource);
     }
+    getLastID getLastID = new getLastID(main.getPlugin().getDatabaseAsync().getDataSource());
 
     public CompletableFuture<Boolean> createPlayer(UUID uniqueId) {
         return builder().query("INSERT INTO accounts(uniqueid, deathTime, isJail, cash, phoneNumber," +

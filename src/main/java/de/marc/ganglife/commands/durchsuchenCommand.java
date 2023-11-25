@@ -36,7 +36,7 @@ public class durchsuchenCommand implements CommandExecutor {
                 main.playErrorSound(player);
                 return true;
             }
-            if(uPlayer.getDeathTime() >= 0) return true;
+            if(uPlayer.getDeathTime() >= 1) return true;
 
             if(uPlayer.isFFA()) {
                 player.sendMessage(main.pre_error + "§cDu kannst diesen Befehl nicht in FFA verwenden.");
@@ -79,15 +79,21 @@ public class durchsuchenCommand implements CommandExecutor {
             main.playProccessSound(target);
 
             playerScheduler.put(player, Bukkit.getScheduler().scheduleSyncDelayedTask(main.getPlugin(), () -> {
-                Player open_inv = Bukkit.getPlayerExact(args[0]);
-
-                if(open_inv == null) {
+                if(target == null) {
                     player.sendMessage(main.pre_error + "§cDieser Spieler ist nicht mehr Online.");
                     main.playErrorSound(player);
                     return;
                 }
-                inventoryCancel.inventoryFreeze.add(player); // türken fix
-                player.openInventory(open_inv.getInventory());
+
+                Gui searchInventory = Gui.gui()
+                        .rows(5)
+                        .disableAllInteractions()
+                        .title(Component.text(main.prefix + "§7Inventar von: " + target.getName()))
+                        .create();
+
+                searchInventory.open(player);
+                searchInventory.getInventory().setContents(target.getInventory().getContents());
+
                 player.sendMessage(main.prefix + "§7Du hast erfolgreich §6" + target.getName() + " §7durchsucht!");
                 target.sendMessage(main.prefix + "§6" + player.getName() + " §7hat dich erfolgreich durchsucht!");
                 player.setWalkSpeed((float) 0.2);

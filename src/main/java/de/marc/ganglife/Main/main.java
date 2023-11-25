@@ -71,11 +71,11 @@ public final class main extends JavaPlugin {
         getCommand("durchsuchen").setExecutor(new durchsuchenCommand());
         getCommand("ffastats").setExecutor(new ffastatsCommand());
         getCommand("profil").setExecutor(new profileCommand());
+        getCommand("fraklager").setExecutor(new fraklagerCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
 
-       // getServer().getPluginManager().registerEvents(new loginManager(), this);
         getServer().getPluginManager().registerEvents(new quitListener(), this);
         getServer().getPluginManager().registerEvents(new interactionmenu(), this);
         getServer().getPluginManager().registerEvents(new chat(), this);

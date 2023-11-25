@@ -24,3 +24,5 @@ commands:
   durchsuchen:
   ffastats:
   profil:
+  fraklager:
+    aliases: [flager]

@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class profileCommand implements CommandExecutor {
+    getLastID getLastID = new getLastID(main.getPlugin().getDatabaseAsync().getDataSource());
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -40,6 +41,12 @@ public class profileCommand implements CommandExecutor {
                     });
 
             GuiItem playerHead = ItemBuilder.from(Material.PLAYER_HEAD).name(Component.text("§a" + player.getName()))
+                    .setSkullOwner(player)
+                    .asGuiItem(clickEvent -> {
+                        player.closeInventory();
+                    });
+
+            GuiItem playerHeadPremium = ItemBuilder.from(Material.PLAYER_HEAD).name(Component.text("§a" + player.getName() + " §7(§6Premium§7)"))
                     .setSkullOwner(player)
                     .asGuiItem(clickEvent -> {
                         player.closeInventory();
@@ -128,7 +135,14 @@ public class profileCommand implements CommandExecutor {
                         player.closeInventory();
                     });
 
-            profileInventory.setItem(4, playerHead);
+
+            if(uPlayer.isPremiumAccount()) {
+                profileInventory.setItem(4, playerHeadPremium);
+            } else {
+                profileInventory.setItem(4, playerHead);
+            }
+
+
             profileInventory.setItem(21, playerMoney);
             profileInventory.setItem(22, playerLevel);
             profileInventory.setItem(23, playerEXP);
