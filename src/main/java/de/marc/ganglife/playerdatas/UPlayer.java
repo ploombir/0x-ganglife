@@ -13,7 +13,7 @@ public class UPlayer {
     public static final Map<UUID, UPlayer> cachedUPlayers = new HashMap<>();
 
     public final UUID uuid;
-    private final playerManager playerManager;
+    public final playerManager playerManager;
 
     private int deathTime;
     private boolean isJail;

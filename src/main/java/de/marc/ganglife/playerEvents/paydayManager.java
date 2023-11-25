@@ -16,21 +16,6 @@ import java.util.Map;
 
 public class paydayManager implements Listener {
     public static final Map<Player, Integer> paydayScheduler = new HashMap<>();
-    setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-
-        setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
-            Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
-                if(id.isEmpty()) return;
-
-                startPayDay(player);
-            });
-        });
-
-
-    }
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
@@ -40,11 +25,10 @@ public class paydayManager implements Listener {
 
     public void startPayDay(Player player) {
         if(paydayScheduler.get(player) == null) {
-            UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
             player.sendMessage(main.prefix + "§aPayDay wurde gestartet.");
             main.playProccessSound(player);
 
-            final int[] totalTime = {60};
+            final int[] totalTime = {10};
 
 
             Bukkit.getConsoleSender().sendMessage(main.log + player.getName() + " §9sein PayDay wurde §agestartet.");
@@ -55,10 +39,19 @@ public class paydayManager implements Listener {
                     return;
                 }
                 totalTime[0]--;
+                player.sendMessage(totalTime[0] + "");
 
                 if (totalTime[0] <= 0) { // Entspricht einer Minute
-                        totalTime[0] = 60;
+                        totalTime[0] = 10;
+
+                        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
+
+                        if(uPlayer == null) {
+                            player.sendMessage("Du bist null");
+                            return;
+                        }
                         uPlayer.setPaydayTime(uPlayer.getPaydayTime() + 1);
+                        player.sendMessage(uPlayer.getPaydayTime() + "");
 
                         if(uPlayer.getPaydayTime() >= 60) {
                             player.sendMessage("§apayday erhalten");

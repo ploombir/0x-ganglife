@@ -22,23 +22,53 @@ import static de.marc.ganglife.playerdatas.UPlayer.cachedUPlayers;
 
 public class registerAccounts implements Listener {
 
-    public final playerManager playerManager;
+    private final playerManager playerManager;
 
     public registerAccounts(playerManager playerManager) {
         this.playerManager = playerManager;
     }
 
-    public static Map<Player, Integer> playerWaiter = new HashMap<>();
-
     setUnique setUnique = new setUnique(main.getPlugin().getDatabaseAsync().getDataSource());
-
     paydayManager paydayManager = new paydayManager();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        event.setJoinMessage(null);
 
+        setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
+            if (id.isEmpty()) {
+                Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                    Bukkit.getConsoleSender().sendMessage(main.log + "§aPlayerAccount für §6" + player.getName() + " §awurde erfolgreich angelegt. §7IP: " + player.getAddress().getHostString());
+                    logs.sendTeamLog(player, "ist ein neuer Spieler.");
+                    Location locnew = new Location(Bukkit.getWorld("0xMain"), -175, 71, -268);
+
+                    player.teleport(locnew);
+                    player.sendMessage(" ");
+                    player.sendMessage(main.prefix + "§aHallo und Herzlich Willkommen auf §bOx-GangLife§a! §aDu befindest dich im moment am Flughafen, bitte begebe dich aus dem Flugzeug und folge den grünen Teppichen auf dem Boden. Spreche mit dem Einreiseamt und beantrage einen Ausweis.");
+                    main.playSuccessSound(player);
+
+                    Location loc = new Location(player.getWorld(), -156, 68, -239);
+                    navigation.navigateTo(player, loc);
+
+                    playerManager.createPlayer(player.getUniqueId());
+                });
+            }
+        });
+
+        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+
+        if (uPlayer == null) {
+            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
+            player.sendMessage("new uplayer created");
+        } else {
+            player.sendMessage("exists already");
+        }
+        uPlayer.loadData();
+        paydayManager.startPayDay(player);
+
+        event.joinMessage(null);
+
+        /*
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
             Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                 if (id.isEmpty()) {
@@ -57,35 +87,36 @@ public class registerAccounts implements Listener {
                     playerManager.createPlayer(player.getUniqueId());
 
 
-                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
-                        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-                        if (uPlayer == null) {
-                            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
-                        }
+                    UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+                    if (uPlayer == null) {
+                        uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                         uPlayer.loadData();
                         uPlayer.loadData();
-                        System.out.println(cachedUPlayers);
-                    });
+                    }
+                    uPlayer.loadData();
+                    uPlayer.loadData();
+                    System.out.println(UPlayer.cachedUPlayers.get(player.getUniqueId()));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(main.log + "§6" + player.getName() + " §aist beigetreten. §7IP: " + player.getAddress().getHostString());
                     logs.sendTeamLog(player, "ist dem Server beigetreten.");
+                    player.sendMessage("bereits account");
 
-                    player.sendMessage("debug");
-
-                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
-                        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-                        if (uPlayer == null) {
-                            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
-                            uPlayer.loadData();
-                            uPlayer.loadData();
-                        }
+                    UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+                    if (uPlayer == null) {
+                        uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                         uPlayer.loadData();
                         uPlayer.loadData();
-                        System.out.println(cachedUPlayers);
-                    });
+                    }
+                    uPlayer.loadData();
+                    uPlayer.loadData();
+                    //paydayManager.startPayDay(player);
+                    System.out.println(UPlayer.cachedUPlayers.get(player.getUniqueId()));
+
                 }
             });
         });
+
+         */
     }
 
     public static int generateRandomFourDigitNumber() {

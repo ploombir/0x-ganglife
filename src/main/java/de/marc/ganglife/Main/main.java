@@ -81,7 +81,7 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new chat(), this);
         getServer().getPluginManager().registerEvents(new weaponHandler(this), this);
         getServer().getPluginManager().registerEvents(new inventoryCancel(), this);
-        //getServer().getPluginManager().registerEvents(new paydayManager(), this);
+        getServer().getPluginManager().registerEvents(new paydayManager(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {
