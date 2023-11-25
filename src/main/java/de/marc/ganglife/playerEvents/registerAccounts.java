@@ -6,6 +6,7 @@ import de.marc.ganglife.methods.logs;
 import de.marc.ganglife.methods.navigation;
 import de.marc.ganglife.playerdatas.UPlayer;
 import de.marc.ganglife.playerdatas.playerManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ public class registerAccounts implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        event.joinMessage(Component.text(""));
 
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
             if (id.isEmpty()) {
@@ -51,23 +53,25 @@ public class registerAccounts implements Listener {
                     navigation.navigateTo(player, loc);
 
                     playerManager.createPlayer(player.getUniqueId());
+
+                    UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+
+                    if (uPlayer == null) {
+                        uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
+                    }
+                    uPlayer.loadData();
+                    paydayManager.startPayDay(player);
                 });
+            } else {
+                UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
+
+                if (uPlayer == null) {
+                    uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
+                }
+                uPlayer.loadData();
+                paydayManager.startPayDay(player);
             }
         });
-
-        UPlayer uPlayer = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
-
-        if (uPlayer == null) {
-            uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
-            player.sendMessage("new uplayer created");
-        } else {
-            player.sendMessage("exists already");
-        }
-        uPlayer.loadData();
-        paydayManager.startPayDay(player);
-
-        event.joinMessage(null);
-
         /*
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
             Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
