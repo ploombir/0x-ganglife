@@ -27,3 +27,7 @@ commands:
   fraklager:
     aliases: [flager]
   uncuff:
+  teleport:
+  tphere:
+  vanish:
+  verify:

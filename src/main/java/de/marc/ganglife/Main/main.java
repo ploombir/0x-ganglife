@@ -73,6 +73,10 @@ public final class main extends JavaPlugin {
         getCommand("profil").setExecutor(new profileCommand());
         getCommand("fraklager").setExecutor(new fraklagerCommand());
         getCommand("uncuff").setExecutor(new uncuffCommand());
+        getCommand("teleport").setExecutor(new teleportCommand());
+        getCommand("tphere").setExecutor(new tphereCommand());
+        getCommand("vanish").setExecutor(new vanishCommand());
+        getCommand("verify").setExecutor(new verifyCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
