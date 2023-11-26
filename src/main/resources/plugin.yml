@@ -26,3 +26,4 @@ commands:
   profil:
   fraklager:
     aliases: [flager]
+  uncuff:

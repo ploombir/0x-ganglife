@@ -72,6 +72,7 @@ public final class main extends JavaPlugin {
         getCommand("ffastats").setExecutor(new ffastatsCommand());
         getCommand("profil").setExecutor(new profileCommand());
         getCommand("fraklager").setExecutor(new fraklagerCommand());
+        getCommand("uncuff").setExecutor(new uncuffCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
