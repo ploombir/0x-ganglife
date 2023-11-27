@@ -39,6 +39,8 @@ public class registerAccounts implements Listener {
         Player player = event.getPlayer();
         event.joinMessage(Component.text(""));
 
+        TabAPI.setScoreboard();
+
         setUnique.getUniqueID(player.getUniqueId()).thenAccept(id -> {
             if (id.isEmpty()) {
                 Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
@@ -80,13 +82,14 @@ public class registerAccounts implements Listener {
                     uPlayer = new UPlayer(event.getPlayer(), this.playerManager);
                 }
                 uPlayer.loadData();
-                paydayManager.startPayDay(player);
 
                 player.sendMessage(main.prefix + "§7Willkommen zurück.");
                 //check premium
                 Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
                     UPlayer uPlayer2 = UPlayer.getUPlayer(event.getPlayer().getUniqueId());
                     systems.updateLevel(player, uPlayer2);
+                    paydayManager.startPayDay(player);
+
                     if (uPlayer2.isPremiumAccount()) {
                         if (!player.hasPermission("system.premium")) {
                             player.sendMessage(main.prefix + "§aHerzlichen Glückwunsch, dein Account hat nun Premium.");

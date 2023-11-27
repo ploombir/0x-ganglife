@@ -43,6 +43,7 @@ public class paydayManager implements Listener {
                 if (totalTime[0] <= 0) { // Entspricht einer Minute
                         totalTime[0] = 60;
                         syncTime();
+                        TabAPI.setScoreboard();
 
                         UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
@@ -89,6 +90,7 @@ public class paydayManager implements Listener {
                             }
                              */
                             uPlayer.setPaydayTime(0);
+                            uPlayer.setPlayTime(uPlayer.getPlayTime() + 1);
                             player.sendMessage(" §f▹ §7Neuer Kontostand: §a" + uPlayer.getBank() + "$");
                             systems.updateLevel(player, uPlayer);
                             main.playSuccessSound(player);
