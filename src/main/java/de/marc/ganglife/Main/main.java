@@ -4,6 +4,8 @@ import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.setgehaltCommand;
 import de.marc.ganglife.faction.commands.showgehaltCommand;
+import de.marc.ganglife.phone.commands.inviteCommand;
+import de.marc.ganglife.phone.events.openPhone;
 import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;
 import de.marc.ganglife.playerdatas.quitListener;
@@ -82,6 +84,7 @@ public final class main extends JavaPlugin {
         getCommand("arevive").setExecutor(new entityDamageClass());
         getCommand("showgehalt").setExecutor(new showgehaltCommand());
         getCommand("setgehalt").setExecutor(new setgehaltCommand());
+        getCommand("invite").setExecutor(new inviteCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
@@ -97,6 +100,7 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new buildListener(), this);
         getServer().getPluginManager().registerEvents(new cancelInteracts(), this);
         getServer().getPluginManager().registerEvents(new entityDamageClass(), this);
+        getServer().getPluginManager().registerEvents(new openPhone(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {
