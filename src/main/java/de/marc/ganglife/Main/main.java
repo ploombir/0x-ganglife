@@ -2,6 +2,7 @@ package de.marc.ganglife.Main;
 
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
+import de.marc.ganglife.faction.commands.setgehaltCommand;
 import de.marc.ganglife.faction.commands.showgehaltCommand;
 import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;
@@ -80,6 +81,7 @@ public final class main extends JavaPlugin {
         getCommand("verify").setExecutor(new verifyCommand());
         getCommand("arevive").setExecutor(new entityDamageClass());
         getCommand("showgehalt").setExecutor(new showgehaltCommand());
+        getCommand("setgehalt").setExecutor(new setgehaltCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);

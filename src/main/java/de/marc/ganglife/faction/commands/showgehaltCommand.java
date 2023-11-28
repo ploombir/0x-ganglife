@@ -20,7 +20,7 @@ public class showgehaltCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player player) {
             if(args.length != 0) {
-                player.sendMessage(main.pre_error + "§cBitte benutze /showgehalt");
+                player.sendMessage(main.pre_error + "§cVerwendung: /showgehalt");
                 main.playErrorSound(player);
                 return true;
             }
@@ -47,7 +47,7 @@ public class showgehaltCommand implements CommandExecutor {
             if(args.length == 1) {
                 sendGehaltToConsole(args[0]);
             } else {
-                console.sendMessage(main.pre_error + "§cBenutze /showgehalt <Fraktion>");
+                console.sendMessage(main.pre_error + "§cVerwendung: /showgehalt <Fraktion>");
             }
         }
         return false;

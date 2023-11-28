@@ -1,6 +1,7 @@
 package de.marc.ganglife.dataSetter;
 
 import de.chojo.sadu.base.QueryFactory;
+import de.chojo.sadu.wrapper.util.UpdateResult;
 
 import javax.sql.DataSource;
 import java.util.Optional;
@@ -16,5 +17,14 @@ public class setFBank extends QueryFactory {
                 .parameter(stmt -> stmt.setString(faction))
                 .readRow(row -> row.getString("salary"))
                 .first();
+    }
+    public CompletableFuture<Boolean> setFBankSalary(String faction, String gehalt) {
+        return builder().query("UPDATE factions SET salary = ? WHERE name = ?")
+                .parameter(stmt -> stmt
+                        .setString(gehalt)
+                        .setString(faction))
+                .update()
+                .send()
+                .thenApply(UpdateResult::changed);
     }
 }
