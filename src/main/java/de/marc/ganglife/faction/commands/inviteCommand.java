@@ -1,4 +1,4 @@
-package de.marc.ganglife.phone.commands;
+package de.marc.ganglife.faction.commands;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
@@ -77,7 +77,7 @@ public class inviteCommand implements CommandExecutor {
             }
 
             if(!found) {
-                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um die Fraktionen zu verwalten.");
+                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Fraktionen zu verwalten.");
                 main.playErrorSound(player);
                 return true;
             }
