@@ -2,10 +2,7 @@ package de.marc.ganglife.Main;
 
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
-import de.marc.ganglife.faction.commands.fkickCommand;
-import de.marc.ganglife.faction.commands.setgehaltCommand;
-import de.marc.ganglife.faction.commands.showgehaltCommand;
-import de.marc.ganglife.faction.commands.inviteCommand;
+import de.marc.ganglife.faction.commands.*;
 import de.marc.ganglife.phone.events.openPhone;
 import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;

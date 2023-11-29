@@ -1,4 +1,4 @@
-package de.marc.ganglife.commands;
+package de.marc.ganglife.faction.commands;
 
 import com.google.gson.Gson;
 import de.marc.ganglife.Main.main;
@@ -93,7 +93,121 @@ public class fraklagerCommand implements CommandExecutor {
                         setFrakLager.setFrakLagerFrak(Arrays.toString(formattedInventory), 1);
                     });
                 }
-                case "test" -> {
+                case "Medics" -> {
+                    if (isInMedicLager) {
+                        player.sendMessage(main.prefix + "§cEs ist bereits jemand im Lager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    if (player.getLocation().distance(medic_hq) >= 3) {
+                        player.sendMessage(main.prefix + "§cDu befindest dich nicht am Fraklager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    isInMedicLager = true;
+
+                    Gui medicInventory = Gui.gui()
+                            .rows(4)
+                            .title(Component.text(main.prefix + "§7Fraklager"))
+                            .create();
+
+                    setFrakLager.getFrakLager(2).thenAccept(fraklager -> {
+                        Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                            String inventoryString = fraklager.get();
+                            Map<String, Object>[] inventoryFormat = formatFromString(inventoryString);
+                            main.playProccessSound(player);
+                            medicInventory.open(player);
+                            medicInventory.getInventory().setContents(formatToInventory(inventoryFormat));
+                        });
+                    });
+
+                    medicInventory.setCloseGuiAction(close -> {
+                        isInMedicLager = false;
+                        Inventory closedInventory = close.getInventory();
+
+                        Map[] formattedInventory = inventoryToFormat(closedInventory.getContents()).toArray(new Map[0]);
+                        setFrakLager.setFrakLagerFrak(Arrays.toString(formattedInventory), 2);
+                    });
+
+                }
+                case "Ballas" -> {
+                    if (isInGangLager) {
+                        player.sendMessage(main.prefix + "§cEs ist bereits jemand im Lager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    if (player.getLocation().distance(gang_hq) >= 3) {
+                        player.sendMessage(main.prefix + "§cDu befindest dich nicht am Fraklager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    isInGangLager = true;
+
+                    Gui gangInventory = Gui.gui()
+                            .rows(4)
+                            .title(Component.text(main.prefix + "§7Fraklager"))
+                            .create();
+
+                    setFrakLager.getFrakLager(3).thenAccept(fraklager -> {
+                        Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                            String inventoryString = fraklager.get();
+                            Map<String, Object>[] inventoryFormat = formatFromString(inventoryString);
+                            main.playProccessSound(player);
+                            gangInventory.open(player);
+                            gangInventory.getInventory().setContents(formatToInventory(inventoryFormat));
+                        });
+                    });
+
+                    gangInventory.setCloseGuiAction(close -> {
+                        isInMedicLager = false;
+                        Inventory closedInventory = close.getInventory();
+
+                        Map[] formattedInventory = inventoryToFormat(closedInventory.getContents()).toArray(new Map[0]);
+                        setFrakLager.setFrakLagerFrak(Arrays.toString(formattedInventory), 3);
+                    });
+
+                }
+                case "Mafia" -> {
+                    if (isInMafiaLager) {
+                        player.sendMessage(main.prefix + "§cEs ist bereits jemand im Lager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    if (player.getLocation().distance(mafia_hq) >= 3) {
+                        player.sendMessage(main.prefix + "§cDu befindest dich nicht am Fraklager.");
+                        main.playErrorSound(player);
+                        return true;
+                    }
+
+                    isInMafiaLager = true;
+
+                    Gui mafaInventory = Gui.gui()
+                            .rows(4)
+                            .title(Component.text(main.prefix + "§7Fraklager"))
+                            .create();
+
+                    setFrakLager.getFrakLager(4).thenAccept(fraklager -> {
+                        Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                            String inventoryString = fraklager.get();
+                            Map<String, Object>[] inventoryFormat = formatFromString(inventoryString);
+                            main.playProccessSound(player);
+                            mafaInventory.open(player);
+                            mafaInventory.getInventory().setContents(formatToInventory(inventoryFormat));
+                        });
+                    });
+
+                    mafaInventory.setCloseGuiAction(close -> {
+                        isInMedicLager = false;
+                        Inventory closedInventory = close.getInventory();
+
+                        Map[] formattedInventory = inventoryToFormat(closedInventory.getContents()).toArray(new Map[0]);
+                        setFrakLager.setFrakLagerFrak(Arrays.toString(formattedInventory), 4);
+                    });
 
                 }
                 default -> {

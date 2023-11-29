@@ -112,8 +112,10 @@ public class fkickCommand implements CommandExecutor {
 
             player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7aus der Fraktion " + factionPrefixes.getPrefix(player) + uPlayer.getFaction() + " §7geworfen.");
             main.playProccessSound(player);
-            target.sendMessage(main.prefix + "§7Du wurdest aus der Fraktion §6" + factionPrefixes.getPrefix(player) + uPlayer.getFaction() + "§7geworfen.");
+            target.sendMessage(main.prefix + "§7Du wurdest aus der Fraktion " + factionPrefixes.getPrefix(player) + uPlayer.getFaction() + " §7geworfen.");
             main.playProccessSound(target);
+            uTarget.setFaction("Zivilist");
+            uTarget.setFactionRank(0);
         }
         return false;
     }
