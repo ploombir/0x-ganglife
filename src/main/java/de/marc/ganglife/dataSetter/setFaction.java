@@ -4,6 +4,7 @@ import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.util.UpdateResult;
 
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -36,6 +37,13 @@ public class setFaction extends QueryFactory {
                 .parameter(stmt -> stmt.setString(playerName))
                 .readRow(row -> row.getString("faction"))
                 .first();
+    }
+    public CompletableFuture<List<String>> getFactionMembers(String faction) {
+        return builder(String.class)
+                .query("SELECT playerName FROM accounts WHERE faction = ?")
+                .parameter(stmt -> stmt.setString(faction))
+                .readRow(row -> row.getString("playerName"))
+                .all();
     }
 
     public CompletableFuture<Optional<Integer>> getOfflineFactionRank(String playerName) {
