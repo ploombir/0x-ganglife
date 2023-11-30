@@ -26,6 +26,12 @@ public class fkickCommand implements CommandExecutor {
                     .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
                     .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
 
+            if(!found) {
+                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Fraktionen zu verwalten.");
+                main.playErrorSound(player);
+                return true;
+            }
+
             if(args.length != 1) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /fkick <Spieler>");
                 main.playErrorSound(player);
@@ -33,7 +39,7 @@ public class fkickCommand implements CommandExecutor {
             }
             UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
-            if(uPlayer.getFaction().equals("Zivlist")) {
+            if(uPlayer.getFaction().equals("Zivilist")) {
                 player.sendMessage(main.pre_error + "§cDu bist in keiner Fraktion.");
                 main.playErrorSound(player);
                 return true;
@@ -51,11 +57,6 @@ public class fkickCommand implements CommandExecutor {
                 return true;
             }
 
-            if(!found) {
-                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Fraktionen zu verwalten.");
-                main.playErrorSound(player);
-                return true;
-            }
 
             if(target == null) {
                 setFaction.getOfflineFaction(args[0]).thenAccept(faction -> {

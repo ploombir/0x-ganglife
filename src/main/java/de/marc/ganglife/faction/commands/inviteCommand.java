@@ -34,6 +34,12 @@ public class inviteCommand implements CommandExecutor {
                     .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
                     .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
 
+            if(!found) {
+                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Fraktionen zu verwalten.");
+                main.playErrorSound(player);
+                return true;
+            }
+
             if(args.length != 1) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /invite <Spieler>");
                 main.playErrorSound(player);
@@ -76,11 +82,6 @@ public class inviteCommand implements CommandExecutor {
                 return true;
             }
 
-            if(!found) {
-                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Fraktionen zu verwalten.");
-                main.playErrorSound(player);
-                return true;
-            }
 
             invitedFaction.put(target, uPlayer.getFaction());
 

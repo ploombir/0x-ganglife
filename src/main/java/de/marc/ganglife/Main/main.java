@@ -84,6 +84,7 @@ public final class main extends JavaPlugin {
         getCommand("setgehalt").setExecutor(new setgehaltCommand());
         getCommand("invite").setExecutor(new inviteCommand());
         getCommand("fkick").setExecutor(new fkickCommand());
+        getCommand("frank").setExecutor(new frankCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
