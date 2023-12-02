@@ -7,6 +7,8 @@ import de.marc.ganglife.phone.events.openPhone;
 import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;
 import de.marc.ganglife.playerdatas.quitListener;
+import de.marc.ganglife.playermanager.playermanageCommand;
+import de.marc.ganglife.playermanager.playermanageHandler;
 import de.marc.ganglife.utils.inventoryCancel;
 import de.marc.ganglife.weapons.func.weaponHandler;
 import org.bukkit.Bukkit;
@@ -86,6 +88,7 @@ public final class main extends JavaPlugin {
         getCommand("fkick").setExecutor(new fkickCommand());
         getCommand("frank").setExecutor(new frankCommand());
         getCommand("members").setExecutor(new membersCommand());
+        getCommand("playermanage").setExecutor(new playermanageCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
@@ -102,6 +105,7 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new cancelInteracts(), this);
         getServer().getPluginManager().registerEvents(new entityDamageClass(), this);
         getServer().getPluginManager().registerEvents(new openPhone(), this);
+        getServer().getPluginManager().registerEvents(new playermanageHandler(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

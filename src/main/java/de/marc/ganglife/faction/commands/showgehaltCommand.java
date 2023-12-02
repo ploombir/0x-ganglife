@@ -2,9 +2,11 @@ package de.marc.ganglife.faction.commands;
 
 import com.google.gson.Gson;
 import de.marc.ganglife.Main.main;
+import de.marc.ganglife.dataSetter.items;
 import de.marc.ganglife.dataSetter.setFBank;
 import de.marc.ganglife.playerdatas.UPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +22,18 @@ public class showgehaltCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player player) {
+
+            boolean found = Arrays.stream(player.getInventory().getContents())
+                    .filter(item -> item != null && item.getType() != Material.AIR)
+                    .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
+                    .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
+
+            if(!found) {
+                player.sendMessage(main.pre_error + "§cDu benötigst ein Handy, um Gehälter zu einzusehen.");
+                main.playErrorSound(player);
+                return true;
+            }
+
             if(args.length != 0) {
                 player.sendMessage(main.pre_error + "§cVerwendung: /showgehalt");
                 main.playErrorSound(player);
