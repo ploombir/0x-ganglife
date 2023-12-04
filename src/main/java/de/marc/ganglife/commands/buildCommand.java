@@ -37,12 +37,12 @@ public class buildCommand implements CommandExecutor {
                 Player target = Bukkit.getPlayer(args[0]);
                 if (allowed.contains(target)) {
                     allowed.remove(target);
-                    player.sendMessage(main.prefix + "§6" + target.getName() + " §7kann nun §cnicht §7mehr bauen.");
+                    player.sendMessage(main.prefix + "§e" + target.getName() + " §7kann nun §cnicht §7mehr bauen.");
                     main.playErrorSound(target);
                     main.playProccessSound(player);
                 } else {
                     allowed.add(target);
-                    player.sendMessage(main.prefix + "§6" + target.getName() + " §7kann nun bauen.");
+                    player.sendMessage(main.prefix + "§e" + target.getName() + " §7kann nun bauen.");
                     main.playProccessSound(player);
                     main.playProccessSound(target);
                 }

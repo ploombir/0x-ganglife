@@ -20,7 +20,7 @@ public class verifyCommand implements CommandExecutor {
 
             UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
-            player.sendMessage(main.prefix + "§7Dein Verifizierungscode für Discord lautet: §6" + uPlayer.getDiscordVerify());
+            player.sendMessage(main.prefix + "§7Dein Verifizierungscode für Discord lautet: §e" + uPlayer.getDiscordVerify());
             main.playProccessSound(player);
         }
         return false;

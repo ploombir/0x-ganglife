@@ -37,7 +37,7 @@ public class playermanageCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage(main.pre_error + "§cVerwednung: /playermanage <Spieler>");
+            player.sendMessage(main.pre_error + "§cVerwendung: /playermanage <Spieler>");
 
             main.playErrorSound(player);
             return false;
@@ -53,7 +53,7 @@ public class playermanageCommand implements CommandExecutor {
         UPlayer uPlayer = UPlayer.getUPlayer(target.getUniqueId());
 
         Gui playerGui = Gui.gui()
-                .title(Component.text(main.prefix + " §7Spielerverwaltung | " + target.getName()))
+                .title(Component.text(main.prefix + "§7Spielerverwaltung | " + target.getName()))
                 .rows(6)
                 .disableAllInteractions()
                 .create();

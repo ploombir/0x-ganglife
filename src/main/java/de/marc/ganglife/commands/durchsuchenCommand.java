@@ -71,9 +71,9 @@ public class durchsuchenCommand implements CommandExecutor {
                 return true;
             }
 
-            player.sendMessage(main.prefix + "§7Du durchsucht nun §6" + target.getName() + "..");
+            player.sendMessage(main.prefix + "§7Du durchsucht nun §e" + target.getName() + "..");
             player.sendMessage(main.prefix + "§c§l! §cBewege dich nicht");
-            target.sendMessage(main.prefix + "§6" + player.getName() + " §7fängt an dich zu durchsuchen..");
+            target.sendMessage(main.prefix + "§e" + player.getName() + " §7fängt an dich zu durchsuchen..");
             target.sendMessage(main.prefix + "§c§l! §cBewege dich nicht");
             player.setWalkSpeed(0);
             main.playProccessSound(target);
@@ -94,21 +94,21 @@ public class durchsuchenCommand implements CommandExecutor {
                 searchInventory.open(player);
                 searchInventory.getInventory().setContents(target.getInventory().getContents());
 
-                player.sendMessage(main.prefix + "§7Du hast erfolgreich §6" + target.getName() + " §7durchsucht!");
-                target.sendMessage(main.prefix + "§6" + player.getName() + " §7hat dich erfolgreich durchsucht!");
+                player.sendMessage(main.prefix + "§7Du hast erfolgreich §e" + target.getName() + " §7durchsucht!");
+                target.sendMessage(main.prefix + "§e" + player.getName() + " §7hat dich erfolgreich durchsucht!");
                 player.setWalkSpeed((float) 0.2);
                 main.playProccessSound(player);
 
                 UPlayer uPlayerTarget = UPlayer.getUPlayer(target.getUniqueId());
 
                 player.sendMessage(" ");
-                player.sendMessage(main.prefix + "§aInventar von §6" + target.getName());
-                player.sendMessage(" §f▹ §7Bargeld: §6" + uPlayerTarget.getCash());
-                player.sendMessage(" §f▹ §7Pulver: §6" + uPlayerTarget.getCocaineAmount() + "g");
-                player.sendMessage(" §f▹ §7Sportzigaretten: §6" + uPlayerTarget.getWeedAmount() + "g");
-                player.sendMessage(" §f▹ §7Kristalle: §6" + uPlayerTarget.getMethAmount() + "g");
-                player.sendMessage(" §f▹ §7Verbandskasten: §6" + uPlayerTarget.getMedicineAmount() + "g");
-                player.sendMessage(" §f▹ §7Schutzwesten: §6" + uPlayerTarget.getBulletproofAmount() + "g");
+                player.sendMessage(main.prefix + "§aInventar von §e" + target.getName());
+                player.sendMessage(" §f▹ §7Bargeld: §e" + uPlayerTarget.getCash());
+                player.sendMessage(" §f▹ §7Pulver: §e" + uPlayerTarget.getCocaineAmount() + "g");
+                player.sendMessage(" §f▹ §7Sportzigaretten: §e" + uPlayerTarget.getWeedAmount() + "g");
+                player.sendMessage(" §f▹ §7Kristalle: §e" + uPlayerTarget.getMethAmount() + "g");
+                player.sendMessage(" §f▹ §7Verbandskasten: §e" + uPlayerTarget.getMedicineAmount() + "g");
+                player.sendMessage(" §f▹ §7Schutzwesten: §e" + uPlayerTarget.getBulletproofAmount() + "g");
 
             }, 3 * 20L));
         }

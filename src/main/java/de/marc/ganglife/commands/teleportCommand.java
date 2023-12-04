@@ -38,7 +38,7 @@ public class teleportCommand implements CommandExecutor {
 
             if(args.length == 1) {
                 player.teleport(target.getLocation());
-                player.sendMessage(main.prefix + "§7Du hast dich zu §6" + target.getName() + " §7teleportiert.");
+                player.sendMessage(main.prefix + "§7Du hast dich zu §e" + target.getName() + " §7teleportiert.");
                 main.playProccessSound(player);
             } else if(args.length == 2) {
                 Player target2 = Bukkit.getPlayer(args[1]);
@@ -56,9 +56,9 @@ public class teleportCommand implements CommandExecutor {
                 }
 
                 target.teleport(target2.getLocation());
-                player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7zu §6" + target2.getName() + "  §7teleportiert.");
-                target.sendMessage(main.prefix + "§6" + player.getName() + " §7hat dich zu §6" + target2.getName() + " §7teleportiert.");
-                target2.sendMessage(main.prefix + "§6" + player.getName() + " §7hat §6" + target.getName() + " §7zu dir teleportiert.");
+                player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7zu §e" + target2.getName() + "  §7teleportiert.");
+                target.sendMessage(main.prefix + "§e" + player.getName() + " §7hat dich zu §e" + target2.getName() + " §7teleportiert.");
+                target2.sendMessage(main.prefix + "§e" + player.getName() + " §7hat §e" + target.getName() + " §7zu dir teleportiert.");
 
                 main.playProccessSound(player);
                 main.playProccessSound(target);

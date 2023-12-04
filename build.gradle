@@ -60,7 +60,7 @@ tasks {
     }
     shadowJar {
         archiveFileName.set("ganglife.jar")
-        destinationDirectory.set(file("C:\\Users\\azuser\\Desktop\\Dev-Server\\plugins"))
+        destinationDirectory.set(file("C:\\Users\\azuser\\Desktop\\MC Server\\plugins"))
     }
     build {
         dependsOn(shadowJar)

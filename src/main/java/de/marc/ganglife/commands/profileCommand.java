@@ -53,50 +53,50 @@ public class profileCommand implements CommandExecutor {
                     });
 
             GuiItem playerMoney = ItemBuilder.from(Material.GOLD_INGOT).name(Component.text("§7Dein Bargeld:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getCash() + "$"))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getCash() + "$"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Dein Bargeld: §6" + uPlayer.getCash() + "$");
+                        player.sendMessage(main.prefix + "§7Dein Bargeld: §e" + uPlayer.getCash() + "$");
                         player.closeInventory();
                     });
 
             GuiItem playerLevel = ItemBuilder.from(Material.EXPERIENCE_BOTTLE).name(Component.text("§7Dein Level:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getLevel()))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getLevel()))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Dein Level: §6" + uPlayer.getLevel());
+                        player.sendMessage(main.prefix + "§7Dein Level: §e" + uPlayer.getLevel());
                         player.closeInventory();
                     });
 
 
             int requiredEXP = 500 + (uPlayer.getLevel() - 1) * 250;
 
-            GuiItem playerEXP = ItemBuilder.from(Material.DRAGON_BREATH).name(Component.text(" §f▹ §7Deine Experience:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getLevelExp() + "§7/§6" + requiredEXP))
+            GuiItem playerEXP = ItemBuilder.from(Material.DRAGON_BREATH).name(Component.text("§7Deine Experience:"))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getLevelExp() + "§7/§e" + requiredEXP))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Deine Experience: §6" + uPlayer.getLevelExp() + "§7/§6" + requiredEXP);
+                        player.sendMessage(main.prefix + "§7Deine Experience: §e" + uPlayer.getLevelExp() + "§7/§e" + requiredEXP);
                         player.closeInventory();
                     });
 
 
             GuiItem playerPayDay = ItemBuilder.from(Material.EMERALD).name(Component.text("§7Dein PayDay:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getPaydayTime() + "§7/§660"))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getPaydayTime() + "§7/§e60"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Dein PayDay: §6" + uPlayer.getPaydayTime() + "§7/§660");
+                        player.sendMessage(main.prefix + "§7Dein PayDay: §e" + uPlayer.getPaydayTime() + "§7/§e60");
                         player.closeInventory();
                     });
 
             GuiItem playerFaction = ItemBuilder.from(Material.BONE).name(Component.text("§7Deine Fraktion:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getFaction() + " §7- §6" + uPlayer.getFactionRank()))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getFaction() + " §7- §e" + uPlayer.getFactionRank()))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Deine Fraktion: §6" + uPlayer.getFaction() + " §7- §6" + uPlayer.getFactionRank());
+                        player.sendMessage(main.prefix + "§7Deine Fraktion: §e" + uPlayer.getFaction() + " §7- §e" + uPlayer.getFactionRank());
                         player.closeInventory();
                     });
             GuiItem playerNoFaction = ItemBuilder.from(Material.BONE).name(Component.text("§7Deine Fraktion:"))
-                    .lore(Component.text(" §f▹ §6Zivilist"))
+                    .lore(Component.text(" §f▹ §eZivilist"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.sendMessage(main.prefix + "§cDu bist in keiner Fraktion.");
@@ -104,15 +104,15 @@ public class profileCommand implements CommandExecutor {
                     });
 
             GuiItem playerHouse = ItemBuilder.from(Material.BRICK).name(Component.text("§7Deine Hausnummer:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getHouseNumber()))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getHouseNumber()))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Deine Hausnummer: §6" + uPlayer.getHouseNumber());
+                        player.sendMessage(main.prefix + "§7Deine Hausnummer: §e" + uPlayer.getHouseNumber());
                         player.closeInventory();
                     });
 
             GuiItem playerHouseNo = ItemBuilder.from(Material.BRICK).name(Component.text("§7Deine Hausnummer:"))
-                    .lore(Component.text(" §f▹ §6Obdachlos"))
+                    .lore(Component.text(" §f▹ §eObdachlos"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.sendMessage(main.prefix + "§7Du besitzt kein Haus.");
@@ -120,16 +120,16 @@ public class profileCommand implements CommandExecutor {
                     });
 
             GuiItem playerTime = ItemBuilder.from(Material.CLOCK).name(Component.text("§7Deine Spielzeit:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getPlayTime() + " Stunden"))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getPlayTime() + " Stunden"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
-                        player.sendMessage(main.prefix + "§7Deine Spielzeit: §6" + uPlayer.getPlayTime());
+                        player.sendMessage(main.prefix + "§7Deine Spielzeit: §e" + uPlayer.getPlayTime());
                         player.closeInventory();
                     });
 
 
             GuiItem playerDrink = ItemBuilder.from(Material.POTION).name(Component.text("§7Dein Durst:"))
-                    .lore(Component.text(" §f▹ §6" + uPlayer.getDrink() + "§7/§610"))
+                    .lore(Component.text(" §f▹ §e" + uPlayer.getDrink() + "§7/§e10"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.closeInventory();

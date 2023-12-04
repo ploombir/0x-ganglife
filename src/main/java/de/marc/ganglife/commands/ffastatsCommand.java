@@ -48,7 +48,7 @@ public class ffastatsCommand implements CommandExecutor {
                 .asGuiItem(clickEvent -> {
                     main.playProccessSound(player);
                     player.closeInventory();
-                    player.sendMessage(main.prefix + "§7Deine Kills in FFA: §6" + ffa_kills);
+                    player.sendMessage(main.prefix + "§7Deine Kills in FFA: §e" + ffa_kills);
                 });
 
 
@@ -57,7 +57,7 @@ public class ffastatsCommand implements CommandExecutor {
                 .asGuiItem(clickEvent -> {
                     main.playProccessSound(player);
                     player.closeInventory();
-                    player.sendMessage(main.prefix + "§7Deine Tode in FFA: §6" + ffa_deaths);
+                    player.sendMessage(main.prefix + "§7Deine Tode in FFA: §e" + ffa_deaths);
                 });
 
         if(ffa_kills == 0 || ffa_deaths == 0) {
@@ -66,7 +66,7 @@ public class ffastatsCommand implements CommandExecutor {
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.closeInventory();
-                        player.sendMessage(main.prefix + "§7Deine K/D in FFA: §60");
+                        player.sendMessage(main.prefix + "§7Deine K/D in FFA: §e0");
                     });
             statsInventory.setItem(23, killsdeathsnull);
         } else {
@@ -75,7 +75,7 @@ public class ffastatsCommand implements CommandExecutor {
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.closeInventory();
-                        player.sendMessage(main.prefix + "§7Deine K/D in FFA: §6" + ffa_kills/ffa_deaths);
+                        player.sendMessage(main.prefix + "§7Deine K/D in FFA: §e" + ffa_kills/ffa_deaths);
                     });
             statsInventory.setItem(23, killsdeaths);
         }

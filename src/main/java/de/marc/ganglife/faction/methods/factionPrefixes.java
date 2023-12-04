@@ -26,4 +26,23 @@ public class factionPrefixes {
         }
         return colorCode;
     }
+    public static String getStringPrefix(String Faction) {
+        String colorCode = "";
+
+        switch (Faction) {
+            case "Polizei" -> {
+                colorCode = "§9";
+            }
+            case "Medics" -> {
+                colorCode = "§c";
+            }
+            case "Ballas" -> {
+                colorCode = "§d";
+            }
+            case "Mafia" -> {
+                colorCode = "§7";
+            }
+        }
+        return colorCode;
+    }
 }

@@ -39,7 +39,7 @@ public class werbungCommand implements CommandExecutor {
                             String finalMsg = msg;
                             if(uPlayer.getCash() >= 50) {
                                 Bukkit.broadcast(Component.text("§bWERBUNG §f▹§7" + finalMsg + "."));
-                                Bukkit.broadcast(Component.text(" §f▹ §aGeschaltet von §7" + player.getName() + " §7- §6" + uPlayer.getPhoneNumber()));
+                                Bukkit.broadcast(Component.text(" §f▹ §aGeschaltet von §7" + player.getName() + " §7- §e" + uPlayer.getPhoneNumber()));
 
                                 uPlayer.setCash(uPlayer.getCash() - 50);
                                 blocked.add(player);

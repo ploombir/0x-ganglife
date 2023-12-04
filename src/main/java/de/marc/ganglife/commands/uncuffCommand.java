@@ -50,8 +50,8 @@ public class uncuffCommand implements CommandExecutor {
                 return true;
             }
 
-            player.sendMessage(main.pre_error + "§7Du hast §6" + target.getName() + " §7entfesselt.");
-            target.sendMessage(main.pre_error + "§7Du wurdest von §6" + player.getName() + " §7entfesselt.");
+            player.sendMessage(main.pre_error + "§7Du hast §e" + target.getName() + " §7entfesselt.");
+            target.sendMessage(main.pre_error + "§7Du wurdest von §e" + player.getName() + " §7entfesselt.");
             main.playProccessSound(player);
             main.playProccessSound(target);
 

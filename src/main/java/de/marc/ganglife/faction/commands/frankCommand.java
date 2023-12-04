@@ -80,7 +80,7 @@ public class frankCommand implements CommandExecutor {
             target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7auf Rang §6" + rank + " §7gesetzt.");
             main.playProccessSound(player);
             main.playSuccessSound(target);
-            sendFactionMessage.sendFactionMessage(player, target.getName() + " wurde auf Rang " + rank + " gesetzt.");
+            sendFactionMessage.sendPlayerFactionMessage(player, target.getName() + " wurde auf Rang " + rank + " gesetzt.");
         }
         return false;
     }

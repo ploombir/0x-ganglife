@@ -62,8 +62,8 @@ public class payCommand implements CommandExecutor {
 
             uPlayer.setCash(uPlayer.getCash() - Integer.parseInt(amount));
             uPlayerTarget.setCash(uPlayerTarget.getCash() + Integer.parseInt(amount));
-            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7" + Integer.valueOf(amount) + "$ gegeben!");
-            target.sendMessage(main.prefix + "§7Du hast von §6" + player.getName() + " §7" + Integer.valueOf(amount) + "$ bekommen!");
+            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7" + Integer.valueOf(amount) + "$ gegeben!");
+            target.sendMessage(main.prefix + "§7Du hast von §e" + player.getName() + " §7" + Integer.valueOf(amount) + "$ bekommen!");
             main.playSuccessSound(player);
             main.playProccessSound(target);
         }

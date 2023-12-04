@@ -35,9 +35,9 @@ public class tphereCommand implements CommandExecutor {
                 return true;
             }
 
-            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7zu dir teleportiert.");
+            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7zu dir teleportiert.");
             target.teleport(player.getLocation());
-            target.sendMessage(main.prefix + "§7Du wurdest zu §6" + player.getName() + " §7teleportiert.");
+            target.sendMessage(main.prefix + "§7Du wurdest zu §e" + player.getName() + " §7teleportiert.");
             main.playProccessSound(player);
             main.playProccessSound(target);
 

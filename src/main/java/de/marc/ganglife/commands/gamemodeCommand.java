@@ -45,27 +45,27 @@ public class gamemodeCommand implements CommandExecutor {
                     Player target = Bukkit.getPlayer(args[1]);
                     if(target != null) {
                         if(args[0].equalsIgnoreCase("0")) {
-                            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7in den Survival Modus gesetzt!");
+                            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7in den Survival Modus gesetzt!");
                             target.setGameMode(GameMode.SURVIVAL);
-                            target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7in den Survival Modus gesetzt!");
+                            target.sendMessage(main.prefix + "§7Du wurdest von §e" + player.getName() + " §7in den Survival Modus gesetzt!");
                             main.playProccessSound(player);
                             main.playProccessSound(target);
                         } else if(args[0].equalsIgnoreCase("1")) {
-                            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7in den Creative Modus gesetzt!");
+                            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7in den Creative Modus gesetzt!");
                             target.setGameMode(GameMode.CREATIVE);
-                            target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7in den Creative Modus gesetzt!");
+                            target.sendMessage(main.prefix + "§7Du wurdest von §e" + player.getName() + " §7in den Creative Modus gesetzt!");
                             main.playProccessSound(player);
                             main.playProccessSound(target);
                         } else if(args[0].equalsIgnoreCase("2")) {
-                            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7in den Adventure Modus gesetzt!");
+                            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7in den Adventure Modus gesetzt!");
                             target.setGameMode(GameMode.ADVENTURE);
-                            target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7in den Adventure Modus gesetzt!");
+                            target.sendMessage(main.prefix + "§7Du wurdest von §e" + player.getName() + " §7in den Adventure Modus gesetzt!");
                             main.playProccessSound(player);
                             main.playProccessSound(target);
                         } else if(args[0].equalsIgnoreCase("3")) {
-                            player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7in den Spectator Modus gesetzt!");
+                            player.sendMessage(main.prefix + "§7Du hast §e" + target.getName() + " §7in den Spectator Modus gesetzt!");
                             target.setGameMode(GameMode.SPECTATOR);
-                            target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7in den Spectator Modus gesetzt!");
+                            target.sendMessage(main.prefix + "§7Du wurdest von §e" + player.getName() + " §7in den Spectator Modus gesetzt!");
                             main.playProccessSound(player);
                             main.playProccessSound(target);
                         }

@@ -105,7 +105,7 @@ public class inviteCommand implements CommandExecutor {
                         uTarget.setFaction(invitedFaction.get(target));
                         uTarget.setFactionRank(1);
                         target.sendMessage(main.prefix + "§7Du bist der Fraktion " + factionPrefixes.getPrefix(player) + invitedFaction.get(target) + " §7beigetreten.");
-                        sendFactionMessage.sendFactionMessage(player, target.getName() + " ist der Fraktion beigetreten.");
+                        sendFactionMessage.sendPlayerFactionMessage(player, target.getName() + " ist der Fraktion beigetreten.");
                         main.playSuccessSound(player);
                         main.playSuccessSound(target);
                         target.closeInventory();

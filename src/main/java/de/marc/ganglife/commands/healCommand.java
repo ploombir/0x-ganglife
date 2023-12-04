@@ -28,8 +28,8 @@ public class healCommand implements CommandExecutor {
                 if(player.hasPermission("system.heal.others")) {
                     Player target = Bukkit.getPlayer(args[0]);
                     if(target != null) {
-                        player.sendMessage(main.prefix + "Du hast §6" + target.getName() + " §7geheilt!");
-                        target.sendMessage(main.prefix + "Du wurdest von §6" + player.getName() + " §7geheilt!");
+                        player.sendMessage(main.prefix + "Du hast §e" + target.getName() + " §7geheilt!");
+                        target.sendMessage(main.prefix + "Du wurdest von §e" + player.getName() + " §7geheilt!");
                         target.setHealth(target.getMaxHealth());
                         target.setFoodLevel(20);
                         main.playSuccessSound(target);

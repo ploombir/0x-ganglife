@@ -48,7 +48,7 @@ public class registeratmCommand implements CommandExecutor {
             player.getInventory().addItem(signItem);
             sign.update();
 
-            player.sendMessage(main.prefix + "§7ATM mit Nummer: §6" + nbtTag + " §7erstellt");
+            player.sendMessage(main.prefix + "§7ATM mit Nummer: §e" + nbtTag + " §7erstellt");
             main.playSuccessSound(player);
 
         }

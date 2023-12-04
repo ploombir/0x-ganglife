@@ -30,9 +30,9 @@ public class clearCommand implements CommandExecutor {
                     return true;
                 }
 
-                player.sendMessage(main.prefix + "§7Du hast das Inventar von §6" + target.getName() + " §7geleert.");
+                player.sendMessage(main.prefix + "§7Du hast das Inventar von §e" + target.getName() + " §7geleert.");
                 target.getInventory().clear();
-                target.sendMessage(main.prefix + "§7Dein Inventar wurde von §6" + player.getName() + " §7geleert.");
+                target.sendMessage(main.prefix + "§7Dein Inventar wurde von §e" + player.getName() + " §7geleert.");
                 main.playProccessSound(player);
                 main.playErrorSound(target);
             } else {
