@@ -16,6 +16,10 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "codemc-snapshots"
+        url = "https://repo.codemc.io/repository/maven-snapshots/"
+    }
 }
 
 dependencies {
@@ -25,6 +29,7 @@ dependencies {
     implementation "org.projectlombok:lombok:1.18.26"
     implementation "net.kyori:adventure-api:4.14.0"
     implementation "com.zaxxer:HikariCP:5.1.0"
+    implementation "net.wesjd:anvilgui:1.9.2-SNAPSHOT"
 
     compileOnly "org.projectlombok:lombok:1.18.30"
     annotationProcessor "org.projectlombok:lombok:1.18.30"

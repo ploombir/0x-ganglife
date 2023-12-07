@@ -3,12 +3,15 @@ package de.marc.ganglife.phone.events;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
 import de.marc.ganglife.faction.methods.sendFactionMessage;
+import de.marc.ganglife.methods.isInteger;
 import de.marc.ganglife.methods.navigation;
 import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.components.GuiType;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,10 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class phone implements Listener {
 
@@ -34,6 +34,9 @@ public class phone implements Listener {
     public static final List<String> emergencyListMedicss = new ArrayList<>();
 
     public static final List<String> emergencyListPolice = new ArrayList<>();
+
+    public static HashMap<Player, String> safeContactNumber = new HashMap<>();
+    public static HashMap<Player, String> safeContactName = new HashMap<>();
 
 
     @EventHandler
@@ -57,6 +60,94 @@ public class phone implements Listener {
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
+
+                    Gui contactInventory = Gui.gui()
+                            .rows(3)
+                            .title(Component.text(main.prefix + "§7Kontakte verwalten"))
+                            .disableAllInteractions()
+                            .create();
+
+                    GuiItem addContacts = ItemBuilder.from(Material.GUNPOWDER)
+                            .name(Component.text("§aKontakte hinzufügen"))
+                            .lore(Component.text(" §7▹ §7§oKlicke um ein Kontakt hinzuzufügen."))
+                            .asGuiItem(eventContact -> {
+                                player.closeInventory();
+                                main.playProccessSound(player);
+
+                                ItemStack safe = ItemBuilder.from(Material.GUNPOWDER)
+                                        .name(Component.text("§aBestätigen"))
+                                        .build();
+
+                                ItemStack infoNumber = ItemBuilder.from(Material.BLAZE_ROD)
+                                        .name(Component.text("§7Info"))
+                                        .lore(Component.text(" §7▹ §7§oBitte gebe eine Telefonnummer ein."))
+                                        .build();
+
+                                ItemStack infoName = ItemBuilder.from(Material.BLAZE_ROD)
+                                        .name(Component.text("§7Info"))
+                                        .lore(Component.text(" §7▹ §7§oBitte gebe einen Namen ein."))
+                                        .build();
+
+                                new AnvilGUI.Builder()
+                                        .onClick((slot, stateSnapshot) -> {
+                                            if (slot != AnvilGUI.Slot.OUTPUT) {
+                                                return Collections.emptyList();
+                                            }
+
+                                            if (isInteger.isInt(stateSnapshot.getText())) {
+                                                main.playProccessSound(player);
+                                                player.closeInventory();
+                                                safeContactNumber.put(player, stateSnapshot.getText());
+
+                                                new AnvilGUI.Builder()
+                                                        .onClick((slot2, stateSnapshot2) -> {
+                                                            if (slot2 != AnvilGUI.Slot.OUTPUT) {
+                                                                return Collections.emptyList();
+                                                            }
+                                                            stateSnapshot2.getPlayer().sendMessage(main.prefix + "§7Kontakt wurde §aeingespeichert.");
+                                                            main.playProccessSound(player);
+                                                            player.closeInventory();
+                                                            safeContactName.put(player, stateSnapshot2.getText());
+
+                                                            player.sendMessage(safeContactNumber.get(player) + " " + safeContactName.get(player));
+
+                                                            return Collections.emptyList();
+                                                        })
+                                                        .title(main.prefix + "§7Kontaktname:")
+                                                        .plugin(main.getPlugin())
+                                                        .text("§7Kontaktname")
+                                                        .itemLeft(infoName)
+                                                        .itemOutput(safe)
+                                                        .open(player);
+
+                                                return Collections.emptyList();
+
+                                            } else {
+                                                main.playErrorSound(player);
+                                                return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText("§cBitte gebe eine Zahl an."));
+                                            }
+                                        })
+
+                                        .title(main.prefix + "§7Telefonnummer:")
+                                        .plugin(main.getPlugin())
+                                        .text("§7Telefonnummer")
+                                        .itemLeft(infoNumber)
+                                        .itemOutput(safe)
+                                        .open(player);
+
+                            });
+
+                    GuiItem manageContacts = ItemBuilder.from(Material.ITEM_FRAME)
+                            .name(Component.text("§eKontakte verwalten"))
+                            .lore(Component.text(" §7▹ §7§oKlicke um deine Kontakte zu verwalten."))
+                            .asGuiItem(eventContact -> {
+                                player.closeInventory();
+                                main.playProccessSound(player);
+                            });
+
+                    contactInventory.setItem(11, addContacts);
+                    contactInventory.setItem(15, manageContacts);
+                    contactInventory.open(player);
                 });
 
         GuiItem bankingApp = ItemBuilder.from(Material.GOLD_BLOCK).name(Component.text("§eBank"))
