@@ -34,6 +34,7 @@ public class uncuffCommand implements CommandExecutor {
 
             UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
             if(uPlayer.getDeathTime() >= 1) return true;
+
             if(interactionmenu.cuff.contains(player)) {
                 player.sendMessage(main.pre_error + "§cDu kannst nicht gefesselt, andere Personen entfesseln.");
                 main.playErrorSound(player);
@@ -57,11 +58,7 @@ public class uncuffCommand implements CommandExecutor {
 
             target.setWalkSpeed((float) 0.2);
             interactionmenu.cuff.remove(target);
-
-
         }
-
-
         return false;
     }
 }

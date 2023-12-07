@@ -82,7 +82,6 @@ public class inviteCommand implements CommandExecutor {
                 return true;
             }
 
-
             invitedFaction.put(target, uPlayer.getFaction());
 
             Gui inviteInventory = Gui.gui()
@@ -91,14 +90,12 @@ public class inviteCommand implements CommandExecutor {
                     .disableAllInteractions()
                     .create();
 
-
             player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7in die Fraktion " + factionPrefixes.getPrefix(player)
                     + uPlayer.getFaction() + " §7eingeladen.");
             main.playProccessSound(player);
             main.playProccessSound(target);
 
-
-            GuiItem inviteGUI = ItemBuilder.from(Material.GREEN_CONCRETE)
+            GuiItem inviteGUI = ItemBuilder.from(Material.GUNPOWDER)
                     .name(Component.text("§aFraktion beitreten.."))
                     .lore(Component.text(" §f▹ §7§oKlicke um die Einladung anzunehmen."))
                     .asGuiItem(clickEvent -> {

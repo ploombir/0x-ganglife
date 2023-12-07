@@ -273,6 +273,8 @@ public class phone implements Listener {
                                                         main.playProccessSound(player);
                                                         player.sendMessage(main.prefix + "§7Du hast den Notruf von §e" + target.getName() + " §cgeschlossen.");
                                                         emergencyListPolice.remove(target.getName());
+                                                        main.playProccessSound(target);
+                                                        target.sendMessage(main.prefix + "§7Dein Notruf wurde §cgeschlossen.");
                                                     });
 
                                             manageEmergency.setItem(11, acceptEmergency);
