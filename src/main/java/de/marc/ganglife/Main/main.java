@@ -3,6 +3,7 @@ package de.marc.ganglife.Main;
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.*;
+import de.marc.ganglife.phone.commands.addcontactCommand;
 import de.marc.ganglife.phone.commands.smsCommand;
 import de.marc.ganglife.phone.events.phone;
 import de.marc.ganglife.playerEvents.*;
@@ -91,6 +92,7 @@ public final class main extends JavaPlugin {
         getCommand("members").setExecutor(new membersCommand());
         getCommand("playermanage").setExecutor(new playermanageCommand());
         getCommand("sms").setExecutor(new smsCommand());
+        getCommand("addcontact").setExecutor(new addcontactCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);

@@ -50,13 +50,13 @@ public class phone implements Listener {
                 .disableAllInteractions()
                 .create();
 
-        GuiItem closePhoneGUI = ItemBuilder.from(Material.BARRIER).name(Component.text("§cAusschalten"))
+        GuiItem closePhoneGUI = ItemBuilder.from(Material.CYAN_DYE).name(Component.text("§cAusschalten"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                 });
 
-        GuiItem contactApp = ItemBuilder.from(Material.BOOK).name(Component.text("§aKontakte"))
+        GuiItem contactApp = ItemBuilder.from(Material.LIGHT_GRAY_DYE).name(Component.text("§aKontakte"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -67,15 +67,16 @@ public class phone implements Listener {
                             .disableAllInteractions()
                             .create();
 
-                    GuiItem addContacts = ItemBuilder.from(Material.GUNPOWDER)
+                    GuiItem addContacts = ItemBuilder.from(Material.HONEYCOMB)
                             .name(Component.text("§aKontakte hinzufügen"))
                             .lore(Component.text(" §7▹ §7§oKlicke um ein Kontakt hinzuzufügen."))
                             .asGuiItem(eventContact -> {
                                 player.closeInventory();
                                 main.playProccessSound(player);
 
-                                ItemStack safe = ItemBuilder.from(Material.GUNPOWDER)
+                                ItemStack safe = ItemBuilder.from(Material.HONEYCOMB)
                                         .name(Component.text("§aBestätigen"))
+                                        .lore(Component.text(" §7▹ §7§oKlicke zum bestätigen."))
                                         .build();
 
                                 ItemStack infoNumber = ItemBuilder.from(Material.BLAZE_ROD)
@@ -104,13 +105,9 @@ public class phone implements Listener {
                                                             if (slot2 != AnvilGUI.Slot.OUTPUT) {
                                                                 return Collections.emptyList();
                                                             }
-                                                            stateSnapshot2.getPlayer().sendMessage(main.prefix + "§7Kontakt wurde §aeingespeichert.");
-                                                            main.playProccessSound(player);
                                                             player.closeInventory();
                                                             safeContactName.put(player, stateSnapshot2.getText());
-
-                                                            player.sendMessage(safeContactNumber.get(player) + " " + safeContactName.get(player));
-
+                                                            Bukkit.dispatchCommand(player, "addcontact " + safeContactName.get(player) + " " + safeContactNumber.get(player));
                                                             return Collections.emptyList();
                                                         })
                                                         .title(main.prefix + "§7Kontaktname:")
@@ -137,12 +134,82 @@ public class phone implements Listener {
 
                             });
 
-                    GuiItem manageContacts = ItemBuilder.from(Material.ITEM_FRAME)
+                    GuiItem manageContacts = ItemBuilder.from(Material.LIGHT_GRAY_DYE)
                             .name(Component.text("§eKontakte verwalten"))
                             .lore(Component.text(" §7▹ §7§oKlicke um deine Kontakte zu verwalten."))
                             .asGuiItem(eventContact -> {
                                 player.closeInventory();
                                 main.playProccessSound(player);
+
+                                String contactsJSON = uPlayer.getPhoneContacts();
+                                Map<String, Object>[] contacts = de.marc.ganglife.methods.phone.formatFromString(contactsJSON);
+
+                                if (contacts.length == 0) {
+                                    player.sendMessage(main.pre_error + "§cEs wurden keine Kontakte gefunden.");
+                                    main.playErrorSound(player);
+                                } else {
+                                    Gui playercontactsInventory = Gui.gui()
+                                            .rows(6)
+                                            .title(Component.text(main.prefix + "§7Kontakte"))
+                                            .disableAllInteractions()
+                                            .create();
+
+                                    for (Map<String, Object> contact : contacts) {
+                                        String name = (String) contact.get("name");
+                                        String number = (String) contact.get("number");
+
+                                        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
+
+                                        playercontactsInventory.addItem(ItemBuilder.from(playerHead)
+                                                .name(Component.text("§e" + name + " §7- §6" + number))
+                                                .lore(Component.text(" §f▹ §7§oKlicke für mehr Informationen."))
+                                                .asGuiItem(click -> {
+
+                                                    Gui contactinfoInventory = Gui.gui()
+                                                            .rows(3)
+                                                            .title(Component.text(main.prefix + "§e" + name))
+                                                            .disableAllInteractions()
+                                                            .create();
+
+                                                    GuiItem callContact = ItemBuilder.from(Material.BOOK)
+                                                            .name(Component.text("§e" + name + " §aanrufen"))
+                                                            .lore(Component.text(" §f▹ §7§oKlicke um den Kontakt anzurufen."))
+                                                            .asGuiItem(accept -> {
+                                                                player.closeInventory();
+                                                                main.playProccessSound(player);
+                                                                // Call functionality
+                                                            });
+
+                                                    GuiItem smsContact = ItemBuilder.from(Material.WHITE_DYE)
+                                                            .name(Component.text("§e" + name + " §6eine SMS schreiben"))
+                                                            .lore(Component.text(" §f▹ §7§oKlicke um dem Kontakt eine Nachricht zu schreiben."))
+                                                            .asGuiItem(cancel -> {
+                                                                player.closeInventory();
+                                                                main.playProccessSound(player);
+                                                                // SMS functionality
+                                                            });
+
+                                                    GuiItem deleteContact = ItemBuilder.from(Material.BARRIER)
+                                                            .name(Component.text("§e" + name + " §clöschen"))
+                                                            .lore(Component.text(" §f▹ §7§oKlicke um den Kontakt zu löschen."))
+                                                            .asGuiItem(cancel -> {
+                                                                player.closeInventory();
+                                                                main.playProccessSound(player);
+                                                                // Delete functionality
+                                                            });
+
+                                                    contactinfoInventory.setItem(11, callContact);
+                                                    contactinfoInventory.setItem(13, smsContact);
+                                                    contactinfoInventory.setItem(15, deleteContact);
+
+                                                    player.closeInventory();
+                                                    contactinfoInventory.open(player);
+                                                    main.playProccessSound(player);
+                                                }));
+                                    }
+
+                                    playercontactsInventory.open(player);
+                                }
                             });
 
                     contactInventory.setItem(11, addContacts);
@@ -150,7 +217,7 @@ public class phone implements Listener {
                     contactInventory.open(player);
                 });
 
-        GuiItem bankingApp = ItemBuilder.from(Material.GOLD_BLOCK).name(Component.text("§eBank"))
+        GuiItem bankingApp = ItemBuilder.from(Material.YELLOW_DYE).name(Component.text("§eBank"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -158,7 +225,7 @@ public class phone implements Listener {
                     player.sendMessage(main.prefix + "§7Aktueller Kontostand: §e" + uPlayer.getBank() + "$");
                 });
 
-        GuiItem emergencyApp = ItemBuilder.from(Material.TRIPWIRE_HOOK).name(Component.text("§9Notruf"))
+        GuiItem emergencyApp = ItemBuilder.from(Material.BROWN_DYE).name(Component.text("§9Notruf"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -213,7 +280,7 @@ public class phone implements Listener {
                     emergencyInventory.setItem(15, policeEmergency);
                     emergencyInventory.open(player);
                 });
-        GuiItem settingsApp = ItemBuilder.from(Material.REDSTONE).name(Component.text("§7Einstellungen"))
+        GuiItem settingsApp = ItemBuilder.from(Material.RED_DYE).name(Component.text("§7Einstellungen"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -295,28 +362,29 @@ public class phone implements Listener {
                     main.playProccessSound(player);
                 });
 
-        GuiItem navigationApp = ItemBuilder.from(Material.COMPASS).name(Component.text("§aNavigation"))
+        GuiItem navigationApp = ItemBuilder.from(Material.LIME_DYE).name(Component.text("§aNavigation"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                     Bukkit.dispatchCommand(player, "navi");
                 });
 
-        GuiItem factionApp = ItemBuilder.from(Material.DIAMOND_HORSE_ARMOR).name(Component.text("§6Fraktion"))
+        GuiItem factionApp = ItemBuilder.from(Material.BLACK_DYE).name(Component.text("§6Fraktion"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                 });
 
-        GuiItem businessApp = ItemBuilder.from(Material.CLAY_BALL).name(Component.text("§eBusiness"))
+        GuiItem businessApp = ItemBuilder.from(Material.GRAY_DYE).name(Component.text("§eBusiness"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                 });
 
-        GuiItem notrufListApp = ItemBuilder.from(Material.WRITABLE_BOOK).name(Component.text("§cAktuelle Notrufe"))
+        GuiItem notrufListApp = ItemBuilder.from(Material.ORANGE_DYE).name(Component.text("§cAktuelle Notrufe"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
+
                     Gui notruflistInventory = Gui.gui()
                             .rows(3)
                             .title(Component.text(main.prefix + "§7Aktuelle Notrufe"))
@@ -435,13 +503,13 @@ public class phone implements Listener {
                     }
                 });
 
-        GuiItem actsApp = ItemBuilder.from(Material.MAGMA_CREAM).name(Component.text("§cAkten"))
+        GuiItem actsApp = ItemBuilder.from(Material.GREEN_DYE).name(Component.text("§cAkten"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                 });
 
-        GuiItem placeHolder = ItemBuilder.from(Material.BLACK_STAINED_GLASS).name(Component.text(""))
+        GuiItem placeHolder = ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.text(""))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
