@@ -35,7 +35,7 @@ public class smsCommand implements CommandExecutor {
             }
 
             if(args.length <= 1) {
-                player.sendMessage(main.pre_error + "§cVerwendung: /call <Nummer> <Nachricht>.");
+                player.sendMessage(main.pre_error + "§cVerwendung: /sms <Nummer> <Nachricht>.");
                 main.playErrorSound(player);
                 return true;
             }
@@ -92,6 +92,7 @@ public class smsCommand implements CommandExecutor {
                         main.playErrorSound(player);
                         return;
                     }
+
                     String message = "";
                     for (int i = 1; i < args.length; i++) {
                         message += args[i] + " ";

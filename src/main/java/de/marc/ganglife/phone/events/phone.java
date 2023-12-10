@@ -50,7 +50,7 @@ public class phone implements Listener {
                 .disableAllInteractions()
                 .create();
 
-        GuiItem closePhoneGUI = ItemBuilder.from(Material.CYAN_DYE).name(Component.text("§cAusschalten"))
+        GuiItem closePhoneGUI = ItemBuilder.from(Material.CYAN_DYE).name(Component.text("§4Ausschalten"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -189,12 +189,13 @@ public class phone implements Listener {
                                                                 // SMS functionality
                                                             });
 
-                                                    GuiItem deleteContact = ItemBuilder.from(Material.BARRIER)
+                                                    GuiItem deleteContact = ItemBuilder.from(Material.LIGHT_BLUE_DYE)
                                                             .name(Component.text("§e" + name + " §clöschen"))
                                                             .lore(Component.text(" §f▹ §7§oKlicke um den Kontakt zu löschen."))
                                                             .asGuiItem(cancel -> {
                                                                 player.closeInventory();
                                                                 main.playProccessSound(player);
+                                                                Bukkit.dispatchCommand(player, "delcontact " + name + " " + number);
                                                                 // Delete functionality
                                                             });
 
@@ -225,7 +226,7 @@ public class phone implements Listener {
                     player.sendMessage(main.prefix + "§7Aktueller Kontostand: §e" + uPlayer.getBank() + "$");
                 });
 
-        GuiItem emergencyApp = ItemBuilder.from(Material.BROWN_DYE).name(Component.text("§9Notruf"))
+        GuiItem emergencyApp = ItemBuilder.from(Material.BROWN_DYE).name(Component.text("§cNotruf"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -362,14 +363,14 @@ public class phone implements Listener {
                     main.playProccessSound(player);
                 });
 
-        GuiItem navigationApp = ItemBuilder.from(Material.LIME_DYE).name(Component.text("§aNavigation"))
+        GuiItem navigationApp = ItemBuilder.from(Material.LIME_DYE).name(Component.text("§3Navigation"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
                     Bukkit.dispatchCommand(player, "navi");
                 });
 
-        GuiItem factionApp = ItemBuilder.from(Material.BLACK_DYE).name(Component.text("§6Fraktion"))
+        GuiItem factionApp = ItemBuilder.from(Material.BLACK_DYE).name(Component.text("§9Fraktion"))
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
@@ -411,7 +412,7 @@ public class phone implements Listener {
                                                     .disableAllInteractions()
                                                     .create();
 
-                                            GuiItem acceptEmergency = ItemBuilder.from(Material.GUNPOWDER)
+                                            GuiItem acceptEmergency = ItemBuilder.from(Material.BLUE_DYE)
                                                     .name(Component.text("§aNotruf annehmen"))
                                                     .lore(Component.text(" §f▹ §7§oKlicke um den Notruf anzunehmen."))
                                                     .asGuiItem(accept -> {
@@ -424,7 +425,7 @@ public class phone implements Listener {
                                                         main.playProccessSound(target);
                                                         navigation.navigateTo(player, target.getLocation());
                                                     });
-                                            GuiItem cancelEmergency = ItemBuilder.from(Material.BARRIER)
+                                            GuiItem cancelEmergency = ItemBuilder.from(Material.LIGHT_BLUE_DYE)
                                                     .name(Component.text("§cNotruf schließen"))
                                                     .lore(Component.text(" §f▹ §7§oKlicke um den Notruf zu schließen."))
                                                     .asGuiItem(cancel -> {
@@ -467,7 +468,7 @@ public class phone implements Listener {
                                                     .disableAllInteractions()
                                                     .create();
 
-                                            GuiItem acceptEmergency = ItemBuilder.from(Material.GUNPOWDER)
+                                            GuiItem acceptEmergency = ItemBuilder.from(Material.BLUE_DYE)
                                                     .name(Component.text("§aNotruf annehmen"))
                                                     .lore(Component.text(" §f▹ §7§oKlicke um den Notruf anzunehmen."))
                                                     .asGuiItem(accept -> {
@@ -480,7 +481,7 @@ public class phone implements Listener {
                                                         main.playProccessSound(target);
                                                         navigation.navigateTo(player, target.getLocation());
                                                     });
-                                            GuiItem cancelEmergency = ItemBuilder.from(Material.BARRIER)
+                                            GuiItem cancelEmergency = ItemBuilder.from(Material.LIGHT_BLUE_DYE)
                                                     .name(Component.text("§cNotruf schließen"))
                                                     .lore(Component.text(" §f▹ §7§oKlicke um den Notruf zu schließen."))
                                                     .asGuiItem(cancel -> {

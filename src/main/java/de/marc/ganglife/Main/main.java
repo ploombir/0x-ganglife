@@ -3,8 +3,8 @@ package de.marc.ganglife.Main;
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.*;
-import de.marc.ganglife.phone.commands.addcontactCommand;
-import de.marc.ganglife.phone.commands.smsCommand;
+import de.marc.ganglife.phone.commands.*;
+import de.marc.ganglife.phone.events.callManager;
 import de.marc.ganglife.phone.events.phone;
 import de.marc.ganglife.playerEvents.*;
 import de.marc.ganglife.playerdatas.playerManager;
@@ -93,6 +93,11 @@ public final class main extends JavaPlugin {
         getCommand("playermanage").setExecutor(new playermanageCommand());
         getCommand("sms").setExecutor(new smsCommand());
         getCommand("addcontact").setExecutor(new addcontactCommand());
+        getCommand("delcontact").setExecutor(new delcontactCommand());
+        getCommand("call").setExecutor(new callCommand());
+        getCommand("acceptcall").setExecutor(new acceptcallCommand());
+        getCommand("denycall").setExecutor(new denycallCommand());
+        getCommand("auflegen").setExecutor(new auflegenCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
@@ -110,6 +115,7 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new entityDamageClass(), this);
         getServer().getPluginManager().registerEvents(new phone(), this);
         getServer().getPluginManager().registerEvents(new playermanageHandler(), this);
+        getServer().getPluginManager().registerEvents(new callManager(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {

@@ -41,3 +41,8 @@ commands:
   playermanage:
   sms:
   addcontact:
+  delcontact:
+  call:
+  acceptcall:
+  denycall:
+  auflegen:

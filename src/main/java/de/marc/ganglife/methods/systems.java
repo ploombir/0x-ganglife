@@ -12,6 +12,9 @@ public class systems {
 
         int requiredExp = 500 + (uPlayer.getLevel() - 1) * 250;
 
+        player.setLevel(uPlayer.getLevel());
+        updatePlayerLevelAndExp(player, uPlayer);
+
         if (uPlayer.getLevelExp() >= requiredExp) {
             uPlayer.setLevel(uPlayer.getLevel() + 1);
             uPlayer.setLevelExp(uPlayer.getLevelExp() - requiredExp);
