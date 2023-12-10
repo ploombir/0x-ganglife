@@ -98,6 +98,7 @@ public final class main extends JavaPlugin {
         getCommand("acceptcall").setExecutor(new acceptcallCommand());
         getCommand("denycall").setExecutor(new denycallCommand());
         getCommand("auflegen").setExecutor(new auflegenCommand());
+        getCommand("me").setExecutor(new meCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
