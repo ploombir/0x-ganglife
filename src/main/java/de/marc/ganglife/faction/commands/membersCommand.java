@@ -48,8 +48,6 @@ public class membersCommand implements CommandExecutor {
             }
 
             main.playProccessSound(player);
-            player.sendMessage(main.prefix + "§7Gesamte Spieler in Fraktion: §7(" +factionPrefixes.getPrefix(player)
-                    + uPlayer.getFaction() + "§7)");
 
             setFaction.getFactionMembers(uPlayer.getFaction()).thenAccept(members -> {
                 Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
@@ -68,6 +66,8 @@ public class membersCommand implements CommandExecutor {
                         }
                     }
                 });
+                player.sendMessage(main.prefix + "§7Gesamte Spieler in Fraktion: §7(" +factionPrefixes.getPrefix(player)
+                        + uPlayer.getFaction() + " §f- §e" + members.size() + "§7/§e10§7)");
             });
 
         }
