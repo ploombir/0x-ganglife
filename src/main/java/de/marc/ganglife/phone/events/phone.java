@@ -2,6 +2,7 @@ package de.marc.ganglife.phone.events;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
+import de.marc.ganglife.faction.methods.factionPrefixes;
 import de.marc.ganglife.faction.methods.sendFactionMessage;
 import de.marc.ganglife.methods.isInteger;
 import de.marc.ganglife.methods.navigation;
@@ -374,6 +375,42 @@ public class phone implements Listener {
                 .asGuiItem(clickEvent -> {
                     player.closeInventory();
                     main.playProccessSound(player);
+
+                    if(uPlayer.getFaction().equals("Zivilist")) {
+                        player.sendMessage(main.pre_error + "§cDu bist in keiner Fraktion.");
+                        main.playErrorSound(player);
+                        return;
+                    }
+
+                    Gui factionInventory = Gui.gui()
+                            .rows(3)
+                            .title(Component.text(main.prefix + factionPrefixes.getPrefix(player) + uPlayer.getFaction()))
+                            .disableAllInteractions()
+                            .create();
+
+                    GuiItem manageFaction = ItemBuilder.from(Material.PURPLE_DYE)
+                            .name(Component.text(factionPrefixes.getPrefix(player) + uPlayer.getFaction() + " §7verwalten"))
+                            .lore(Component.text(" §7▹ §7§oKlicke um deine Fraktion zu verwalten."))
+                            .asGuiItem(click -> {
+                                player.closeInventory();
+                                main.playProccessSound(player);
+                            });
+
+                    GuiItem inviteFaction = ItemBuilder.from(Material.HONEYCOMB)
+                            .name(Component.text("§7Spieler zu " + factionPrefixes.getPrefix(player) + uPlayer.getFaction()
+                                    + " §7einladen"))
+                            .lore(Component.text(" §7▹ §7§oKlicke um jemanden in deine Fraktion einzuladen."))
+                            .asGuiItem(click -> {
+                                player.closeInventory();
+                                main.playProccessSound(player);
+                            });
+
+                    if(uPlayer.getFactionRank() >= 5) {
+                        factionInventory.setItem(11, inviteFaction);
+                        factionInventory.setItem(15, manageFaction);
+                        factionInventory.open(player);
+                    }
+
                 });
 
         GuiItem businessApp = ItemBuilder.from(Material.GRAY_DYE).name(Component.text("§eBusiness"))
@@ -516,21 +553,28 @@ public class phone implements Listener {
                     main.playProccessSound(player);
                 });
 
-        if (uPlayer.getFaction().equals("Polizei") || uPlayer.getFaction().equals("Medics")) {
-            phoneInventory.setItem(12, notrufListApp);
+
+        if(!uPlayer.isPhoneFlightMode()) {
+            if (uPlayer.getFaction().equals("Polizei") || uPlayer.getFaction().equals("Medics")) {
+                phoneInventory.setItem(12, notrufListApp);
+            }
+
+            phoneInventory.setItem(13, navigationApp);
+
+            if (uPlayer.getFaction().equals("Polizei")) {
+                phoneInventory.setItem(14, actsApp);
+            }
+            phoneInventory.setItem(21, emergencyApp);
+            phoneInventory.setItem(22, bankingApp);
+            phoneInventory.setItem(23, settingsApp);
+            phoneInventory.setItem(39, businessApp);
+            phoneInventory.setItem(40, contactApp);
+            phoneInventory.setItem(41, factionApp);
+        } else {
+            phoneInventory.setItem(13, navigationApp);
+            phoneInventory.setItem(23, settingsApp);
         }
 
-        phoneInventory.setItem(13, navigationApp);
-
-        if (uPlayer.getFaction().equals("Polizei")) {
-            phoneInventory.setItem(14, actsApp);
-        }
-        phoneInventory.setItem(21, emergencyApp);
-        phoneInventory.setItem(22, bankingApp);
-        phoneInventory.setItem(23, settingsApp);
-        phoneInventory.setItem(39, businessApp);
-        phoneInventory.setItem(40, contactApp);
-        phoneInventory.setItem(41, factionApp);
         phoneInventory.setItem(49, closePhoneGUI);
 
         phoneInventory.setItem(2, placeHolder);
