@@ -12,6 +12,9 @@ import dev.triumphteam.gui.components.GuiType;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,6 +28,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Consumer;
+
+import static org.bukkit.Bukkit.getServer;
 
 public class phone implements Listener {
 
@@ -178,16 +184,17 @@ public class phone implements Listener {
                                                             .asGuiItem(accept -> {
                                                                 player.closeInventory();
                                                                 main.playProccessSound(player);
-                                                                // Call functionality
+                                                                Bukkit.dispatchCommand(player, "call " + number);
                                                             });
-
                                                     GuiItem smsContact = ItemBuilder.from(Material.WHITE_DYE)
                                                             .name(Component.text("§e" + name + " §6eine SMS schreiben"))
                                                             .lore(Component.text(" §f▹ §7§oKlicke um dem Kontakt eine Nachricht zu schreiben."))
                                                             .asGuiItem(cancel -> {
                                                                 player.closeInventory();
                                                                 main.playProccessSound(player);
+
                                                                 // SMS functionality
+                                                                Bukkit.dispatchCommand(player, "sms " + number);
                                                             });
 
                                                     GuiItem deleteContact = ItemBuilder.from(Material.LIGHT_BLUE_DYE)
@@ -394,6 +401,12 @@ public class phone implements Listener {
                             .asGuiItem(click -> {
                                 player.closeInventory();
                                 main.playProccessSound(player);
+
+                                Gui manageFactionInventory = Gui.gui()
+                                        .rows(3)
+                                        .title(Component.text(main.prefix + factionPrefixes.getPrefix(player) + uPlayer.getFaction()))
+                                        .disableAllInteractions()
+                                        .create();
                             });
 
                     GuiItem inviteFaction = ItemBuilder.from(Material.HONEYCOMB)
