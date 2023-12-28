@@ -125,6 +125,7 @@ public class interactionmenu implements Listener {
                             .filter(item -> item != null && item.getType() != Material.AIR)
                             .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.POLICE_CUFF.getItem().getItemMeta().getDisplayName()))
                             .anyMatch(item -> item.getType() == items.POLICE_CUFF.getItem().getType());
+
                     if(!found) {
                         player.sendMessage(main.pre_error + "§cDu hast keine Handschellen dabei.");
                         main.playErrorSound(player);

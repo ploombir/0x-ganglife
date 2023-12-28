@@ -6,6 +6,7 @@ import de.marc.ganglife.faction.methods.factionPrefixes;
 import de.marc.ganglife.faction.methods.sendFactionMessage;
 import de.marc.ganglife.methods.isInteger;
 import de.marc.ganglife.methods.navigation;
+import de.marc.ganglife.phone.commands.smsCommand;
 import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.GuiType;
@@ -195,6 +196,7 @@ public class phone implements Listener {
 
                                                                 // SMS functionality
                                                                 Bukkit.dispatchCommand(player, "sms " + number);
+                                                                smsCommand.smsTarget.put(player, number);
                                                             });
 
                                                     GuiItem deleteContact = ItemBuilder.from(Material.LIGHT_BLUE_DYE)

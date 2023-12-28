@@ -13,11 +13,20 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.http.WebSocket;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
-public class smsCommand implements CommandExecutor {
+public class smsCommand implements CommandExecutor, Listener {
+
+    public static ArrayList<Player> writeSMS = new ArrayList<>();
+    public static HashMap<Player, String> smsTarget = new HashMap<>();
 
     setMobile setMobile = new setMobile(main.getPlugin().getDatabaseAsync().getDataSource());
     @Override
@@ -34,8 +43,8 @@ public class smsCommand implements CommandExecutor {
                 return true;
             }
 
-            if(args.length <= 1) {
-                player.sendMessage(main.pre_error + "§cVerwendung: /sms <Nummer> <Nachricht>.");
+            if(args.length == 0) {
+                player.sendMessage(main.pre_error + "§cVerwendung: /sms <Nummer> <Nachricht>");
                 main.playErrorSound(player);
                 return true;
             }
@@ -54,59 +63,85 @@ public class smsCommand implements CommandExecutor {
                 return true;
             }
 
-            setMobile.getPlayerFromNumber(args[0]).thenAccept(targetName -> {
-                Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
-                    if(targetName.isEmpty()) {
-                        player.sendMessage(main.pre_error + "§cDiese Nummer existiert nicht.");
-                        main.playErrorSound(player);
-                        return;
-                    }
-                    Player target = Bukkit.getPlayer(targetName.get());
 
-                    if(target == player) {
-                        player.sendMessage(main.pre_error + "§cDu kannst dir nicht selber eine Nachricht schreiben.");
-                        main.playErrorSound(player);
-                        return;
-                    }
+            if(args.length >= 2) {
+                setMobile.getPlayerFromNumber(args[0]).thenAccept(targetName -> {
+                    Bukkit.getScheduler().runTask(main.getPlugin(), () -> {
+                        if(targetName.isEmpty()) {
+                            player.sendMessage(main.pre_error + "§cDiese Nummer existiert nicht.");
+                            main.playErrorSound(player);
+                            return;
+                        }
+                        Player target = Bukkit.getPlayer(targetName.get());
 
-                    if(target == null) {
-                        player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
-                        main.playErrorSound(player);
-                        return;
-                    }
-                    UPlayer uTarget = UPlayer.getUPlayer(target.getUniqueId());
+                        if(target == player) {
+                            player.sendMessage(main.pre_error + "§cDu kannst dir nicht selber eine Nachricht schreiben.");
+                            main.playErrorSound(player);
+                            return;
+                        }
 
-                    if(uTarget.isPhoneFlightMode()) {
-                        player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
-                        main.playErrorSound(player);
-                        return;
-                    }
+                        if(target == null) {
+                            player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
+                            main.playErrorSound(player);
+                            return;
+                        }
+                        UPlayer uTarget = UPlayer.getUPlayer(target.getUniqueId());
 
-                    boolean foundTarget = Arrays.stream(target.getInventory().getContents())
-                            .filter(item -> item != null && item.getType() != Material.AIR)
-                            .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
-                            .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
+                        if(uTarget.isPhoneFlightMode()) {
+                            player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
+                            main.playErrorSound(player);
+                            return;
+                        }
 
-                    if(!foundTarget) {
-                        player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
-                        main.playErrorSound(player);
-                        return;
-                    }
+                        boolean foundTarget = Arrays.stream(target.getInventory().getContents())
+                                .filter(item -> item != null && item.getType() != Material.AIR)
+                                .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
+                                .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
 
-                    String message = "";
-                    for (int i = 1; i < args.length; i++) {
-                        message += args[i] + " ";
-                    }
-                    player.sendMessage(main.prefix + "§aDu hast eine SMS an §e" + args[0] + " §7(" + phone.findContactNameByNumber(player, args[0]) + ") §aversendet.");
-                    player.playSound(player.getLocation(), Sound.MUSIC_DISC_CAT, 1, 1);
+                        if(!foundTarget) {
+                            player.sendMessage(main.pre_error + "§cDiese Nummer ist zurzeit nicht erreichbar.");
+                            main.playErrorSound(player);
+                            return;
+                        }
 
-                    String numberToFind = String.valueOf(uPlayer.getPhoneNumber());
-                    target.sendMessage("§bSMS von §e" + uPlayer.getPhoneNumber() + " §7(" + phone.findContactNameByNumber(target, numberToFind) + ") " + "§f▹ §6" + message);
-                    target.playSound(target.getLocation(), Sound.MUSIC_DISC_CAT, 1, 1);
+                        String message = "";
+                        for (int i = 1; i < args.length; i++) {
+                            message += args[i] + " ";
+                        }
+                        player.sendMessage(main.prefix + "§aDu hast eine SMS an §e" + args[0] + " §7(" + phone.findContactNameByNumber(player, args[0]) + ") §aversendet.");
+                        player.playSound(player.getLocation(), Sound.MUSIC_DISC_CAT, 1, 1);
+
+                        String numberToFind = String.valueOf(uPlayer.getPhoneNumber());
+                        target.sendMessage("§bSMS von §e" + uPlayer.getPhoneNumber() + " §7(" + phone.findContactNameByNumber(target, numberToFind) + ") " + "§f▹ §6" + message);
+                        target.playSound(target.getLocation(), Sound.MUSIC_DISC_CAT, 1, 1);
+                    });
                 });
-            });
+            } else if(args.length == 1) {
+                player.sendMessage(main.prefix + "§7Bitte gebe nun die Nachricht ein die du versenden möchtest.");
+                writeSMS.add(player);
+            }
+
         }
 
         return false;
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        Player player = e.getPlayer();
+
+        String[] args = e.getMessage().split(" ");
+        args = Arrays.copyOfRange(args, Math.min(1, args.length), args.length);
+
+        if (writeSMS.contains(player)) {
+            Bukkit.getScheduler().runTask(main.getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    Bukkit.dispatchCommand(player, "sms " + smsTarget.get(player) + " " + e.getMessage());
+                    smsTarget.remove(player);
+                    writeSMS.remove(player);
+                }
+            });
+        }
     }
 }
