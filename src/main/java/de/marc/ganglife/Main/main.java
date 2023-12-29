@@ -3,6 +3,7 @@ package de.marc.ganglife.Main;
 import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.*;
+import de.marc.ganglife.farm.farmAramid;
 import de.marc.ganglife.npcs.interactAramid;
 import de.marc.ganglife.phone.commands.*;
 import de.marc.ganglife.phone.events.callManager;
@@ -100,6 +101,7 @@ public final class main extends JavaPlugin {
         getCommand("denycall").setExecutor(new denycallCommand());
         getCommand("auflegen").setExecutor(new auflegenCommand());
         getCommand("me").setExecutor(new meCommand());
+        getCommand("checkitem").setExecutor(new checkitemCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
@@ -122,6 +124,9 @@ public final class main extends JavaPlugin {
 
         //npcs
         getServer().getPluginManager().registerEvents(new interactAramid(), this);
+
+        //farming
+        getServer().getPluginManager().registerEvents(new farmAramid(), this);
     }
 
     public mySQLConnection getDatabaseAsync() {
