@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class paydayManager implements Listener {
     public static final Map<Player, Integer> paydayScheduler = new HashMap<>();
+
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
@@ -28,53 +29,56 @@ public class paydayManager implements Listener {
     }
 
     public void startPayDay(Player player) {
-        if(paydayScheduler.get(player) == null) {
+        if (paydayScheduler.get(player) == null) {
             final int[] totalTime = {60};
 
             Bukkit.getConsoleSender().sendMessage(main.log + player.getName() + " §9sein PayDay wurde §agestartet.");
 
             paydayScheduler.put(player, Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getPlugin(), () -> {
-                if(!player.isOnline()) {
+                if (!player.isOnline()) {
                     stopPayDay(player);
                     return;
                 }
                 totalTime[0]--;
 
                 if (totalTime[0] <= 0) { // Entspricht einer Minute
-                        totalTime[0] = 60;
-                        syncTime();
-                        TabAPI.setScoreboard();
+                    totalTime[0] = 60;
+                    syncTime();
+                    TabAPI.setScoreboard();
 
-                        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
-                        if(uPlayer == null) {
-                            player.kick(Component.text("§cDu wurdest gekickt, bitte melde dich bei einem Admin. \n §cUPLAYER NULL"));
-                            return;
+                    UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
+
+                    if (uPlayer == null) {
+                        player.kick(Component.text("§cDu wurdest gekickt, bitte melde dich bei einem Admin. \n §cUPLAYER NULL"));
+                        return;
+                    }
+
+                    uPlayer.setPaydayTime(uPlayer.getPaydayTime() + 1);
+                    uPlayer.saveData();
+
+                    if (uPlayer.getPaydayTime() >= 60) {
+                        player.sendMessage("§7=========== §9PayDay §7===========");
+                        player.sendMessage(" §f▹ §7Alter Kontostand: §a" + uPlayer.getBank() + "$");
+                        player.sendMessage(" §f▹ §7Zinsen: §a+" + Math.round(uPlayer.getBank() * 0.02) + "$");
+                        player.sendMessage(" §f▹ §7Steuern: §c-" + Math.round(uPlayer.getBank() * 0.015) + "$");
+
+                        uPlayer.setBank((int) (uPlayer.getBank() + Math.round(uPlayer.getBank() * 0.02)));
+                        uPlayer.setBank((int) (uPlayer.getBank() - Math.round(uPlayer.getBank() * 0.015)));
+
+                        if (uPlayer.isPremiumAccount()) {
+                            player.sendMessage(" §f▹ §7Premium Bonus: §a+200$ +50 EXP §7(§6Premium§7)");
+                            uPlayer.setBank(uPlayer.getBank() + 200);
+                            uPlayer.setLevelExp(uPlayer.getLevelExp() + 50);
                         }
-                        uPlayer.setPaydayTime(uPlayer.getPaydayTime() + 1);
 
-                        if(uPlayer.getPaydayTime() >= 60) {
-                            player.sendMessage("§7=========== §9PayDay §7===========");
-                            player.sendMessage(" §f▹ §7Alter Kontostand: §a" + uPlayer.getBank() + "$");
-                            player.sendMessage(" §f▹ §7Zinsen: §a+" +  Math.round(uPlayer.getBank() * 0.02) + "$");
-                            player.sendMessage(" §f▹ §7Steuern: §c-" + Math.round(uPlayer.getBank() * 0.015) + "$");
+                        if (uPlayer.isRentStorage()) {
+                            player.sendMessage(" §f▹ §7Lagerkosten: §c-20$");
+                            uPlayer.setBank(uPlayer.getBank() - 20);
+                        }
 
-                            uPlayer.setBank((int) (uPlayer.getBank() + Math.round(uPlayer.getBank() * 0.02)));
-                            uPlayer.setBank((int) (uPlayer.getBank() - Math.round(uPlayer.getBank() * 0.015)));
-
-                            if (uPlayer.isPremiumAccount()) {
-                                player.sendMessage(" §f▹ §7Premium Bonus: §a+200$ +50 EXP §7(§6Premium§7)");
-                                uPlayer.setBank(uPlayer.getBank() + 200);
-                                uPlayer.setLevelExp(uPlayer.getLevelExp() + 50);
-                            }
-
-                            if(uPlayer.isRentStorage()) {
-                                player.sendMessage(" §f▹ §7Lagerkosten: §c-20$");
-                                uPlayer.setBank(uPlayer.getBank() - 20);
-                            }
-
-                            player.sendMessage(" §f▹ §7PayDay Experience: §a+25 EXP");
-                            uPlayer.setLevelExp(uPlayer.getLevelExp() + 25);
+                        player.sendMessage(" §f▹ §7PayDay Experience: §a+25 EXP");
+                        uPlayer.setLevelExp(uPlayer.getLevelExp() + 25);
 
                             /*if(!setFaction.isInFaction(player.getUniqueId(), "Zivilist")) {
                                 String getFaction = setFaction.getFaction(player.getUniqueId());
@@ -89,13 +93,13 @@ public class paydayManager implements Listener {
                                 }
                             }
                              */
-                            uPlayer.setPaydayTime(0);
-                            uPlayer.setPlayTime(uPlayer.getPlayTime() + 1);
-                            player.sendMessage(" §f▹ §7Neuer Kontostand: §a" + uPlayer.getBank() + "$");
-                            systems.updateLevel(player, uPlayer);
-                            main.playSuccessSound(player);
-                        }
+                        uPlayer.setPaydayTime(0);
+                        uPlayer.setPlayTime(uPlayer.getPlayTime() + 1);
+                        player.sendMessage(" §f▹ §7Neuer Kontostand: §a" + uPlayer.getBank() + "$");
+                        systems.updateLevel(player, uPlayer);
+                        main.playSuccessSound(player);
                     }
+                }
             }, 0, 20));
         }
     }

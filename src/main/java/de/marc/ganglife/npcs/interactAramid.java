@@ -48,12 +48,9 @@ public class interactAramid implements Listener {
                     .asGuiItem(settingsClickEvent -> {
                         player.closeInventory();
                         main.playProccessSound(player);
-                        Location npcLocation = new Location(player.getWorld(), 1, 1,1);
+                        Location npcLocation = new Location(player.getWorld(), 46, 76, -93);
 
-                        ItemStack rawItem = items.ARAMID.getItem();
-                        ItemStack finishItem = items.BULLETPROOF.getItem();
-
-                        process.startProcess(player, rawItem, rawAmount, finishItem, finishAmount, npcLocation);
+                        process.startProcess(player, items.ARAMID, rawAmount, items.BULLETPROOF_CHEST, finishAmount, npcLocation);
                     });
 
             interactInventory.setItem(13, interactItem);

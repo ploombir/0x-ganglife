@@ -3,6 +3,7 @@ package de.marc.ganglife.methods;
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
 import de.marc.ganglife.playerdatas.UPlayer;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -19,17 +20,21 @@ public class process {
 
     private static final Map<Player, Integer> proccessTimer = new HashMap<>();
 
-    public static void startProcess(Player player, ItemStack item_raw, Integer raw_amount, ItemStack item_finish, Integer finish_amoumt, Location locNPC) {
+    public static void startProcess(Player player, items itemRaw, Integer raw_amount, items itemFinish, Integer finish_amoumt, Location locNPC) {
         if (proccessTimer.containsKey(player)) {
             player.sendMessage(main.pre_error + "§cDu bist bereits am verarbeiten!");
             main.playErrorSound(player);
             return;
         }
 
+        ItemStack item_raw = new ItemStack(ItemBuilder.from(itemRaw.getItem()).build());
+        ItemStack item_finish = new ItemStack(ItemBuilder.from(itemFinish.getItem()).build());
+
         player.closeInventory();
 
         boolean found = Arrays.stream(player.getInventory().getContents())
                 .filter(item -> item != null && item.getType() != Material.AIR)
+                .filter(item -> item.getAmount() >= raw_amount)
                 .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(item_raw.getItemMeta().getDisplayName()))
                 .anyMatch(item -> item.getType() == item_raw.getType());
 
@@ -50,8 +55,10 @@ public class process {
 
         player.sendMessage(main.prefix + "§7Du verarbeitest nun " + item_raw.getItemMeta().getDisplayName() + "§7.. (Dauer: " + totalTime[0] + " Sekunden)");
         main.playProccessSound(player);
-        item_raw.setAmount(raw_amount);
-        player.getInventory().removeItem(item_raw);
+
+        ItemStack is = ItemBuilder.from(item_raw).build();
+        is.setAmount(raw_amount);
+        player.getInventory().removeItem(is);
 
         proccessTimer.put(player, Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getPlugin(), () -> {
             if (player.getLocation().distance(locNPC) >= 5) {
