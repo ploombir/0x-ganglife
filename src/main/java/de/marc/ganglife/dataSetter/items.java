@@ -1,5 +1,6 @@
 package de.marc.ganglife.dataSetter;
 
+import de.marc.ganglife.utils.ItemB;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -51,10 +52,7 @@ public enum items {
     private final ItemStack item;
 
     items(Material material, String displayName, boolean unbreakable) {
-        this.item = ItemBuilder.from(material)
-                .name(Component.text(displayName))
-                .unbreakable(unbreakable)
-                .build();
+        this.item = new ItemStack(new ItemB(material).setUnbreakable(unbreakable).setName(displayName).build());
     }
     public ItemStack getItem() {
         return this.item.clone();
