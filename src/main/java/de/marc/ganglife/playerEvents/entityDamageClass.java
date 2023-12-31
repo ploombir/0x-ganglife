@@ -128,9 +128,40 @@ public class entityDamageClass implements CommandExecutor, Listener {
                 }
 
                 deleteArmorStand(player);
-                player.sendMessage("revived");
+                player.sendMessage(main.prefix + "§7Du hast dich wiederbelebt.");
                 stopDeathTimer(player);
                 player.setGameMode(GameMode.SURVIVAL);
+                uPlayer.setDeathTime(0);
+                player.setFlySpeed((float) 0.2);
+
+            } else if(args.length == 1) {
+                Player target = Bukkit.getPlayer(args[0]);
+
+                if(target == null) {
+                    player.sendMessage(main.notonline);
+                    main.playErrorSound(player);
+                    return true;
+                }
+
+                UPlayer uTarget = UPlayer.getUPlayer(target.getUniqueId());
+
+                if (uTarget.getDeathTime() <= 0) {
+                    player.sendMessage(main.pre_error + "§cDieser Spieler ist nicht tot.");
+                    main.playErrorSound(player);
+                    return true;
+                }
+
+                deleteArmorStand(target);
+                player.sendMessage(main.prefix + "§7Du hast §6" + target.getName() + " §7wiederbelebt.");
+                target.sendMessage(main.prefix + "§7Du wurdest von §6" + player.getName() + " §7wiederbelebt.");
+                stopDeathTimer(target);
+                target.setGameMode(GameMode.SURVIVAL);
+                uTarget.setDeathTime(0);
+                target.setFlySpeed((float) 0.2);
+
+            } else {
+                player.sendMessage(main.pre_error + "§cVerwendung: /arevive <Spieler>");
+                main.playErrorSound(player);
             }
 
         }

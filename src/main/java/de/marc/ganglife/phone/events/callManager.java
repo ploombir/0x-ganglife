@@ -33,6 +33,7 @@ public class callManager implements Listener {
                 .filter(item -> item.getItemMeta().getDisplayName().equalsIgnoreCase(items.PHONE.getItem().getItemMeta().getDisplayName()))
                 .anyMatch(item -> item.getType() == items.PHONE.getItem().getType());
 
+        if(target == null) return;
 
         if (callCommand.phoneIsInCall.contains(player) && callCommand.phoneIsInCall.contains(target)) {
             if(target.isOnline()) {
