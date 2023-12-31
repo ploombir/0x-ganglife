@@ -82,7 +82,7 @@ public class process {
                 Bukkit.getScheduler().cancelTask(proccessTimer.get(player));
                 proccessTimer.remove(player);
 
-                player.sendMessage(main.prefix + "§aDu hast nun " + raw_amount + " §7" + item_raw.getItemMeta().getDisplayName() + " §averarbeitet und erhältst " + item_finish.getItemMeta().getDisplayName());
+                player.sendMessage(main.prefix + "§aDu hast nun " + raw_amount + " §7" + item_raw.getItemMeta().getDisplayName() + " §averarbeitet und erhältst " + finish_amoumt + " " + item_finish.getItemMeta().getDisplayName() + ".");
                 main.playSuccessSound(player);
                 item_finish.setAmount(finish_amoumt);
                 player.getInventory().addItem(item_finish);

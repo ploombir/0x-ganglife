@@ -126,10 +126,10 @@ public class giveitemCommand implements CommandExecutor {
                     uPlayer.setMedicineAmount(uPlayer.getMedicineAmount() + 5);
                 }));
 
-                inv.setItem(18, ItemBuilder.from(items.IRON_INGOT.getItem()).asGuiItem(event -> {
+                inv.setItem(18, ItemBuilder.from(items.IRON_NUGGET.getItem()).asGuiItem(event -> {
                     main.playProccessSound(player);
                     Bukkit.getConsoleSender().sendMessage(main.log + "§e" + player.getName() + " §9hat sich eine §f" + event.getCurrentItem().getItemMeta().getDisplayName() + " §9gegeben.");
-                    player.getInventory().addItem(items.IRON_INGOT.getItem());
+                    player.getInventory().addItem(items.IRON_NUGGET.getItem());
                 }));
 
                 inv.setItem(19, ItemBuilder.from(items.WOOD_LOG.getItem()).asGuiItem(event -> {

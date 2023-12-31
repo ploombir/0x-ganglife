@@ -55,7 +55,6 @@ public class paydayManager implements Listener {
                     }
 
                     uPlayer.setPaydayTime(uPlayer.getPaydayTime() + 1);
-                    uPlayer.saveData();
 
                     if (uPlayer.getPaydayTime() >= 60) {
                         player.sendMessage("§7=========== §9PayDay §7===========");

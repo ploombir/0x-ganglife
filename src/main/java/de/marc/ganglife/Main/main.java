@@ -4,7 +4,7 @@ import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.*;
 import de.marc.ganglife.farm.*;
-import de.marc.ganglife.npcs.interactAramid;
+import de.marc.ganglife.npcs.*;
 import de.marc.ganglife.phone.commands.*;
 import de.marc.ganglife.phone.events.callManager;
 import de.marc.ganglife.phone.events.phone;
@@ -124,6 +124,11 @@ public final class main extends JavaPlugin {
 
         //npcs
         getServer().getPluginManager().registerEvents(new interactAramid(), this);
+        getServer().getPluginManager().registerEvents(new interactCocain(), this);
+        getServer().getPluginManager().registerEvents(new interactIron(), this);
+        getServer().getPluginManager().registerEvents(new interactMeth(), this);
+        getServer().getPluginManager().registerEvents(new interactWeed(), this);
+        getServer().getPluginManager().registerEvents(new interactWood(), this);
 
         //farming
         getServer().getPluginManager().registerEvents(new farmAramid(), this);
