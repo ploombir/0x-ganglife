@@ -168,7 +168,7 @@ public class playermanageHandler implements Listener {
                 }
                 case HOUSE_NUMBER -> {
                     if (isInt(message)) {
-                        uPlayer.setHouseNumber(Integer.parseInt(message));
+                        uPlayer.setHouseNumber(message);
                         player.sendMessage(main.prefix + "§aDu hast die Hausnummer von §e" + player.getName() + "§a auf §e" + message + "§a gesetzt.");
 
                         player.playSound(player, "entity.player.levelup", 1, 1);

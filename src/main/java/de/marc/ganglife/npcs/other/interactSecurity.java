@@ -1,8 +1,9 @@
-package de.marc.ganglife.npcs;
+package de.marc.ganglife.npcs.other;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
-import de.marc.ganglife.methods.process;
+import de.marc.ganglife.methods.systems;
+import de.marc.ganglife.playerdatas.UPlayer;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -16,13 +17,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class interactIron implements Listener {
+public class interactSecurity implements Listener {
 
-    public String npcname = "Schmelze";
-
-    public Integer rawAmount = 20;
-    public Integer finishAmount = 1;
-
+    public String npcname = "Security";
     @EventHandler
     public void handleInteractEvent(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
@@ -40,18 +37,27 @@ public class interactIron implements Listener {
         if (npc.getCustomName() != null && npc.getCustomName().equals(npcname) && event.getHand() == EquipmentSlot.OFF_HAND) {
             event.setCancelled(true);
 
-            GuiItem interactItem = ItemBuilder.from(Material.MAGENTA_DYE)
-                    .name(Component.text("§eEisenklumpen verarbeiten.."))
-                    .lore(Component.text(" §f▹ §7" + rawAmount + " Eisenklumpen ≙ " + finishAmount + " Eisenbarren"))
+            GuiItem sellGold = ItemBuilder.from(Material.BLUE_DYE)
+                    .name(Component.text("§eEinreisen.."))
+                    .lore(Component.text(" §f▹ §7§oKlicke um einzureisen."))
                     .asGuiItem(settingsClickEvent -> {
-                        player.closeInventory();
-                        main.playProccessSound(player);
-                        Location npcLocation = new Location(player.getWorld(), 339, 67, -52);
+                        UPlayer uPlayer = UPlayer.getUPlayer(player.getUniqueId());
 
-                        process.startProcess(player, items.IRON_NUGGET, rawAmount, items.IRON_INGOT, finishAmount, npcLocation);
+                        if (uPlayer.getFirstName().equals("")) {
+                            player.sendMessage(main.pre_error + "§cBentrage zuerst einen Personalausweis.");
+                            main.playErrorSound(player);
+                            return;
+                        }
+
+                        Location loc = new Location(player.getWorld(), -140, 68, -236);
+                        loc.setYaw((float) 270);
+                        player.teleport(loc);
+
+                        player.sendMessage(main.prefix + "§7Du bist erfolgreich eingereist. Viel Spaß auf 0x-Ganglife.");
+                        main.playSuccessSound(player);
                     });
 
-            interactInventory.setItem(13, interactItem);
+            interactInventory.setItem(13, sellGold);
             interactInventory.open(player);
             main.playProccessSound(player);
         }

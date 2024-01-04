@@ -1,4 +1,4 @@
-package de.marc.ganglife.npcs;
+package de.marc.ganglife.npcs.worker;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
@@ -7,6 +7,7 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,10 +16,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-public class interactCocain implements Listener {
-
-    public String npcname = "Pulverhersteller";
+public class interactAramid implements Listener {
+    public String npcname = "Schneiderei";
 
     public Integer rawAmount = 50;
     public Integer finishAmount = 1;
@@ -41,14 +43,14 @@ public class interactCocain implements Listener {
             event.setCancelled(true);
 
             GuiItem interactItem = ItemBuilder.from(Material.MAGENTA_DYE)
-                    .name(Component.text("§ePulver verarbeiten.."))
-                    .lore(Component.text(" §f▹ §7" + rawAmount + " Pulverblätter ≙ " + finishAmount + " Pulverkiste"))
+                    .name(Component.text("§eAramid verarbeiten.."))
+                    .lore(Component.text(" §f▹ §7" + rawAmount + " Aramid ≙ " + finishAmount + " Westenkiste"))
                     .asGuiItem(settingsClickEvent -> {
                         player.closeInventory();
                         main.playProccessSound(player);
-                        Location npcLocation = new Location(player.getWorld(), -182, 81, 159);
+                        Location npcLocation = new Location(player.getWorld(), 46, 76, -93);
 
-                        process.startProcess(player, items.COCAINE_LEAVES, rawAmount, items.COCAINE_CHEST, finishAmount, npcLocation);
+                        process.startProcess(player, items.ARAMID, rawAmount, items.BULLETPROOF_CHEST, finishAmount, npcLocation);
                     });
 
             interactInventory.setItem(13, interactItem);

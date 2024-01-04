@@ -28,7 +28,7 @@ public class UPlayer {
     private String faction;
     private int factionRank;
     private int drink;
-    private int houseNumber;
+    private String houseNumber;
     private String houseInventory;
     private int paydayTime;
     private int playTime;
@@ -249,7 +249,7 @@ public class UPlayer {
         return this;
     }
 
-    public UPlayer setHouseNumber(int houseNumber) {
+    public UPlayer setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
         return this;
     }

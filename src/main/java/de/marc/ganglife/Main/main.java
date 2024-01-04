@@ -4,7 +4,13 @@ import de.marc.ganglife.commands.*;
 import de.marc.ganglife.dataSetter.mySQLConnection;
 import de.marc.ganglife.faction.commands.*;
 import de.marc.ganglife.farm.*;
-import de.marc.ganglife.npcs.*;
+import de.marc.ganglife.housing.buyhouseEvent;
+import de.marc.ganglife.housing.createhouseCommand;
+import de.marc.ganglife.npcs.jobs.garbage.clickDoor;
+import de.marc.ganglife.npcs.jobs.garbage.interactGarbage;
+import de.marc.ganglife.npcs.other.interactSecurity;
+import de.marc.ganglife.npcs.seller.*;
+import de.marc.ganglife.npcs.worker.*;
 import de.marc.ganglife.phone.commands.*;
 import de.marc.ganglife.phone.events.callManager;
 import de.marc.ganglife.phone.events.phone;
@@ -102,6 +108,7 @@ public final class main extends JavaPlugin {
         getCommand("auflegen").setExecutor(new auflegenCommand());
         getCommand("me").setExecutor(new meCommand());
         getCommand("checkitem").setExecutor(new checkitemCommand());
+        getCommand("registerhouse").setExecutor(new createhouseCommand());
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new registerAccounts(new playerManager(getDatabaseAsync().getDataSource())), this);
@@ -121,14 +128,29 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new playermanageHandler(), this);
         getServer().getPluginManager().registerEvents(new callManager(), this);
         getServer().getPluginManager().registerEvents(new smsCommand(), this);
+        getServer().getPluginManager().registerEvents(new buyhouseEvent(), this);
 
-        //npcs
+        //jobs
+        getServer().getPluginManager().registerEvents(new clickDoor(), this);
+
+        //npcs proccess
         getServer().getPluginManager().registerEvents(new interactAramid(), this);
         getServer().getPluginManager().registerEvents(new interactCocain(), this);
         getServer().getPluginManager().registerEvents(new interactIron(), this);
         getServer().getPluginManager().registerEvents(new interactMeth(), this);
         getServer().getPluginManager().registerEvents(new interactWeed(), this);
         getServer().getPluginManager().registerEvents(new interactWood(), this);
+
+        //npc seller
+        getServer().getPluginManager().registerEvents(new interactDealer(), this);
+        getServer().getPluginManager().registerEvents(new interactHehler(), this);
+        getServer().getPluginManager().registerEvents(new interactShop(), this);
+        getServer().getPluginManager().registerEvents(new interactWeaponlicence(), this);
+        getServer().getPluginManager().registerEvents(new interactWeaponshop(), this);
+
+        //npc other
+        getServer().getPluginManager().registerEvents(new interactSecurity(), this);
+        getServer().getPluginManager().registerEvents(new interactGarbage(), this);
 
         //farming
         getServer().getPluginManager().registerEvents(new farmAramid(), this);

@@ -154,7 +154,7 @@ public class profileCommand implements CommandExecutor {
                 profileInventory.setItem(31, playerFaction);
             }
 
-            if (uPlayer.getHouseNumber() == 0) {
+            if (uPlayer.getHouseNumber().equals("[]")) {
                 profileInventory.setItem(32, playerHouseNo);
             } else {
                 profileInventory.setItem(32, playerHouse);

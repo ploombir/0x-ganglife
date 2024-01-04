@@ -1,4 +1,4 @@
-package de.marc.ganglife.npcs;
+package de.marc.ganglife.npcs.worker;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
@@ -16,11 +16,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class interactMeth implements Listener {
+public class interactIron implements Listener {
 
-    public String npcname = "Laborant";
+    public String npcname = "Schmelze";
 
-    public Integer rawAmount = 50;
+    public Integer rawAmount = 20;
     public Integer finishAmount = 1;
 
     @EventHandler
@@ -41,14 +41,14 @@ public class interactMeth implements Listener {
             event.setCancelled(true);
 
             GuiItem interactItem = ItemBuilder.from(Material.MAGENTA_DYE)
-                    .name(Component.text("§eKristalle verarbeiten.."))
-                    .lore(Component.text(" §f▹ §7" + rawAmount + " Kristalle ≙ " + finishAmount + " Kristallkiste"))
+                    .name(Component.text("§eEisenklumpen verarbeiten.."))
+                    .lore(Component.text(" §f▹ §7" + rawAmount + " Eisenklumpen ≙ " + finishAmount + " Eisenbarren"))
                     .asGuiItem(settingsClickEvent -> {
                         player.closeInventory();
                         main.playProccessSound(player);
-                        Location npcLocation = new Location(player.getWorld(), -387, 89, -234);
+                        Location npcLocation = new Location(player.getWorld(), 339, 67, -52);
 
-                        process.startProcess(player, items.FROG, rawAmount, items.METH_CHEST, finishAmount, npcLocation);
+                        process.startProcess(player, items.IRON_NUGGET, rawAmount, items.IRON_INGOT, finishAmount, npcLocation);
                     });
 
             interactInventory.setItem(13, interactItem);

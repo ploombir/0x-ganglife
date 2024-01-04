@@ -1,4 +1,4 @@
-package de.marc.ganglife.npcs;
+package de.marc.ganglife.npcs.worker;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
@@ -16,11 +16,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class interactWood implements Listener {
+public class interactMeth implements Listener {
 
-    public String npcname = "Holzverarbeiter";
+    public String npcname = "Laborant";
 
-    public Integer rawAmount = 20;
+    public Integer rawAmount = 50;
     public Integer finishAmount = 1;
 
     @EventHandler
@@ -41,14 +41,14 @@ public class interactWood implements Listener {
             event.setCancelled(true);
 
             GuiItem interactItem = ItemBuilder.from(Material.MAGENTA_DYE)
-                    .name(Component.text("§eHolz verarbeiten.."))
-                    .lore(Component.text(" §f▹ §7" + rawAmount + " Holz ≙ " + finishAmount + " Holzpalette"))
+                    .name(Component.text("§eKristalle verarbeiten.."))
+                    .lore(Component.text(" §f▹ §7" + rawAmount + " Kristalle ≙ " + finishAmount + " Kristallkiste"))
                     .asGuiItem(settingsClickEvent -> {
                         player.closeInventory();
                         main.playProccessSound(player);
-                        Location npcLocation = new Location(player.getWorld(), -201, 68, -193);
+                        Location npcLocation = new Location(player.getWorld(), -387, 89, -234);
 
-                        process.startProcess(player, items.WOOD_LOG, rawAmount, items.WOOD_PLANKS, finishAmount, npcLocation);
+                        process.startProcess(player, items.FROG, rawAmount, items.METH_CHEST, finishAmount, npcLocation);
                     });
 
             interactInventory.setItem(13, interactItem);

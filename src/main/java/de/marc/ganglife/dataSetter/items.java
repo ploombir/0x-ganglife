@@ -47,7 +47,8 @@ public enum items {
     BOX(Material.PRISMARINE_SHARD, "§fBox", false),
     DRILL(Material.INK_SAC, "§fBohrer", false),
     C4(Material.GLOW_INK_SAC, "§fSprengstoff", false),
-    GOLD_INGOT(Material.GOLD_INGOT, "§fGoldbarren", false);
+    GOLD_INGOT(Material.GOLD_INGOT, "§fGoldbarren", false),
+    BREAD(Material.BREAD, "§fBrot", false);
 
     private final ItemStack item;
 

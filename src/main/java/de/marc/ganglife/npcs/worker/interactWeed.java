@@ -1,4 +1,4 @@
-package de.marc.ganglife.npcs;
+package de.marc.ganglife.npcs.worker;
 
 import de.marc.ganglife.Main.main;
 import de.marc.ganglife.dataSetter.items;
