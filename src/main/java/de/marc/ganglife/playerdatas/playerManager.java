@@ -23,7 +23,7 @@ public class playerManager extends QueryFactory {
         return builder().query("INSERT INTO accounts(uniqueid, deathTime, isJail, cash, phoneNumber," +
                         "phoneFlightMode, phoneContacts, playerName, bank, level," +
                         "levelExp, faction, factionRank, drink, houseNumber," +
-                        "houseInventory, paydayTime, playTime, weaponLicence, driveLicence," +
+                        "paydayTime, playTime, weaponLicence, driveLicence," +
                         "firstaidLicence, jailTime, actReasons, garbageLevel, garbageExp," +
                         "cocaineAmount, weedAmount, methAmount, medicineAmount, bulletproofAmount," +
                         "policeBulletproofAmount, storageInventory, rentStorage, firstName, lastName," +
@@ -32,7 +32,7 @@ public class playerManager extends QueryFactory {
 
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " + //20
                         "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," + //20
-                        " ?, ?, ?, ?, ?)")
+                        " ?, ?, ?, ?)")
                 .parameter(stmt -> stmt.setUuidAsString(uniqueId)
                         .setInt(0)
                         .setBoolean(false)
@@ -47,7 +47,6 @@ public class playerManager extends QueryFactory {
                         .setString("Zivilist")
                         .setInt(0)
                         .setInt(10)
-                        .setString("[]")
                         .setString("[]")
                         .setInt(0)
                         .setInt(0)
@@ -103,7 +102,6 @@ public class playerManager extends QueryFactory {
                         .setFactionRank(row.getInt("factionRank"))
                         .setDrink(row.getInt("drink"))
                         .setHouseNumber(row.getString("houseNumber"))
-                        .setHouseInventory(row.getString("houseInventory"))
                         .setPaydayTime(row.getInt("paydayTime"))
                         .setPlayTime(row.getInt("playTime"))
                         .setWeaponLicence(row.getBoolean("weaponLicence"))
@@ -140,7 +138,7 @@ public class playerManager extends QueryFactory {
     public CompletableFuture<Boolean> savePlayer(UPlayer uPlayer) {
         return builder().query("UPDATE accounts SET deathTime = ?, isJail = ?, cash = ?, phoneNumber = ?, phoneFlightMode = ?," +
                         "phoneContacts = ?, faction = ?, bank = ?, level = ?, levelExp = ?, playerName = ?, factionRank = ?, drink = ?," +
-                        "houseNumber = ?, houseInventory = ?, paydayTime = ?, playTime = ?, weaponLicence = ?, driveLicence = ?," +
+                        "houseNumber = ?, paydayTime = ?, playTime = ?, weaponLicence = ?, driveLicence = ?," +
                         "firstaidLicence = ?, jailTime = ?, actReasons = ?, garbageLevel = ?, garbageExp = ?, cocaineAmount = ?," +
                         "weedAmount = ?, methAmount = ?, medicineAmount = ?, bulletproofAmount = ?, policeBulletproofAmount = ?," +
                         "storageInventory = ?, rentStorage = ?, firstName = ?, lastName = ?, birthDate = ?, gender = ?, discordVerify = ?," +
@@ -161,7 +159,6 @@ public class playerManager extends QueryFactory {
                         .setInt(uPlayer.getFactionRank())
                         .setInt(uPlayer.getDrink())
                         .setString(uPlayer.getHouseNumber())
-                        .setString(uPlayer.getHouseInventory())
                         .setInt(uPlayer.getPaydayTime())
                         .setInt(uPlayer.getPlayTime())
                         .setBoolean(uPlayer.isWeaponLicence())

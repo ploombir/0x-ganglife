@@ -4,6 +4,7 @@ import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.util.UpdateResult;
 
 import javax.sql.DataSource;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class setHousing extends QueryFactory {
@@ -18,6 +19,23 @@ public class setHousing extends QueryFactory {
                         .setInt(houseNumber)
                         .setString(Inventory)
                         .setString(Location))
+                .update()
+                .send()
+                .thenApply(UpdateResult::changed);
+    }
+    public CompletableFuture<Optional<String>> getHouseInventory(Integer houseNumber) {
+        return builder(String.class)
+                .query("SELECT houseInventory FROM housing WHERE houseNumber = ?")
+                .parameter(stmt -> stmt.setInt(houseNumber))
+                .readRow(row -> row.getString("houseInventory"))
+                .first();
+    }
+
+    public CompletableFuture<Boolean> setHouseInventory(Integer houseNumber, String Inventory) {
+        return builder().query("UPDATE housing SET houseInventory = ? WHERE houseNumber = ?")
+                .parameter(stmt -> stmt
+                        .setString(Inventory)
+                        .setInt(houseNumber))
                 .update()
                 .send()
                 .thenApply(UpdateResult::changed);

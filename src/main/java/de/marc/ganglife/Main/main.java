@@ -6,6 +6,7 @@ import de.marc.ganglife.faction.commands.*;
 import de.marc.ganglife.farm.*;
 import de.marc.ganglife.housing.buyhouseEvent;
 import de.marc.ganglife.housing.createhouseCommand;
+import de.marc.ganglife.housing.houseInfo;
 import de.marc.ganglife.npcs.jobs.garbage.clickDoor;
 import de.marc.ganglife.npcs.jobs.garbage.interactGarbage;
 import de.marc.ganglife.npcs.other.interactSecurity;
@@ -129,6 +130,7 @@ public final class main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new callManager(), this);
         getServer().getPluginManager().registerEvents(new smsCommand(), this);
         getServer().getPluginManager().registerEvents(new buyhouseEvent(), this);
+        getServer().getPluginManager().registerEvents(new houseInfo(), this);
 
         //jobs
         getServer().getPluginManager().registerEvents(new clickDoor(), this);

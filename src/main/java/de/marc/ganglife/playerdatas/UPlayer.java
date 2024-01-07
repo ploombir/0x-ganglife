@@ -254,11 +254,6 @@ public class UPlayer {
         return this;
     }
 
-    public UPlayer setHouseInventory(String houseInventory) {
-        this.houseInventory = houseInventory;
-        return this;
-    }
-
     public UPlayer setPaydayTime(int paydayTime) {
         this.paydayTime = paydayTime;
         return this;

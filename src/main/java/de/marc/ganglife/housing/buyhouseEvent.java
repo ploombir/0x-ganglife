@@ -95,9 +95,25 @@ public class buyhouseEvent implements Listener {
                                     if (existingHouses != null && !existingHouses.isEmpty()) {
                                         List<Integer> existingNumbers = new Gson().fromJson(existingHouses, new TypeToken<List<Integer>>() {}.getType());
                                         customTags.addAll(existingNumbers);
+
+                                        if(player.hasPermission("system.premium")) {
+                                            if(customTags.size() >= 5) {
+                                                player.sendMessage(main.pre_error + "§cDu besitzt bereits 5 Immobilien.");
+                                                main.playErrorSound(player);
+                                                return;
+                                            }
+                                        } else {
+                                            if(customTags.size() >= 1) {
+                                                player.sendMessage(main.pre_error + "§cDu besitzt bereits eine Immobilie.");
+                                                main.playErrorSound(player);
+                                                return;
+                                            }
+                                        }
+
                                     }
 
                                     customTags.add(Integer.parseInt(customTag));
+
                                     String updatedHouses = new Gson().toJson(customTags);
                                     uPlayer.setHouseNumber(updatedHouses);
 
