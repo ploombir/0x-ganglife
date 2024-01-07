@@ -40,5 +40,14 @@ public class setHousing extends QueryFactory {
                 .send()
                 .thenApply(UpdateResult::changed);
     }
+    public CompletableFuture<Boolean> deleteHouse(String ownerUUID, Integer houseNumber) {
+        return builder().query("DELETE FROM housing WHERE ownerUUID = ? AND houseNumber = ?")
+                .parameter(stmt -> stmt
+                        .setString(ownerUUID)
+                        .setInt(houseNumber))
+                .update()
+                .send()
+                .thenApply(UpdateResult::changed);
+    }
 }
 

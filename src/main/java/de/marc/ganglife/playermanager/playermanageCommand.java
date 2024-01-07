@@ -21,6 +21,7 @@ import java.util.Map;
 public class playermanageCommand implements CommandExecutor {
 
     public static final Map<Player, ActionType> ACTIONS = new HashMap<>();
+    public static Map<Player, Player> TARGET = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -51,6 +52,7 @@ public class playermanageCommand implements CommandExecutor {
             return false;
         }
         UPlayer uPlayer = UPlayer.getUPlayer(target.getUniqueId());
+        TARGET.put(player, target);
 
         Gui playerGui = Gui.gui()
                 .title(Component.text(main.prefix + "§7Spielerverwaltung | " + target.getName()))
@@ -60,7 +62,10 @@ public class playermanageCommand implements CommandExecutor {
 
         GuiItem deadItem = ItemBuilder.from(Material.SKELETON_SKULL)
                 .name(Component.text("§aTod verwalten"))
-                .lore(Component.text("§f▹ §7Tod von " + target.getName() + " verwalten"), Component.text(""), Component.text("§7Linksklick §8» §7Informationen anzeigen"), Component.text("§7Rechtsklick §8» §7Todeszeit setzen"))
+                .lore(Component.text("§f▹ §7Tod von " + target.getName() + " verwalten"),
+                        Component.text(""),
+                        Component.text("§7Linksklick §8» §7Informationen anzeigen"),
+                        Component.text("§7Rechtsklick §8» §7Todeszeit setzen"))
                 .asGuiItem(event -> {
                     switch (event.getClick()) {
                         case LEFT -> {
@@ -107,7 +112,7 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem cashItem = ItemBuilder.from(Material.GOLD_NUGGET)
+        GuiItem cashItem = ItemBuilder.from(Material.GOLD_INGOT)
                 .name(Component.text("§aGeld verwalten"))
                 .lore(Component.text("§f▹ §7Geld von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Geld setzen"))
                 .asGuiItem(event -> {
@@ -129,19 +134,21 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem phoneItem = ItemBuilder.from(Material.IRON_INGOT)
+        GuiItem phoneItem = ItemBuilder.from(Material.MUSIC_DISC_CAT)
                 .name(Component.text("§aHandy verwalten"))
-                .lore(Component.text("§f▹ §7Handy von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Nummer setzen"), Component.text("§f▹ §7Shift + Linksklick §8» §7Flugmodus setzen"), Component.text("§f▹ §7Shift + Rechtsklick §8» §7Kontakte setzen"))
+                .lore(Component.text("§f▹ §7Handy von " + target.getName() + " verwalten"),
+                        Component.text(""),
+                        Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"),
+                        Component.text("§f▹ §7Rechtsklick §8» §7Nummer setzen"),
+                        Component.text("§f▹ §7Shift + Linksklick §8» §7Flugmodus setzen"))
                 .asGuiItem(event -> {
                     // NUMBER
                     // FLIGHT MODE
-                    // CONTACTS
 
                     switch (event.getClick()) {
                         case LEFT -> {
                             player.sendMessage(Component.text(main.prefix + "§7Telefonnummer: " + uPlayer.getPhoneNumber()));
                             player.sendMessage(Component.text(main.prefix + "§7Flugmodus: " + uPlayer.isPhoneFlightMode()));
-                            player.sendMessage(Component.text(main.prefix + "§7Kontakte: " + uPlayer.getPhoneContacts()));
 
                             playerGui.close(player);
 
@@ -161,17 +168,10 @@ public class playermanageCommand implements CommandExecutor {
 
                             playerGui.close(player);
                         }
-                        case SHIFT_RIGHT -> {
-                            ACTIONS.put(player, ActionType.PHONE_CONTACTS);
-
-                            player.sendMessage(Component.text(main.prefix + "§7Schreibe nun die Kontakte in den Chat. (Name:Nummer)"));
-
-                            playerGui.close(player);
-                        }
                     }
                 });
 
-        GuiItem bankItem = ItemBuilder.from(Material.GOLD_NUGGET)
+        GuiItem bankItem = ItemBuilder.from(Material.GOLD_BLOCK)
                 .name(Component.text("§aBank verwalten"))
                 .lore(Component.text("§f▹ §7Bank von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Bank setzen"))
                 .asGuiItem(event -> {
@@ -225,7 +225,7 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem factionItem = ItemBuilder.from(Material.GREEN_DYE)
+        GuiItem factionItem = ItemBuilder.from(Material.DIAMOND_HORSE_ARMOR)
                 .name(Component.text("§aFraktion verwalten"))
                 .lore(Component.text("§f▹ §7Fraktion von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Fraktion setzen"), Component.text("§f▹ §7Shift + Linksklick §8» §7Fraktionsrang setzen"))
                 .asGuiItem(event -> {
@@ -279,16 +279,16 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem houseItem = ItemBuilder.from(Material.LIGHT_GRAY_CONCRETE)
+        GuiItem houseItem = ItemBuilder.from(Material.BRICKS)
                 .name(Component.text("§aHaus verwalten"))
-                .lore(Component.text("§f▹ §7Haus von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Hausnummer setzen"), Component.text("§f▹ §7Shift + Linksklick §8» §7Hausinventar setzen"))
+                .lore(Component.text("§f▹ §7Haus von " + target.getName() + " verwalten"),
+                        Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"),
+                        Component.text("§f▹ §7Rechtsklick §8» §7Hausnummer setzen"))
                 .asGuiItem(event -> {
                     // HOUSE NUMBER
-                    // HOUSE INVENTORY
                     switch (event.getClick()) {
                         case LEFT -> {
                             player.sendMessage(Component.text(main.prefix + "§7Hausnummer: " + uPlayer.getHouseNumber()));
-                            player.sendMessage(Component.text(main.prefix + "§7Hausinventar: " + uPlayer.getHouseInventory()));
 
                             playerGui.close(player);
 
@@ -301,17 +301,10 @@ public class playermanageCommand implements CommandExecutor {
 
                             playerGui.close(player);
                         }
-                        case SHIFT_LEFT -> {
-                            ACTIONS.put(player, ActionType.HOUSE_INVENTORY);
-
-                            player.sendMessage(Component.text(main.prefix + "§7Schreibe nun das Hausinventar in den Chat. (keine ahnung bruder)"));
-
-                            playerGui.close(player);
-                        }
                     }
                 });
 
-        GuiItem paydayItem = ItemBuilder.from(Material.GOLD_BLOCK)
+        GuiItem paydayItem = ItemBuilder.from(Material.EMERALD)
                 .name(Component.text("§aPayday verwalten"))
                 .lore(Component.text("§f▹ §7Payday von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Payday setzen"))
                 .asGuiItem(event -> {
@@ -355,9 +348,14 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem licenceItem = ItemBuilder.from(Material.BOOK)
+        GuiItem licenceItem = ItemBuilder.from(Material.CLAY_BALL)
                 .name(Component.text("§aLizenzen verwalten"))
-                .lore(Component.text("§f▹ §7Lizenzen von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7Waffenlizent setzen"), Component.text("§f▹ §7Shift + Linksklick §8» §7Führerschein setzen"), Component.text("§f▹ §7Shift + Rechtsklick §8» §7Erste-Hilfe Schein setzen"))
+                .lore(Component.text("§f▹ §7Lizenzen von " + target.getName() + " verwalten"),
+                        Component.text(""),
+                        Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"),
+                        Component.text("§f▹ §7Rechtsklick §8» §7Waffenlizenz setzen"),
+                        Component.text("§f▹ §7Shift + Linksklick §8» §7Führerschein setzen"),
+                        Component.text("§f▹ §7Shift + Rechtsklick §8» §7Erste-Hilfe Schein setzen"))
                 .asGuiItem(event -> {
                     // WEAPON
                     // DRIVE
@@ -396,7 +394,7 @@ public class playermanageCommand implements CommandExecutor {
                     }
                 });
 
-        GuiItem actsItem = ItemBuilder.from(Material.BOOK)
+        GuiItem actsItem = ItemBuilder.from(Material.GREEN_DYE)
                 .name(Component.text("§aAkten verwalten"))
                 .lore(Component.text("§f▹ §7Akten von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Shift + Linksklick §8» §7Akten setzen"))
                 .asGuiItem(event -> {
@@ -533,13 +531,6 @@ public class playermanageCommand implements CommandExecutor {
 
                             main.playSuccessSound(player);
                         }
-                        case RIGHT -> {
-                            ACTIONS.put(player, ActionType.STORAGE_INVENTORY);
-
-                            player.sendMessage(Component.text(main.prefix + "§7Schreibe nun das Lagerhalleninventar in den Chat. (keine ahnung bruder)"));
-
-                            playerGui.close(player);
-                        }
                         case SHIFT_LEFT -> {
                             ACTIONS.put(player, ActionType.RENT_STORAGE);
 
@@ -656,7 +647,12 @@ public class playermanageCommand implements CommandExecutor {
 
         GuiItem ffaItem = ItemBuilder.from(Material.IRON_SWORD)
                 .name(Component.text("§aFFA verwalten"))
-                .lore(Component.text("§f▹ §7FFA von " + target.getName() + " verwalten"), Component.text(""), Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"), Component.text("§f▹ §7Rechtsklick §8» §7FFA setzen"), Component.text("§f▹ §7Shift + Linksklick §8» §7FFA Inventar setzen"), Component.text("§f▹ §7Shift + Rechtsklick §8» §7FFA Kills setzen"), Component.text("§f▹ §7Q §8» §7FFA Tode setzen"))
+                .lore(Component.text("§f▹ §7FFA von " + target.getName() + " verwalten"),
+                        Component.text(""),
+                        Component.text("§f▹ §7Linksklick §8» §7Informationen anzeigen"),
+                        Component.text("§f▹ §7Rechtsklick §8» §7FFA setzen"),
+                        Component.text("§f▹ §7Shift + Rechtsklick §8» §7FFA Kills setzen"),
+                        Component.text("§f▹ §7Q §8» §7FFA Tode setzen"))
                 .asGuiItem(event -> {
                     // IS FFA
                     // FFA INVENTORY
@@ -677,13 +673,6 @@ public class playermanageCommand implements CommandExecutor {
                             ACTIONS.put(player, ActionType.IS_FFA);
 
                             player.sendMessage(Component.text(main.prefix + "§7Schreibe nun den FFA Status in den Chat. (true/false)"));
-
-                            playerGui.close(player);
-                        }
-                        case SHIFT_LEFT -> {
-                            ACTIONS.put(player, ActionType.FFA_INVENTORY);
-
-                            player.sendMessage(Component.text(main.prefix + "§7Schreibe nun das FFA Inventar in den Chat. (keine ahnung bruder)"));
 
                             playerGui.close(player);
                         }

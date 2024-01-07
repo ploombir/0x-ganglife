@@ -149,10 +149,22 @@ public class houseInfo implements Listener {
                                                 player.sendMessage(main.prefix + "§aDu hast Immoblie " + customTag +" für §e" + sellPrice + "$ §aerfolgreich verkauft.");
                                                 uPlayer.setCash(uPlayer.getCash() + sellPrice);
 
+                                                sign.getPersistentDataContainer().set(getKey("CustomTag"), PersistentDataType.STRING, customTag);
+                                                sign.getPersistentDataContainer().set(getKey("CustimPrice"), PersistentDataType.STRING, customPrice);
+                                                sign.getPersistentDataContainer().set(getKey("CustomOwner"), PersistentDataType.STRING, "none");
+                                                sign.getPersistentDataContainer().set(getKey("CustomUUID"), PersistentDataType.STRING, "none");
+
+                                                sign.setLine(0, "-x-");
+                                                sign.setLine(1, "Haus " + customTag);
+                                                sign.setLine(2, "Preis: " + customPrice);
+                                                sign.setLine(3, "-x-");
+                                                sign.update();
+
                                                 if (customTags.contains(Integer.parseInt(customTag))) {
                                                     customTags.removeIf(number -> number.equals(Integer.parseInt(customTag)));
                                                     String updatedHouses = new Gson().toJson(customTags);
                                                     uPlayer.setHouseNumber(updatedHouses);
+                                                    setHousing.deleteHouse(player.getUniqueId().toString(), Integer.parseInt(customTag));
                                                 } else {
                                                     player.sendMessage(main.pre_error + "§cEs ist ein Fehler aufgetreten, bitte kontaktiere einen Administrator.");
                                                     main.playErrorSound(player);
