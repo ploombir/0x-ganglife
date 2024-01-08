@@ -88,14 +88,14 @@ public class profileCommand implements CommandExecutor {
                         player.closeInventory();
                     });
 
-            GuiItem playerFaction = ItemBuilder.from(Material.BONE).name(Component.text("§7Deine Fraktion:"))
+            GuiItem playerFaction = ItemBuilder.from(Material.DIAMOND_HORSE_ARMOR).name(Component.text("§7Deine Fraktion:"))
                     .lore(Component.text(" §f▹ §e" + uPlayer.getFaction() + " §7- §e" + uPlayer.getFactionRank()))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
                         player.sendMessage(main.prefix + "§7Deine Fraktion: §e" + uPlayer.getFaction() + " §7- §e" + uPlayer.getFactionRank());
                         player.closeInventory();
                     });
-            GuiItem playerNoFaction = ItemBuilder.from(Material.BONE).name(Component.text("§7Deine Fraktion:"))
+            GuiItem playerNoFaction = ItemBuilder.from(Material.DIAMOND_HORSE_ARMOR).name(Component.text("§7Deine Fraktion:"))
                     .lore(Component.text(" §f▹ §eZivilist"))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
@@ -103,7 +103,7 @@ public class profileCommand implements CommandExecutor {
                         player.closeInventory();
                     });
 
-            GuiItem playerHouse = ItemBuilder.from(Material.BRICK).name(Component.text("§7Deine Hausnummer:"))
+            GuiItem playerHouse = ItemBuilder.from(Material.BRICKS).name(Component.text("§7Deine Hausnummer:"))
                     .lore(Component.text(" §f▹ §e" + uPlayer.getHouseNumber()))
                     .asGuiItem(clickEvent -> {
                         main.playProccessSound(player);
